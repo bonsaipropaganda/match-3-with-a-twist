@@ -46,17 +46,17 @@ func update_grid():
 				move_tile(x, y, x, y+1)
 				settled = false
 	
-	var to_pop = []
+	var to_free = []
 	if settled:
-		to_pop = get_to_pop()
-		for i in to_pop: # [tile_type, x, y]
+		to_free = get_to_free()
+		for i in to_free: # [tile_type, x, y]
 			var x = i[1]
 			var y = i[2]
 			if grid[y][x] != null:
 				grid[y][x].queue_free()
 				grid[y][x] = null
 	
-	if to_pop.size() == 0:
+	if to_free.size() == 0:
 		done_updating = true
 		for x in grid_width:
 			if (add_tile(x, 0)):
@@ -110,8 +110,8 @@ func can_fall(x, y):
 	else:
 		return grid[y][x] != null && grid[y+1][x] == null
 
-func get_to_pop():
-	var to_pop := []
+func get_to_free():
+	var to_free := []
 	var to_check := []
 	
 	# Vertical check
@@ -123,14 +123,14 @@ func get_to_pop():
 					to_check.append([grid[y][x].tile_type, x, y])
 				elif grid[y][x].tile_type != to_check.back()[0]:
 					if to_check.size() >= 3:
-						to_pop.append_array(to_check)
+						to_free.append_array(to_check)
 					to_check.clear()
 					to_check.append([grid[y][x].tile_type, x, y])
 				elif grid[y][x].tile_type == to_check.back()[0]:
 					to_check.append([grid[y][x].tile_type, x, y])
 					if y == grid_height-1 && to_check.size() >= 3:
 						to_check.append([grid[y][x].tile_type, x, y])
-						to_pop.append_array(to_check)
+						to_free.append_array(to_check)
 			else:
 				to_check.clear()
 	# Horizontal check
@@ -142,17 +142,17 @@ func get_to_pop():
 					to_check.append([grid[y][x].tile_type, x, y])
 				elif grid[y][x].tile_type != to_check.back()[0]:
 					if to_check.size() >= 3:
-						to_pop.append_array(to_check)
+						to_free.append_array(to_check)
 					to_check.clear()
 					to_check.append([grid[y][x].tile_type, x, y])
 				elif grid[y][x].tile_type == to_check.back()[0]:
 					to_check.append([grid[y][x].tile_type, x, y])
 					if x == grid_width-1 && to_check.size() >= 3:
 						to_check.append([grid[y][x].tile_type, x, y])
-						to_pop.append_array(to_check)
+						to_free.append_array(to_check)
 			else:
 				to_check.clear()
-	return to_pop
+	return to_free
 
 func on_swap_tile(from_pos, direction):
 	if done_updating:
