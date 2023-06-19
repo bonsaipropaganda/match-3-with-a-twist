@@ -20,7 +20,7 @@ const tile_images = [
 	preload("res://icon.svg"),
 	preload("res://icon.svg"),
 	preload("res://icon.svg"),
-	preload("res://icon.svg"),
+	preload("res://art/pieces/tiles_yellow.png"),
 ]
 
 # These are to distinguish tiles before we have sprites
