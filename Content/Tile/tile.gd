@@ -29,7 +29,7 @@ const tile_colors = [
 	Color("ef2655"),
 	Color("2655ef"),
 	Color("55ef26"),
-	Color("efe526"),
+	Color("ffd175"),
 ]
 
 func initialise(_tile_width : float, margin_width):
