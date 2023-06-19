@@ -66,9 +66,14 @@ func move_tile(x1, y1, x2, y2):
 		grid[y2][x2] = grid[y1][x1]
 		grid[y1][x1] = null
 
+func can_fall(x, y):
+	if y == grid_height -1:
+		return false
+	else:
+		return grid[y][x] != null && grid[y+1][x] == null
+
 func update_grid():
 	for y in range(grid_height-2, -1, -1):
 		for x in range(0, grid_width):
-			# Fall if space below is empty
-			if grid[y][x] != null && grid[y+1][x] == null:
+			if can_fall(x, y):
 				move_tile(x, y, x, y+1)
