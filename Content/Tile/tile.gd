@@ -23,15 +23,6 @@ const tile_images = [
 	preload("res://art/pieces/unselected_yellow.png"),
 ]
 
-# These are to distinguish tiles before we have sprites
-# Delete this after we add sprites
-const tile_colors = [
-	Color("ef2655"),
-	Color("2655ef"),
-	Color("55ef26"),
-	Color("ffd175"),
-]
-
 func initialise(_tile_width : float, margin_width):
 	tile_width = _tile_width - margin_width * 2
 	scale *= tile_width / SPRITE_WIDTH
@@ -40,7 +31,6 @@ func initialise(_tile_width : float, margin_width):
 	
 	tile_type = randi() % TileType.size()
 	$Sprite2D.texture = tile_images[tile_type]
-	$Sprite2D.modulate = tile_colors[tile_type]
 
 var clicked = false
 func _on_input_event(viewport, event, shape_idx):
