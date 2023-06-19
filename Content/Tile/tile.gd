@@ -3,6 +3,7 @@ extends Control
 const SPRITE_WIDTH = 128.0 # Currently set to width of placeholder image
 
 var tile_type: TileType
+var group_id: int
 
 enum TileType {
 	RED,

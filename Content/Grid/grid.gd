@@ -5,10 +5,13 @@ const GRID_COLOR = Color("fce1cf")
 const LINE_WIDTH = 2.0
 const TILE_MARGIN = 3.0
 
+const NO_GROUP = -1
+
 @export var grid_width = 5
 @export var grid_height = 5
 @export var tile_width = 70
 var grid: Array
+var group_counts: Dictionary
 
 @onready var tile_scene := preload("res://Content/Tile/tile.tscn")
 
@@ -67,13 +70,46 @@ func move_tile(x1, y1, x2, y2):
 		grid[y1][x1] = null
 
 func can_fall(x, y):
-	if y == grid_height -1:
+	if y == grid_height - 1:
 		return false
 	else:
 		return grid[y][x] != null && grid[y+1][x] == null
 
+func update_tile_group(x, y, group_id, tile_type):
+	if (x < 0 || x >= grid_width || y < 0 || y >= grid_height || grid[y][x] == null):
+		return
+	if (can_fall(x,y) || grid[y][x].group_id != NO_GROUP || grid[y][x].tile_type != tile_type):
+		return
+	
+	grid[y][x].group_id = group_id
+	if group_counts.get(group_id):
+		group_counts[group_id] += 1
+	else:
+		group_counts[group_id] = 1
+	
+	update_tile_group(x-1, y, group_id, tile_type)
+	update_tile_group(x+1, y, group_id, tile_type)
+	update_tile_group(x, y-1, group_id, tile_type)
+	update_tile_group(x, y+1, group_id, tile_type)
+
 func update_grid():
+	var settled = true
 	for y in range(grid_height-2, -1, -1):
 		for x in range(0, grid_width):
 			if can_fall(x, y):
 				move_tile(x, y, x, y+1)
+				settled = false
+	
+	if settled:
+		group_counts = {}
+		var group_id = 0
+		for y in grid_height:
+			for x in grid_width:
+				if grid[y][x]:
+					grid[y][x].group_id = NO_GROUP
+		for y in grid_height:
+			for x in grid_width:
+				if grid[y][x]:
+					update_tile_group(x, y, group_id, grid[y][x].tile_type)
+				group_id += 1
+		print(group_counts)
