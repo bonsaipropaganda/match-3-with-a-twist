@@ -17,6 +17,8 @@ var grid: Array
 var group_counts: Dictionary
 var done_updating := false
 
+signal match_created
+
 func _ready():
 	if !Engine.is_editor_hint():
 		$Timer.wait_time = TIMESTEP
@@ -33,6 +35,7 @@ func _process(delta):
 		queue_redraw()
 	else:
 		if !done_updating && $Timer.is_stopped():
+			pass
 			$Timer.start()
 
 func _on_timer_timeout():
@@ -110,6 +113,7 @@ func can_fall(x, y):
 	else:
 		return grid[y][x] != null && grid[y+1][x] == null
 
+# this func checks for tiles that are matching and returns matches in an array
 func get_to_free():
 	var to_free := []
 	var to_check := []
@@ -170,7 +174,13 @@ func on_swap_tile(from_pos, direction):
 		set_tile_scene_position(grid[from_pos.y][from_pos.x], from_pos.x, from_pos.y)
 		set_tile_scene_position(grid[to_pos.y][to_pos.x], to_pos.x, to_pos.y)
 		
-		done_updating = false
+		# instead of done_updating = false
+		# going to move connected tiles because these are results of a swap
+		var to_connect = get_to_free()
+		for i in to_connect: # [tile_type, x, y]
+			var x = i[1]
+			var y = i[2]
+			print(x,y)
 
 #func update_tile_group(x, y, group_id, tile_type):
 #	if (x < 0 || x >= grid_width || y < 0 || y >= grid_height || grid[y][x] == null):
