@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://ci2oao30ktdyn"]
+
+[ext_resource type="Texture2D" uid="uid://byby5rnjw02sl" path="res://icon.svg" id="1_oircm"]
+[ext_resource type="Script" path="res://Content/Tile/tile.gd" id="1_pcm8c"]
+
+[node name="Tile" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_pcm8c")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_oircm")
+centered = false
