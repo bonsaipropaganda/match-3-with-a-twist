@@ -17,10 +17,10 @@ enum TileType {
 # Indexed by TileType
 # Replace these with the actual images
 const tile_images = [
-	preload("res://icon.svg"),
-	preload("res://icon.svg"),
-	preload("res://icon.svg"),
-	preload("res://art/pieces/tiles_yellow.png"),
+	preload("res://art/pieces/unselected_red.png"),
+	preload("res://art/pieces/unselected_blue.png"),
+	preload("res://art/pieces/unselected_green.png"),
+	preload("res://art/pieces/unselected_yellow.png"),
 ]
 
 # These are to distinguish tiles before we have sprites
