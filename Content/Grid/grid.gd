@@ -157,13 +157,15 @@ func get_to_free():
 
 func on_swap_tile(from_pos, direction):
 	if done_updating and !doingSwap:
-		doingSwap = true
+
 		var to_pos = from_pos + direction
 		
 		if (to_pos.x < 0 || to_pos.x >= grid_width || to_pos.y < 0 || to_pos.y >= grid_height):
 			return
 		if (grid[from_pos.y][from_pos.x].tile_type == grid[to_pos.y][to_pos.x].tile_type):
 			return
+		
+		doingSwap = true
 		
 		var tmp = grid[from_pos.y][from_pos.x]
 		grid[from_pos.y][from_pos.x] = grid[to_pos.y][to_pos.x]
