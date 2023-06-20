@@ -1,0 +1,102 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5rmdjyocox8g"]
+
+[ext_resource type="Script" path="res://Content/UserInterface/audio_settings.gd" id="1_nkfga"]
+[ext_resource type="PackedScene" uid="uid://c3e6plvrjmj6l" path="res://Content/UserInterface/volume_slider.tscn" id="2_l1r8h"]
+
+[node name="AudioSettings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -512.0
+offset_top = -204.0
+offset_right = 512.0
+offset_bottom = 204.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.235294)
+
+[node name="MusicAudio" type="AudioStreamPlayer" parent="."]
+autoplay = true
+bus = &"Music"
+
+[node name="VoiceOverAudio" type="AudioStreamPlayer" parent="."]
+autoplay = true
+bus = &"VoiceOver"
+
+[node name="SoundFx" type="AudioStreamPlayer" parent="."]
+autoplay = true
+bus = &"SoundFx"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -384.0
+offset_top = -104.0
+offset_right = 384.0
+offset_bottom = 89.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nkfga")
+
+[node name="LabelContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="MusicLabel" type="Label" parent="HBoxContainer/LabelContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 26
+text = "Music:"
+vertical_alignment = 1
+
+[node name="VoiceOverLabel" type="Label" parent="HBoxContainer/LabelContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 26
+text = "Master:"
+vertical_alignment = 1
+
+[node name="SoundFxLabel" type="Label" parent="HBoxContainer/LabelContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 26
+text = "SoundFx:"
+vertical_alignment = 1
+
+[node name="SliderContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="MusicSlider" parent="HBoxContainer/SliderContainer" instance=ExtResource("2_l1r8h")]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="VoiceOverSlider" parent="HBoxContainer/SliderContainer" instance=ExtResource("2_l1r8h")]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="SoundFxSlider" parent="HBoxContainer/SliderContainer" instance=ExtResource("2_l1r8h")]
+layout_mode = 2
+size_flags_vertical = 2
+
+[connection signal="value_changed" from="HBoxContainer/SliderContainer/MusicSlider" to="HBoxContainer" method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/SliderContainer/VoiceOverSlider" to="HBoxContainer" method="_on_voice_over_slider_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/SliderContainer/SoundFxSlider" to="HBoxContainer" method="_on_sound_fx_slider_value_changed"]
