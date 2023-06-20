@@ -12,6 +12,7 @@ const TIMESTEP = 0.2
 @export var tile_width = 70
 
 @onready var tile_scene := preload("res://Content/Tile/tile.tscn")
+@export var connected_tile_scene: PackedScene
 
 var grid: Array
 var group_counts: Dictionary
@@ -174,15 +175,16 @@ func on_swap_tile(from_pos, direction):
 		set_tile_scene_position(grid[from_pos.y][from_pos.x], from_pos.x, from_pos.y)
 		set_tile_scene_position(grid[to_pos.y][to_pos.x], to_pos.x, to_pos.y)
 		
-		# going to move connected tiles because these are results of a swap
-		var to_connect = get_to_free()
+		# these figures out which tiles were a result of a swap
+		var to_connect = get_to_free() # gets all matches
 		for i in to_connect: # [tile_type, x, y]
-			var x = i[1]
+			var match_type = i[0] # color of the match check tile scene to see what color the number coordinates too
+			var x = i[1] # x and y cords of each tile in the match
 			var y = i[2]
-			print("x: " + str(x))
-			print("y: " + str(y))
+			match_created.emit(match_type,x,y) # this signal will send the info of match created to the new connected piece scene
 		
-		done_updating = false
+		done_updating = false # deletes all matched tiles 
+
 
 #func update_tile_group(x, y, group_id, tile_type):
 #	if (x < 0 || x >= grid_width || y < 0 || y >= grid_height || grid[y][x] == null):

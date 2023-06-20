@@ -1,3 +1,10 @@
-[gd_scene format=3 uid="uid://dcdy8s31ojjmr"]
+[gd_scene load_steps=3 format=3 uid="uid://dcdy8s31ojjmr"]
+
+[ext_resource type="Script" path="res://Content/Tile/connected_tiles.gd" id="1_8hw2w"]
+[ext_resource type="Texture2D" uid="uid://byby5rnjw02sl" path="res://icon.svg" id="1_ddpoy"]
 
 [node name="ConnectedTiles" type="Area2D"]
+script = ExtResource("1_8hw2w")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ddpoy")
