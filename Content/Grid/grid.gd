@@ -171,6 +171,19 @@ func on_swap_tile(from_pos, direction):
 		set_tile_scene_position(grid[to_pos.y][to_pos.x], to_pos.x, to_pos.y)
 		
 		done_updating = false
+		
+		# Reverts changes if no matches were made
+		if get_to_free() == []:
+			await get_tree().create_timer(0.4).timeout
+			
+			tmp = grid[from_pos.y][from_pos.x]
+			grid[from_pos.y][from_pos.x] = grid[to_pos.y][to_pos.x]
+			grid[to_pos.y][to_pos.x] = tmp
+		
+			set_tile_scene_position(grid[from_pos.y][from_pos.x], from_pos.x, from_pos.y)
+			set_tile_scene_position(grid[to_pos.y][to_pos.x], to_pos.x, to_pos.y)
+			
+
 
 #func update_tile_group(x, y, group_id, tile_type):
 #	if (x < 0 || x >= grid_width || y < 0 || y >= grid_height || grid[y][x] == null):
