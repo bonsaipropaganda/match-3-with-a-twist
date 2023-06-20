@@ -174,13 +174,15 @@ func on_swap_tile(from_pos, direction):
 		set_tile_scene_position(grid[from_pos.y][from_pos.x], from_pos.x, from_pos.y)
 		set_tile_scene_position(grid[to_pos.y][to_pos.x], to_pos.x, to_pos.y)
 		
-		# instead of done_updating = false
 		# going to move connected tiles because these are results of a swap
 		var to_connect = get_to_free()
 		for i in to_connect: # [tile_type, x, y]
 			var x = i[1]
 			var y = i[2]
-			print(x,y)
+			print("x: " + str(x))
+			print("y: " + str(y))
+		
+		done_updating = false
 
 #func update_tile_group(x, y, group_id, tile_type):
 #	if (x < 0 || x >= grid_width || y < 0 || y >= grid_height || grid[y][x] == null):
