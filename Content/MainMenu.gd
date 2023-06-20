@@ -1,5 +1,7 @@
 extends Control
 
+@export var startScene : PackedScene
+@export var settingsScene : PackedScene
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,4 +14,8 @@ func _process(delta):
 
 
 func _on_start_game_pressed():
-	print("Start Game Pressed")
+	get_tree().change_scene_to_packed(startScene)
+
+
+func _on_settings_pressed():
+	get_tree().change_scene_to_packed(settingsScene)

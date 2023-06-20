@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://ch28na6r55dlc"]
+[gd_scene load_steps=6 format=3 uid="uid://ch28na6r55dlc"]
 
 [ext_resource type="Theme" uid="uid://3ihnxje2sxwo" path="res://resources/theme/MainTheme.tres" id="1_i0ama"]
 [ext_resource type="Script" path="res://Content/MainMenu.gd" id="1_wvk8g"]
+[ext_resource type="PackedScene" uid="uid://y26xkpybmr8r" path="res://Content/world.tscn" id="2_1alv0"]
+[ext_resource type="PackedScene" uid="uid://c5rmdjyocox8g" path="res://Content/UserInterface/audio_settings.tscn" id="3_d02as"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_etrrl"]
 font_size = 32
@@ -14,6 +16,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wvk8g")
+startScene = ExtResource("2_1alv0")
+settingsScene = ExtResource("3_d02as")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -53,3 +57,4 @@ text = "Settings
 "
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/HFlowContainer/StartGame" to="." method="_on_start_game_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/HFlowContainer/Settings" to="." method="_on_settings_pressed"]
