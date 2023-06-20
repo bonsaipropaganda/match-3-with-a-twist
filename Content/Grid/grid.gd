@@ -12,13 +12,12 @@ const TIMESTEP = 0.2
 @export var tile_width = 70
 
 @onready var tile_scene := preload("res://Content/Tile/tile.tscn")
+@onready var connected_scene := preload("res://Content/Tile/connected_tiles.tscn")
 @export var connected_tile_scene: PackedScene
 
 var grid: Array
 var group_counts: Dictionary
 var done_updating := false
-
-signal match_created
 
 func _ready():
 	if !Engine.is_editor_hint():
@@ -86,7 +85,8 @@ func _draw():
 
 func set_tile_scene_position(tile, x, y):
 	tile.position = Vector2(x * tile_width, y * tile_width) + Vector2(TILE_MARGIN, TILE_MARGIN)
-	tile.grid_pos = Vector2(x,y)
+	if tile.get("grid_pos") != null:
+		tile.grid_pos = Vector2(x,y)
 
 func add_tile(x, y) -> bool:
 	if (x < 0 || x >= grid_width || y < 0 || y >= grid_height):
@@ -181,9 +181,11 @@ func on_swap_tile(from_pos, direction):
 			var match_type = i[0] # color of the match check tile scene to see what color the number coordinates too
 			var x = i[1] # x and y cords of each tile in the match
 			var y = i[2]
-			match_created.emit(match_type,x,y) # this signal will send the info of match created to the new connected piece scene
-		
-		done_updating = false # deletes all matched tiles 
+			var connected = connected_scene.instantiate()
+			set_tile_scene_position(connected, x, y)
+			add_child(connected)
+		if to_connect.size() == 0:
+			done_updating = false # deletes all matched tiles 
 
 
 #func update_tile_group(x, y, group_id, tile_type):

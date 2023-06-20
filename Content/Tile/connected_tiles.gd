@@ -7,7 +7,7 @@ var TILE_MARGIN
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	set_tile_scene_position(self,x,y)
+	pass#set_tile_scene_position(self,x,y)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

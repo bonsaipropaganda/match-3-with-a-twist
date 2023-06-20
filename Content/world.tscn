@@ -2,13 +2,11 @@
 
 [ext_resource type="Script" path="res://Content/world.gd" id="1_hi13m"]
 [ext_resource type="PackedScene" uid="uid://dkbegd2mpsmvo" path="res://Content/Grid/grid.tscn" id="1_ja7kt"]
-[ext_resource type="PackedScene" uid="uid://dcdy8s31ojjmr" path="res://Content/Tile/connected_tiles.tscn" id="2_c12vq"]
+[ext_resource type="PackedScene" uid="uid://oqlb488eqks2" path="res://Content/Tile/connected_tiles.tscn" id="2_c12vq"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_hi13m")
 connected_tile_scene = ExtResource("2_c12vq")
 
 [node name="Grid" parent="." instance=ExtResource("1_ja7kt")]
-position = Vector2(462, 198)
-
-[connection signal="match_created" from="Grid" to="." method="_on_grid_match_created"]
+position = Vector2(374, 136)
