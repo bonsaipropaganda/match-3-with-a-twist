@@ -169,6 +169,8 @@ func on_swap_tile(from_pos, direction):
 			return
 		if (grid[from_pos.y][from_pos.x].tile_type == grid[to_pos.y][to_pos.x].tile_type):
 			return
+		if grid[from_pos.y][from_pos.x].tile_type == 4 or grid[to_pos.y][to_pos.x].tile_type == 4:
+			return
 		
 		doingSwap = true
 		

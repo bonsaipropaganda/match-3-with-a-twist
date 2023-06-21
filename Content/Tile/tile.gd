@@ -12,6 +12,7 @@ enum TileType {
 	BLUE,
 	GREEN,
 	YELLOW,
+	GREY,
 }
 
 # Indexed by TileType
@@ -21,6 +22,7 @@ const tile_images = [
 	preload("res://art/pieces/unselected_blue.png"),
 	preload("res://art/pieces/unselected_green.png"),
 	preload("res://art/pieces/unselected_yellow.png"),
+	preload("res://art/pieces/unselected_grey.png"),
 ]
 
 func initialise(_tile_width : float, margin_width):
