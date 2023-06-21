@@ -17,6 +17,7 @@ var grid: Array
 var group_counts: Dictionary
 var done_updating := false
 var doingSwap:bool = false
+var prevoiusSwaps:Array = []
 
 func _ready():
 	if !Engine.is_editor_hint():
@@ -64,6 +65,10 @@ func update_grid():
 				done_updating = false
 	else:
 		settled = false
+	
+	# Unswaps all the tiles swaped when the length of previous swaps that havent made a match = 3 if enabled
+	if len(prevoiusSwaps) == 3 and true:
+		on_unswap_tiles()
 
 func init_grid(width, height):
 	var g = []
@@ -174,10 +179,13 @@ func on_swap_tile(from_pos, direction):
 		set_tile_scene_position(grid[from_pos.y][from_pos.x], from_pos.x, from_pos.y)
 		set_tile_scene_position(grid[to_pos.y][to_pos.x], to_pos.x, to_pos.y)
 		
+		prevoiusSwaps.append([from_pos,to_pos])
+		if get_to_free() != []:
+			prevoiusSwaps = []
 		
-		# Reverts changes if no matches were made
+		# Reverts changes if no matches were made if allowed
 		if get_to_free() == [] and false:
-			await get_tree().create_timer(0.3).timeout
+			await get_tree().create_timer(0.25).timeout
 			
 			tmp = grid[from_pos.y][from_pos.x]
 			grid[from_pos.y][from_pos.x] = grid[to_pos.y][to_pos.x]
@@ -186,6 +194,31 @@ func on_swap_tile(from_pos, direction):
 			set_tile_scene_position(grid[from_pos.y][from_pos.x], from_pos.x, from_pos.y)
 			set_tile_scene_position(grid[to_pos.y][to_pos.x], to_pos.x, to_pos.y)
 		
+		doingSwap = false
+		done_updating = false
+
+func on_unswap_tiles():
+	if done_updating and !doingSwap:
+		doingSwap = true
+		var to_pos:Vector2
+		var from_pos:Vector2
+		var tmp = grid[from_pos.y][from_pos.x]
+		
+		
+		prevoiusSwaps.reverse()
+		for swap in prevoiusSwaps:
+			await get_tree().create_timer(0.3).timeout
+			
+			to_pos = swap[0]
+			from_pos = swap[1]
+			tmp = grid[from_pos.y][from_pos.x]
+			grid[from_pos.y][from_pos.x] = grid[to_pos.y][to_pos.x]
+			grid[to_pos.y][to_pos.x] = tmp
+		
+			set_tile_scene_position(grid[from_pos.y][from_pos.x], from_pos.x, from_pos.y)
+			set_tile_scene_position(grid[to_pos.y][to_pos.x], to_pos.x, to_pos.y)
+		
+		prevoiusSwaps = []
 		doingSwap = false
 		done_updating = false
 
