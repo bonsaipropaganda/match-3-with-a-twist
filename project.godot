@@ -28,7 +28,7 @@ window/stretch/aspect="expand"
 
 [gui]
 
-theme/custom_font="res://art/fonts/04b_30/04B_30__.TTF"
+theme/custom_font="res://art/fonts/brandy_brunch/BradBunR.ttf"
 
 [input]
 
