@@ -176,7 +176,7 @@ func on_swap_tile(from_pos, direction):
 		
 		
 		# Reverts changes if no matches were made
-		if get_to_free() == []:
+		if get_to_free() == [] and false:
 			await get_tree().create_timer(0.3).timeout
 			
 			tmp = grid[from_pos.y][from_pos.x]
