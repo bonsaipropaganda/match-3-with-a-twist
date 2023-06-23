@@ -1,11 +1,21 @@
 extends Area2D
+class_name Tile
 
 const SPRITE_WIDTH = 128.0 # Currently set to width of placeholder image
+
+var sprite2D : Sprite2D
 
 var tile_type: TileType
 var group_id: int
 var tile_width: int
 var grid_pos: Vector2 # Set by grid
+
+enum TileStats{
+	CAN_SWAP,
+	CAN_FALL, #Caused A Whole Rework Of The Unswap Mechanic To Happen
+	BREAK_ON_MATCH,
+	BREAK_ON_ADJACENT_MATCH, #Not Implemented Yet
+}
 
 enum TileType {
 	RED,
@@ -13,7 +23,17 @@ enum TileType {
 	GREEN,
 	YELLOW,
 	GREY,
+	GHOST,
 }
+
+const tile_stats = [
+	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
+	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
+	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
+	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
+	[TileStats.BREAK_ON_ADJACENT_MATCH],
+	[TileStats.CAN_SWAP],
+	]
 
 # Indexed by TileType
 # Replace these with the actual images
@@ -23,6 +43,7 @@ const tile_images = [
 	preload("res://art/pieces/unselected_green.png"),
 	preload("res://art/pieces/unselected_yellow.png"),
 	preload("res://art/pieces/unselected_grey.png"),
+	preload("res://art/pieces/unselected_ghost.png"),
 ]
 
 func initialise(_tile_width : float, margin_width):
@@ -31,8 +52,10 @@ func initialise(_tile_width : float, margin_width):
 	$CollisionShape2D.position = Vector2.ONE * tile_width
 	$CollisionShape2D.shape.size = Vector2.ONE * tile_width * 2
 	
-	tile_type = randi() % TileType.size()
-	$Sprite2D.texture = tile_images[tile_type]
+	# Prevents Ghost tiles from spawning
+	tile_type = randi() % (TileType.size()-1)
+	sprite2D = $Sprite2D
+	sprite2D.texture = tile_images[tile_type]
 
 var clicked = false
 func _on_input_event(viewport, event, shape_idx):
