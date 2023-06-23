@@ -15,6 +15,7 @@ enum TileStats{
 	CAN_FALL, #Caused A Whole Rework Of The Unswap Mechanic To Happen
 	BREAK_ON_MATCH,
 	BREAK_ON_ADJACENT_MATCH, #Not Implemented Yet
+	BREAK_ON_PRESSURE
 }
 
 enum TileType {
@@ -31,8 +32,8 @@ const tile_stats = [
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
-	[TileStats.BREAK_ON_ADJACENT_MATCH],
-	[TileStats.CAN_SWAP],
+	[TileStats.BREAK_ON_MATCH,TileStats.CAN_SWAP],                           
+	[TileStats.CAN_SWAP,TileStats.BREAK_ON_PRESSURE],
 	]
 
 # Indexed by TileType

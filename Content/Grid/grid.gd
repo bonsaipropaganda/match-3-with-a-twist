@@ -185,7 +185,7 @@ func on_swap_tile(from_pos, direction):
 			
 		if (grid[from_pos.y][from_pos.x].tile_type == grid[to_pos.y][to_pos.x].tile_type):
 			return
-		if grid[from_pos.y][from_pos.x].tile_type == 4 or grid[to_pos.y][to_pos.x].tile_type == 4:
+		if Tile.TileStats.CAN_SWAP not in Tile.tile_stats[grid[from_pos.y][from_pos.x].tile_type] or Tile.TileStats.CAN_SWAP not in Tile.tile_stats[grid[to_pos.y][to_pos.x].tile_type]:
 			return
 		
 		doingSwap = true
@@ -202,9 +202,9 @@ func on_swap_tile(from_pos, direction):
 		
 		
 		# Removes a Temporary Tile
-		if grid[from_pos.y][from_pos.x].tile_type == Tile.TileType.GHOST:
-			grid[from_pos.y][from_pos.x].queue_free()
-			grid[from_pos.y][from_pos.x] = null
+		#if grid[from_pos.y][from_pos.x].tile_type == Tile.TileType.GHOST:
+		#	grid[from_pos.y][from_pos.x].queue_free()
+		#	grid[from_pos.y][from_pos.x] = null
 		
 		if get_to_free() != []:
 			prevoiusSwaps = []
