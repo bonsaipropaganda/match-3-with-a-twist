@@ -28,3 +28,8 @@ func _on_music_slider_value_changed(value):
 
 func _on_sound_fx_slider_value_changed(value):
 	set_bus_volume(sound_fx_bus, value)
+
+
+func _on_back_button_pressed() -> void:
+	# TODO: change to previous scene (can be mainmenu / paused menu)
+	pass
