@@ -1,0 +1,18 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://3ihnxje2sxwo"]
+
+[ext_resource type="StyleBox" uid="uid://pygcsw676xxm" path="res://resources/theme/ButtonDisabledStyleBox.tres" id="1_u0bvg"]
+[ext_resource type="StyleBox" uid="uid://d1shvcn63sqr3" path="res://resources/theme/ButtonFocusStyleBox.tres" id="2_1ai04"]
+[ext_resource type="StyleBox" uid="uid://d3b2rb7ntxs2c" path="res://resources/theme/ButtonHoverStyleBox.tres" id="3_1nq7g"]
+[ext_resource type="StyleBox" uid="uid://bovohjd3p4a50" path="res://resources/theme/ButtonNormalStyleBox.tres" id="4_d8mcc"]
+[ext_resource type="StyleBox" uid="uid://v6ljhngmu6b0" path="res://resources/theme/ButtonPressedStyleBox.tres" id="5_rnwed"]
+
+[resource]
+Button/constants/h_separation = 0
+Button/constants/outline_size = 0
+Button/font_sizes/font_size = 16
+Button/fonts/font = null
+Button/styles/disabled = ExtResource("1_u0bvg")
+Button/styles/focus = ExtResource("2_1ai04")
+Button/styles/hover = ExtResource("3_1nq7g")
+Button/styles/normal = ExtResource("4_d8mcc")
+Button/styles/pressed = ExtResource("5_rnwed")

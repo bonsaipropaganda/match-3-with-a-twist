@@ -18,6 +18,8 @@ const TIMESTEP = 0.2
 var grid: Array
 var group_counts: Dictionary
 var done_updating := false
+var is_swapping:bool = false
+var previous_swaps:Array = []
 
 func _ready():
 	if !Engine.is_editor_hint():
@@ -45,9 +47,11 @@ func update_grid():
 	var settled = true
 	for y in range(grid_height-2, -1, -1):
 		for x in range(0, grid_width):
-			if can_fall(x, y):
+			#Stops Tile from breaking if that tile doesnt have the CAN_FALL Stat
+			if can_fall(x, y) and Tile.TileStats.CAN_FALL in Tile.tile_stats[grid[y][x].tile_type]:
 				move_tile(x, y, x, y+1)
 				settled = false
+				done_updating = false
 	
 	var to_free = []
 	if settled:
@@ -60,12 +64,17 @@ func update_grid():
 				grid[y][x] = null
 	
 	if to_free.size() == 0:
-		done_updating = true
+		if settled:
+			done_updating = true
 		for x in grid_width:
 			if (add_tile(x, 0)):
 				done_updating = false
 	else:
 		settled = false
+	
+	# Unswaps all the tiles swaped when the length of previous swaps that havent made a match = 3 if enabled
+	if len(previous_swaps) == 3 and true:
+		on_unswap_tiles()
 
 func init_grid(width, height):
 	var g = []
@@ -157,16 +166,36 @@ func get_to_free():
 						to_free.append_array(to_check)
 			else:
 				to_check.clear()
+		
+		# Stops Tile from breaking if that tile doesnt have the BREAK_ON_MATCH Stat
+		for tile in to_free:
+			if Tile.TileStats.BREAK_ON_MATCH not in Tile.tile_stats[tile[0]]:
+				to_free.erase(tile)
+		
 	return to_free
 
 func on_swap_tile(from_pos, direction):
-	if done_updating:
+	if done_updating and !is_swapping:
+
 		var to_pos = from_pos + direction
 		
 		if (to_pos.x < 0 || to_pos.x >= grid_width || to_pos.y < 0 || to_pos.y >= grid_height):
 			return
+		
+		# Spawns a Temporary Tile
+		if grid[to_pos.y][to_pos.x] == null:
+			add_tile(to_pos.x,to_pos.y)
+			grid[to_pos.y][to_pos.x].tile_type = Tile.TileType.GHOST
+			grid[to_pos.y][to_pos.x].sprite2D.texture = Tile.tile_images[Tile.TileType.GHOST]
+			
 		if (grid[from_pos.y][from_pos.x].tile_type == grid[to_pos.y][to_pos.x].tile_type):
 			return
+		if grid[from_pos.y][from_pos.x].tile_type == 4 or grid[to_pos.y][to_pos.x].tile_type == 4:
+			return
+		
+		is_swapping = true
+		
+		previous_swaps.append(grid)
 		
 		var tmp = grid[from_pos.y][from_pos.x]
 		grid[from_pos.y][from_pos.x] = grid[to_pos.y][to_pos.x]
@@ -186,6 +215,47 @@ func on_swap_tile(from_pos, direction):
 			add_child(connected)
 		if to_connect.size() == 0:
 			done_updating = false # deletes all matched tiles 
+
+		
+		# Removes a Temporary Tile
+		if grid[from_pos.y][from_pos.x].tile_type == Tile.TileType.GHOST:
+			grid[from_pos.y][from_pos.x].queue_free()
+			grid[from_pos.y][from_pos.x] = null
+		
+		if get_to_free() != []:
+			previous_swaps = []
+		
+		# Reverts changes if no matches were made if allowed
+		if get_to_free() == [] and false:
+			await get_tree().create_timer(0.25).timeout
+			
+			tmp = grid[from_pos.y][from_pos.x]
+			grid[from_pos.y][from_pos.x] = grid[to_pos.y][to_pos.x]
+			grid[to_pos.y][to_pos.x] = tmp
+		
+			set_tile_scene_position(grid[from_pos.y][from_pos.x], from_pos.x, from_pos.y)
+			set_tile_scene_position(grid[to_pos.y][to_pos.x], to_pos.x, to_pos.y)
+		
+		is_swapping = false
+		done_updating = false
+
+func on_unswap_tiles():
+	if done_updating and !is_swapping:
+		is_swapping = true
+		var to_pos:Vector2
+		var from_pos:Vector2
+		var tmp = grid[from_pos.y][from_pos.x]
+		
+		
+		# Still Needs Reimplemented
+		previous_swaps.reverse()
+		for swap in previous_swaps:
+			await get_tree().create_timer(0.05).timeout
+			pass
+		
+		previous_swaps = []
+		is_swapping = false
+		done_updating = false
 
 
 #func update_tile_group(x, y, group_id, tile_type):
