@@ -173,6 +173,7 @@ func on_swap_tile(from_pos, direction):
 	if done_updating and !doingSwap:
 
 		var to_pos = from_pos + direction
+		var ghostTile:Tile
 		
 		if (to_pos.x < 0 || to_pos.x >= grid_width || to_pos.y < 0 || to_pos.y >= grid_height):
 			return
@@ -182,6 +183,7 @@ func on_swap_tile(from_pos, direction):
 			add_tile(to_pos.x,to_pos.y)
 			grid[to_pos.y][to_pos.x].tile_type = Tile.TileType.GHOST
 			grid[to_pos.y][to_pos.x].sprite2D.texture = Tile.tile_images[Tile.TileType.GHOST]
+			ghostTile = grid[to_pos.y][to_pos.x]
 			
 		if (grid[from_pos.y][from_pos.x].tile_type == grid[to_pos.y][to_pos.x].tile_type):
 			return
@@ -202,9 +204,9 @@ func on_swap_tile(from_pos, direction):
 		
 		
 		# Removes a Temporary Tile
-		#if grid[from_pos.y][from_pos.x].tile_type == Tile.TileType.GHOST:
-		#	grid[from_pos.y][from_pos.x].queue_free()
-		#	grid[from_pos.y][from_pos.x] = null
+		if ghostTile != null:
+			grid[ghostTile.grid_pos.y][ghostTile.grid_pos.x] = null
+			ghostTile.queue_free()
 		
 		if get_to_free() != []:
 			prevoiusSwaps = []
