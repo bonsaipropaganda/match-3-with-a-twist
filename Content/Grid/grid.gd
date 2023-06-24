@@ -178,6 +178,7 @@ func get_matched_tiles():
 const HAS_TILE = 1
 const HAS_CONNECTED = 2
 const HAS_BOTH = HAS_TILE | HAS_CONNECTED
+
 func generate_connected_tiles():
 	var to_connect = get_matched_tiles()
 	var grouped_tiles = {}
@@ -187,6 +188,7 @@ func generate_connected_tiles():
 		var tile_type = i[0]
 		var x = i[1]
 		var y = i[2]
+		# tracks whether the tile is a part of a connected tile or just a single tile
 		var tile_info = HAS_TILE if (grid[y][x] is Tile) else HAS_CONNECTED
 		
 		if grouped_tiles.get(tile_type):
@@ -209,16 +211,18 @@ func generate_connected_tiles():
 
 func on_swap_tile(from_pos, direction):
 	if done_updating and !is_swapping:
-
+		# sets new position based on where it came from place the direction of the swap
 		var to_pos = from_pos + direction
-		
+		# this makes sure the tile can't be moved outside of the grid
 		if (to_pos.x < 0 || to_pos.x >= grid_width || to_pos.y < 0 || to_pos.y >= grid_height):
 			return
 		
+		# can i delete this?
 		# Spawns a Temporary Tile
 #		if grid[to_pos.y][to_pos.x] == null:
 #			add_tile(to_pos.x,to_pos.y,Globals.TileType.GHOST)
-			
+		
+		# checks if where the it's swapping with is the same type of tile or not I think
 		if (grid[from_pos.y][from_pos.x].tile_type == grid[to_pos.y][to_pos.x].tile_type):
 			return
 #		if grid[from_pos.y][from_pos.x].tile_type == Globals.TileType.GHOST or grid[to_pos.y][to_pos.x].tile_type == Globals.TileType.GHOST:
@@ -226,12 +230,15 @@ func on_swap_tile(from_pos, direction):
 		
 		is_swapping = true
 		
+		# keeps track of the previous swaps that have been made
 		previous_swaps.append(grid)
 		
+		# actual logic to swap 2 tiles from_pos and to_pos
 		var tmp = grid[from_pos.y][from_pos.x]
 		grid[from_pos.y][from_pos.x] = grid[to_pos.y][to_pos.x]
 		grid[to_pos.y][to_pos.x] = tmp
 		
+		# updates where the tiles are at
 		set_tile_scene_position(grid[from_pos.y][from_pos.x], from_pos.x, from_pos.y)
 		set_tile_scene_position(grid[to_pos.y][to_pos.x], to_pos.x, to_pos.y)
 		
