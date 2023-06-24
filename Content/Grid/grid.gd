@@ -44,9 +44,11 @@ func update_grid():
 	var settled = true
 	for y in range(grid_height-2, -1, -1):
 		for x in range(0, grid_width):
-			if can_fall(x, y):
+			#Stops Tile from breaking if that tile doesnt have the CAN_FALL Stat
+			if can_fall(x, y) and Tile.TileStats.CAN_FALL in Tile.tile_stats[grid[y][x].tile_type]:
 				move_tile(x, y, x, y+1)
 				settled = false
+				done_updating = false
 	
 	var to_free = []
 	if settled:
@@ -59,7 +61,8 @@ func update_grid():
 				grid[y][x] = null
 	
 	if to_free.size() == 0:
-		done_updating = true
+		if settled:
+			done_updating = true
 		for x in grid_width:
 			if (add_tile(x, 0)):
 				done_updating = false
@@ -158,6 +161,12 @@ func get_to_free():
 						to_free.append_array(to_check)
 			else:
 				to_check.clear()
+		
+		# Stops Tile from breaking if that tile doesnt have the BREAK_ON_MATCH Stat
+		for tile in to_free:
+			if Tile.TileStats.BREAK_ON_MATCH not in Tile.tile_stats[tile[0]]:
+				to_free.erase(tile)
+		
 	return to_free
 
 func on_swap_tile(from_pos, direction):
@@ -167,10 +176,21 @@ func on_swap_tile(from_pos, direction):
 		
 		if (to_pos.x < 0 || to_pos.x >= grid_width || to_pos.y < 0 || to_pos.y >= grid_height):
 			return
+		
+		# Spawns a Temporary Tile
+		if grid[to_pos.y][to_pos.x] == null:
+			add_tile(to_pos.x,to_pos.y)
+			grid[to_pos.y][to_pos.x].tile_type = Tile.TileType.GHOST
+			grid[to_pos.y][to_pos.x].sprite2D.texture = Tile.tile_images[Tile.TileType.GHOST]
+			
 		if (grid[from_pos.y][from_pos.x].tile_type == grid[to_pos.y][to_pos.x].tile_type):
+			return
+		if Tile.TileStats.CAN_SWAP not in Tile.tile_stats[grid[from_pos.y][from_pos.x].tile_type] or Tile.TileStats.CAN_SWAP not in Tile.tile_stats[grid[to_pos.y][to_pos.x].tile_type]:
 			return
 		
 		doingSwap = true
+		
+		prevoiusSwaps.append(grid)
 		
 		var tmp = grid[from_pos.y][from_pos.x]
 		grid[from_pos.y][from_pos.x] = grid[to_pos.y][to_pos.x]
@@ -179,7 +199,13 @@ func on_swap_tile(from_pos, direction):
 		set_tile_scene_position(grid[from_pos.y][from_pos.x], from_pos.x, from_pos.y)
 		set_tile_scene_position(grid[to_pos.y][to_pos.x], to_pos.x, to_pos.y)
 		
-		prevoiusSwaps.append([from_pos,to_pos])
+		
+		
+		# Removes a Temporary Tile
+		#if grid[from_pos.y][from_pos.x].tile_type == Tile.TileType.GHOST:
+		#	grid[from_pos.y][from_pos.x].queue_free()
+		#	grid[from_pos.y][from_pos.x] = null
+		
 		if get_to_free() != []:
 			prevoiusSwaps = []
 		
@@ -205,18 +231,11 @@ func on_unswap_tiles():
 		var tmp = grid[from_pos.y][from_pos.x]
 		
 		
+		# Still Needs Reimplemented
 		prevoiusSwaps.reverse()
 		for swap in prevoiusSwaps:
-			await get_tree().create_timer(0.3).timeout
-			
-			to_pos = swap[0]
-			from_pos = swap[1]
-			tmp = grid[from_pos.y][from_pos.x]
-			grid[from_pos.y][from_pos.x] = grid[to_pos.y][to_pos.x]
-			grid[to_pos.y][to_pos.x] = tmp
-		
-			set_tile_scene_position(grid[from_pos.y][from_pos.x], from_pos.x, from_pos.y)
-			set_tile_scene_position(grid[to_pos.y][to_pos.x], to_pos.x, to_pos.y)
+			await get_tree().create_timer(0.05).timeout
+			pass
 		
 		prevoiusSwaps = []
 		doingSwap = false
