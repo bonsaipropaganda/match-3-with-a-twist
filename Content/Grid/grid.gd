@@ -206,8 +206,8 @@ func generate_connected_tiles():
 		add_child(connected)
 		for tile in grouped_tiles[type]:
 			tile.reparent(connected)
-			var gp = tile.grid_pos
-			grid[gp.y][gp.x] = connected
+			#var gp = tile.grid_pos # this is commented out temporarily so that it doesn't crash - bonsai im working on the tile scene making it so that it can be moved when it is reparented
+			#grid[gp.y][gp.x] = connected
 
 func on_swap_tile(from_pos, direction):
 	if done_updating and !is_swapping:

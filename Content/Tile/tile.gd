@@ -9,6 +9,7 @@ var tile_type
 var group_id: int
 var tile_width: int
 var grid_pos: Vector2 # Set by grid
+var parent_cache
 
 enum TileStats{
 	CAN_SWAP,
@@ -61,9 +62,18 @@ func _process(delta):
 	if clicked:
 		var mouse_pos = get_viewport().get_mouse_position()
 		var my_pos = $CollisionShape2D.global_position
-		if abs(mouse_pos.x - my_pos.x) > tile_width/2:
-			Globals.emit_signal("swap_tile", grid_pos, Vector2(sign(mouse_pos.x - my_pos.x), 0))
-			clicked = false
-		if abs(mouse_pos.y - my_pos.y) > tile_width/2:
-			Globals.emit_signal("swap_tile", grid_pos, Vector2(0, sign(mouse_pos.y - my_pos.y)))
-			clicked = false
+		
+		if "ConnectedTiles" in parent_cache:
+			print("This tile is a part of a connected tile scene")
+		else:
+			if abs(mouse_pos.x - my_pos.x) > tile_width/2:
+				Globals.emit_signal("swap_tile", grid_pos, Vector2(sign(mouse_pos.x - my_pos.x), 0))
+				clicked = false
+			if abs(mouse_pos.y - my_pos.y) > tile_width/2:
+				Globals.emit_signal("swap_tile", grid_pos, Vector2(0, sign(mouse_pos.y - my_pos.y)))
+				clicked = false
+
+func _notification(current_notif):
+	# was the tile reparented? If so set the parent cache
+	if current_notif == NOTIFICATION_PARENTED:
+		parent_cache = get_parent().name
