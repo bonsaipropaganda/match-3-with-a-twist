@@ -4,51 +4,51 @@
 [ext_resource type="Script" path="res://Content/MainMenu.gd" id="1_wvk8g"]
 [ext_resource type="PackedScene" uid="uid://y26xkpybmr8r" path="res://Content/world.tscn" id="2_1alv0"]
 [ext_resource type="PackedScene" uid="uid://c5rmdjyocox8g" path="res://Content/UserInterface/audio_settings.tscn" id="3_d02as"]
-[ext_resource type="Texture2D" uid="uid://bd44ajhnr2s0j" path="res://art/gui/FreeGUI/png/Button.png" id="4_oisqg"]
-[ext_resource type="Texture2D" uid="uid://8ryvq7voumc0" path="res://art/gui/FreeGUI/png/button_pressed.png" id="5_n5g4c"]
-[ext_resource type="Texture2D" uid="uid://bdgdlhjxsdc10" path="res://art/gui/FreeGUI/png/button_hover.png" id="5_vu0eq"]
+[ext_resource type="Texture2D" uid="uid://blgd5sbvd3rv3" path="res://art/gui/FreeGUI/Button_x8.png" id="4_fys3y"]
+[ext_resource type="Texture2D" uid="uid://wm4f7o8xmxa3" path="res://art/gui/FreeGUI/Button_pressed_x8.png" id="5_aboem"]
+[ext_resource type="Texture2D" uid="uid://bhmffmcpulflf" path="res://art/gui/FreeGUI/Button_hover_x8.png" id="6_ruv1q"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_etrrl"]
 font_size = 128
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6wsia"]
-atlas = ExtResource("4_oisqg")
-region = Rect2(195.891, 972.51, 179.446, 180.067)
+atlas = ExtResource("4_fys3y")
+region = Rect2(55, 838, 310, 310)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yuqny"]
-atlas = ExtResource("5_n5g4c")
-region = Rect2(168.537, 874.674, 180, 180)
+atlas = ExtResource("5_aboem")
+region = Rect2(55, 838, 310, 310)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1c6gt"]
-atlas = ExtResource("5_vu0eq")
-region = Rect2(195.891, 972.51, 179.446, 180.067)
+atlas = ExtResource("6_ruv1q")
+region = Rect2(55, 838, 310, 310)
 
 [sub_resource type="LabelSettings" id="LabelSettings_d841h"]
 font_size = 52
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e1np7"]
-atlas = ExtResource("4_oisqg")
-region = Rect2(3297, 318.93, 180, 180)
+atlas = ExtResource("4_fys3y")
+region = Rect2(3633, 1916, 310, 310)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mfim2"]
-atlas = ExtResource("5_n5g4c")
-region = Rect2(2982, 281, 180, 180)
+atlas = ExtResource("5_aboem")
+region = Rect2(3633, 1916, 310, 310)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l0msi"]
-atlas = ExtResource("5_vu0eq")
-region = Rect2(3297, 318.93, 180, 180)
+atlas = ExtResource("6_ruv1q")
+region = Rect2(3633, 1916, 310, 310)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6fsls"]
-atlas = ExtResource("4_oisqg")
-region = Rect2(2556, 1408, 180, 180)
+atlas = ExtResource("4_fys3y")
+region = Rect2(3975, 1198, 310, 310)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1ofcw"]
-atlas = ExtResource("5_n5g4c")
-region = Rect2(2309, 1268, 180, 180)
+atlas = ExtResource("5_aboem")
+region = Rect2(3975, 1198, 310, 310)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6baoc"]
-atlas = ExtResource("5_vu0eq")
-region = Rect2(2556, 1408, 180, 180)
+atlas = ExtResource("6_ruv1q")
+region = Rect2(3975, 1198, 310, 310)
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3

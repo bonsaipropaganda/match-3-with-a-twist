@@ -1,26 +1,26 @@
-[gd_scene load_steps=20 format=3 uid="uid://c5rmdjyocox8g"]
+[gd_scene load_steps=19 format=3 uid="uid://c5rmdjyocox8g"]
 
 [ext_resource type="Script" path="res://Content/UserInterface/audio_settings.gd" id="1_b0xxb"]
-[ext_resource type="Texture2D" uid="uid://bd44ajhnr2s0j" path="res://art/gui/FreeGUI/png/Button.png" id="2_b5h0g"]
 [ext_resource type="PackedScene" uid="uid://c3e6plvrjmj6l" path="res://Content/UserInterface/volume_slider.tscn" id="2_l1r8h"]
-[ext_resource type="Texture2D" uid="uid://8ryvq7voumc0" path="res://art/gui/FreeGUI/png/button_pressed.png" id="3_oexo0"]
-[ext_resource type="Texture2D" uid="uid://bdgdlhjxsdc10" path="res://art/gui/FreeGUI/png/button_hover.png" id="4_h4pun"]
-[ext_resource type="Texture2D" uid="uid://dhfqchp5ex6ep" path="res://art/gui/FreeGUI/svg/Button.svg" id="5_mbfya"]
+[ext_resource type="Texture2D" uid="uid://blgd5sbvd3rv3" path="res://art/gui/FreeGUI/Button_x8.png" id="2_o68wg"]
+[ext_resource type="Texture2D" uid="uid://wm4f7o8xmxa3" path="res://art/gui/FreeGUI/Button_pressed_x8.png" id="3_lt8l7"]
+[ext_resource type="Texture2D" uid="uid://bhmffmcpulflf" path="res://art/gui/FreeGUI/Button_hover_x8.png" id="4_5wstc"]
+[ext_resource type="Texture2D" uid="uid://dhfqchp5ex6ep" path="res://art/gui/FreeGUI/Button.svg" id="6_ljc2q"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_odts3"]
-atlas = ExtResource("2_b5h0g")
-region = Rect2(809, 1191, 180, 180)
+atlas = ExtResource("2_o68wg")
+region = Rect2(1072, 1197, 310, 310)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0el5p"]
-atlas = ExtResource("3_oexo0")
-region = Rect2(722, 1071, 180, 180)
+atlas = ExtResource("3_lt8l7")
+region = Rect2(1072, 1197, 310, 310)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pnpn1"]
-atlas = ExtResource("4_h4pun")
-region = Rect2(809, 1190, 180, 180)
+atlas = ExtResource("4_5wstc")
+region = Rect2(1072, 1197, 310, 310)
 
 [sub_resource type="Gradient" id="Gradient_7nrk4"]
-offsets = PackedFloat32Array(0, 0.485166, 1)
+offsets = PackedFloat32Array(0, 0.459701, 1)
 colors = PackedColorArray(0.478604, 0.478604, 0.478604, 1, 0.484198, 0.484198, 0.484198, 1, 0.67409, 0.67409, 0.67409, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_n7st7"]
@@ -28,7 +28,7 @@ gradient = SubResource("Gradient_7nrk4")
 width = 1
 height = 640
 fill = 1
-fill_from = Vector2(0.577211, 1)
+fill_from = Vector2(1, 1)
 fill_to = Vector2(0.5, 0)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ogkfy"]
@@ -40,35 +40,13 @@ font_size = 72
 [sub_resource type="LabelSettings" id="LabelSettings_5vhag"]
 font_size = 56
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_36d3u"]
-atlas = ExtResource("5_mbfya")
-region = Rect2(464, 0, 45, 45)
+[sub_resource type="AtlasTexture" id="AtlasTexture_jomjl"]
+atlas = ExtResource("6_ljc2q")
+region = Rect2(524, 10, 45, 45)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2314n"]
-content_margin_left = 8.0
-content_margin_top = 8.0
-content_margin_right = 8.0
-content_margin_bottom = 8.0
-bg_color = Color(0.568627, 0.568627, 0.568627, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vqkcm"]
-bg_color = Color(0.870588, 0.870588, 0.870588, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+[sub_resource type="AtlasTexture" id="AtlasTexture_mbgrt"]
+atlas = ExtResource("6_ljc2q")
+region = Rect2(572, 10, 45, 45)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ire63"]
 content_margin_left = 32.0
@@ -219,10 +197,8 @@ theme_override_constants/margin_right = 32
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_icons/grabber = SubResource("AtlasTexture_36d3u")
-theme_override_icons/grabber_highlight = SubResource("AtlasTexture_36d3u")
-theme_override_styles/slider = SubResource("StyleBoxFlat_2314n")
-theme_override_styles/grabber_area = SubResource("StyleBoxFlat_vqkcm")
+theme_override_icons/grabber = SubResource("AtlasTexture_jomjl")
+theme_override_icons/grabber_highlight = SubResource("AtlasTexture_jomjl")
 value = -20.0
 
 [node name="SoundFxLabel" type="Label" parent="Panel/VBoxContainer/GridContainer"]
@@ -242,6 +218,8 @@ theme_override_constants/margin_right = 32
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+theme_override_icons/grabber = SubResource("AtlasTexture_mbgrt")
+theme_override_icons/grabber_highlight = SubResource("AtlasTexture_mbgrt")
 
 [node name="Border" type="Panel" parent="Panel"]
 z_index = 2
