@@ -1,5 +1,4 @@
 extends Area2D
-class_name Tile
 
 const SPRITE_WIDTH = 128.0 # Currently set to width of placeholder image
 

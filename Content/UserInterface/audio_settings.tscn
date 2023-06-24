@@ -21,7 +21,7 @@ region = Rect2(1072, 1197, 310, 310)
 
 [sub_resource type="Gradient" id="Gradient_7nrk4"]
 offsets = PackedFloat32Array(0, 0.459701, 1)
-colors = PackedColorArray(0.478604, 0.478604, 0.478604, 1, 0.484198, 0.484198, 0.484198, 1, 0.67409, 0.67409, 0.67409, 1)
+colors = PackedColorArray(0.345098, 0.345098, 0.345098, 1, 0.484198, 0.484198, 0.484198, 1, 0.470588, 0.470588, 0.470588, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_n7st7"]
 gradient = SubResource("Gradient_7nrk4")
@@ -88,6 +88,7 @@ corner_radius_bottom_left = 16
 shadow_size = 30
 
 [node name="AudioSettings" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
