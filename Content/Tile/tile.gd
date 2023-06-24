@@ -5,7 +5,7 @@ const SPRITE_WIDTH = 128.0 # Currently set to width of placeholder image
 
 var sprite2D : Sprite2D
 
-var tile_type: TileType
+var tile_type
 var group_id: int
 var tile_width: int
 var grid_pos: Vector2 # Set by grid
@@ -15,15 +15,6 @@ enum TileStats{
 	CAN_FALL, #Caused A Whole Rework Of The Unswap Mechanic To Happen
 	BREAK_ON_MATCH,
 	BREAK_ON_ADJACENT_MATCH, #Not Implemented Yet
-}
-
-enum TileType {
-	RED,
-	BLUE,
-	GREEN,
-	YELLOW,
-	GREY,
-	GHOST,
 }
 
 const tile_stats = [
@@ -46,14 +37,16 @@ const tile_images = [
 	preload("res://art/pieces/unselected_ghost.png"),
 ]
 
-func initialise(_tile_width : float, margin_width):
+func initialise(_tile_width : float, margin_width, type):
 	tile_width = _tile_width - margin_width * 2
 	scale *= tile_width / SPRITE_WIDTH
 	$CollisionShape2D.position = Vector2.ONE * tile_width
 	$CollisionShape2D.shape.size = Vector2.ONE * tile_width * 2
 	
-	# Prevents Ghost tiles from spawning
-	tile_type = randi() % (TileType.size()-1)
+	if type == null:
+		tile_type = randi() % (Globals.TileType.size()-1)
+	else:
+		tile_type = type
 	sprite2D = $Sprite2D
 	sprite2D.texture = tile_images[tile_type]
 

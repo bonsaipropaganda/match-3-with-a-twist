@@ -47,23 +47,22 @@ func update_grid():
 	var settled = true
 	for y in range(grid_height-2, -1, -1):
 		for x in range(0, grid_width):
-			#Stops Tile from breaking if that tile doesnt have the CAN_FALL Stat
-			if can_fall(x, y) and Tile.TileStats.CAN_FALL in Tile.tile_stats[grid[y][x].tile_type]:
+			if can_fall(x, y):
 				move_tile(x, y, x, y+1)
 				settled = false
 				done_updating = false
 	
-	var to_free = []
+	var matched_tiles = []
 	if settled:
-		to_free = get_to_free()
-		for i in to_free: # [tile_type, x, y]
+		matched_tiles = get_matched_tiles()
+		for i in matched_tiles: # [tile_type, x, y]
 			var x = i[1]
 			var y = i[2]
 			if grid[y][x] != null:
 				grid[y][x].queue_free()
 				grid[y][x] = null
 	
-	if to_free.size() == 0:
+	if matched_tiles.size() == 0:
 		if settled:
 			done_updating = true
 		for x in grid_width:
@@ -72,7 +71,7 @@ func update_grid():
 	else:
 		settled = false
 	
-	# Unswaps all the tiles swaped when the length of previous swaps that havent made a match = 3 if enabled
+	# Unswaps all the tiles swapped when the length of previous swaps that havent made a match = 3 if enabled
 	if len(previous_swaps) == 3 and true:
 		on_unswap_tiles()
 
@@ -97,7 +96,7 @@ func set_tile_scene_position(tile, x, y):
 	if tile.get("grid_pos") != null:
 		tile.grid_pos = Vector2(x,y)
 
-func add_tile(x, y) -> bool:
+func add_tile(x, y, type=null) -> bool:
 	if (x < 0 || x >= grid_width || y < 0 || y >= grid_height):
 		assert(false) # Do not try to add tiles out of bounds
 	if (grid[y][x] != null):
@@ -106,7 +105,7 @@ func add_tile(x, y) -> bool:
 	var new_tile = tile_scene.instantiate()
 	grid[y][x] = new_tile
 	set_tile_scene_position(new_tile, x, y)
-	new_tile.initialise(tile_width, TILE_MARGIN)
+	new_tile.initialise(tile_width, TILE_MARGIN, type)
 	add_child(new_tile)
 	return true
 
@@ -120,12 +119,14 @@ func move_tile(x1, y1, x2, y2):
 func can_fall(x, y):
 	if y == grid_height - 1:
 		return false
+	if grid[y][x] is ConnectedTiles:
+		return false # TODO make way for connected to fall
 	else:
-		return grid[y][x] != null && grid[y+1][x] == null
+		return grid[y][x] != null && grid[y+1][x] == null && (Tile.TileStats.CAN_FALL in Tile.tile_stats[grid[y][x].tile_type])
 
-# this func checks for tiles that are matching and returns matches in an array
-func get_to_free():
-	var to_free := []
+# Return array of [tile_id, x, y]
+func get_matched_tiles():
+	var matched_tiles := []
 	var to_check := []
 	
 	# Vertical check
@@ -137,14 +138,14 @@ func get_to_free():
 					to_check.append([grid[y][x].tile_type, x, y])
 				elif grid[y][x].tile_type != to_check.back()[0]:
 					if to_check.size() >= 3:
-						to_free.append_array(to_check)
+						matched_tiles.append_array(to_check)
 					to_check.clear()
 					to_check.append([grid[y][x].tile_type, x, y])
 				elif grid[y][x].tile_type == to_check.back()[0]:
 					to_check.append([grid[y][x].tile_type, x, y])
 					if y == grid_height-1 && to_check.size() >= 3:
 						to_check.append([grid[y][x].tile_type, x, y])
-						to_free.append_array(to_check)
+						matched_tiles.append_array(to_check)
 			else:
 				to_check.clear()
 	# Horizontal check
@@ -156,23 +157,55 @@ func get_to_free():
 					to_check.append([grid[y][x].tile_type, x, y])
 				elif grid[y][x].tile_type != to_check.back()[0]:
 					if to_check.size() >= 3:
-						to_free.append_array(to_check)
+						matched_tiles.append_array(to_check)
 					to_check.clear()
 					to_check.append([grid[y][x].tile_type, x, y])
 				elif grid[y][x].tile_type == to_check.back()[0]:
 					to_check.append([grid[y][x].tile_type, x, y])
 					if x == grid_width-1 && to_check.size() >= 3:
 						to_check.append([grid[y][x].tile_type, x, y])
-						to_free.append_array(to_check)
+						matched_tiles.append_array(to_check)
 			else:
 				to_check.clear()
 		
 		# Stops Tile from breaking if that tile doesnt have the BREAK_ON_MATCH Stat
-		for tile in to_free:
-			if Tile.TileStats.BREAK_ON_MATCH not in Tile.tile_stats[tile[0]]:
-				to_free.erase(tile)
+#		for tile in matched_tiles:
+#			if Tile.TileStats.BREAK_ON_MATCH not in Tile.tile_stats[tile[0]]:
+#				matched_tiles.erase(tile)
 		
-	return to_free
+	return matched_tiles
+
+const HAS_TILE = 1
+const HAS_CONNECTED = 2
+const HAS_BOTH = HAS_TILE | HAS_CONNECTED
+func generate_connected_tiles():
+	var to_connect = get_matched_tiles()
+	var grouped_tiles = {}
+	var group_info = {}
+	
+	for i in to_connect:
+		var tile_type = i[0]
+		var x = i[1]
+		var y = i[2]
+		var tile_info = HAS_TILE if (grid[y][x] is Tile) else HAS_CONNECTED
+		
+		if grouped_tiles.get(tile_type):
+			group_info[tile_type] |= tile_info
+			grouped_tiles[tile_type].append(grid[y][x])
+		else:
+			group_info[tile_type] = tile_info
+			grouped_tiles[tile_type] = [grid[y][x]]
+	
+	for type in grouped_tiles.keys():
+		if group_info[type] == HAS_BOTH:
+			continue
+		var connected = connected_scene.instantiate()
+		connected.modulate = Color("243784") # for debug
+		add_child(connected)
+		for tile in grouped_tiles[type]:
+			tile.reparent(connected)
+			var gp = tile.grid_pos
+			grid[gp.y][gp.x] = connected
 
 func on_swap_tile(from_pos, direction):
 	if done_updating and !is_swapping:
@@ -183,15 +216,13 @@ func on_swap_tile(from_pos, direction):
 			return
 		
 		# Spawns a Temporary Tile
-		if grid[to_pos.y][to_pos.x] == null:
-			add_tile(to_pos.x,to_pos.y)
-			grid[to_pos.y][to_pos.x].tile_type = Tile.TileType.GHOST
-			grid[to_pos.y][to_pos.x].sprite2D.texture = Tile.tile_images[Tile.TileType.GHOST]
+#		if grid[to_pos.y][to_pos.x] == null:
+#			add_tile(to_pos.x,to_pos.y,Globals.TileType.GHOST)
 			
 		if (grid[from_pos.y][from_pos.x].tile_type == grid[to_pos.y][to_pos.x].tile_type):
 			return
-		if grid[from_pos.y][from_pos.x].tile_type == 4 or grid[to_pos.y][to_pos.x].tile_type == 4:
-			return
+#		if grid[from_pos.y][from_pos.x].tile_type == Globals.TileType.GHOST or grid[to_pos.y][to_pos.x].tile_type == Globals.TileType.GHOST:
+#			return
 		
 		is_swapping = true
 		
@@ -204,29 +235,19 @@ func on_swap_tile(from_pos, direction):
 		set_tile_scene_position(grid[from_pos.y][from_pos.x], from_pos.x, from_pos.y)
 		set_tile_scene_position(grid[to_pos.y][to_pos.x], to_pos.x, to_pos.y)
 		
-		# these figures out which tiles were a result of a swap
-		var to_connect = get_to_free() # gets all matches
-		for i in to_connect: # [tile_type, x, y]
-			var match_type = i[0] # color of the match check tile scene to see what color the number coordinates too
-			var x = i[1] # x and y cords of each tile in the match
-			var y = i[2]
-			var connected = connected_scene.instantiate()
-			set_tile_scene_position(connected, x, y)
-			add_child(connected)
-		if to_connect.size() == 0:
-			done_updating = false # deletes all matched tiles 
+		generate_connected_tiles()
 
 		
-		# Removes a Temporary Tile
-		if grid[from_pos.y][from_pos.x].tile_type == Tile.TileType.GHOST:
-			grid[from_pos.y][from_pos.x].queue_free()
-			grid[from_pos.y][from_pos.x] = null
+#		# Removes a Temporary Tile
+#		if grid[from_pos.y][from_pos.x].tile_type == Globals.TileType.GHOST:
+#			grid[from_pos.y][from_pos.x].queue_free()
+#			grid[from_pos.y][from_pos.x] = null
 		
-		if get_to_free() != []:
+		if get_matched_tiles() != []:
 			previous_swaps = []
 		
 		# Reverts changes if no matches were made if allowed
-		if get_to_free() == [] and false:
+		if get_matched_tiles() == [] and false:
 			await get_tree().create_timer(0.25).timeout
 			
 			tmp = grid[from_pos.y][from_pos.x]
@@ -237,7 +258,6 @@ func on_swap_tile(from_pos, direction):
 			set_tile_scene_position(grid[to_pos.y][to_pos.x], to_pos.x, to_pos.y)
 		
 		is_swapping = false
-		done_updating = false
 
 func on_unswap_tiles():
 	if done_updating and !is_swapping:
@@ -251,11 +271,9 @@ func on_unswap_tiles():
 		previous_swaps.reverse()
 		for swap in previous_swaps:
 			await get_tree().create_timer(0.05).timeout
-			pass
 		
 		previous_swaps = []
 		is_swapping = false
-		done_updating = false
 
 
 #func update_tile_group(x, y, group_id, tile_type):
