@@ -9,6 +9,7 @@ var group_id: int
 var tile_width: int
 var grid_pos: Vector2 # Set by grid
 var parent_cache
+signal tile_scene_clicked
 
 enum TileStats{
 	CAN_SWAP,
@@ -73,8 +74,10 @@ func _process(delta):
 		var mouse_pos = get_viewport().get_mouse_position()
 		var my_pos = $CollisionShape2D.global_position
 		
+		# checks if the parent is connectedtiles or not
 		if "ConnectedTiles" in parent_cache:
-			print("This tile is a part of a connected tile scene")
+			tile_scene_clicked.emit()
+			
 		else:
 			if abs(mouse_pos.x - my_pos.x) > tile_width/2:
 				Globals.emit_signal("swap_tile", grid_pos, Vector2(sign(mouse_pos.x - my_pos.x), 0))

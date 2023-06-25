@@ -206,6 +206,14 @@ func generate_connected_tiles():
 		add_child(connected)
 		for tile in grouped_tiles[type]:
 			tile.reparent(connected)
+			# connects the tiles' tile_scene_clicked signal to the connected tile scene
+			for y in grid_height:
+				for x in grid_width:
+					var tile_scene = grid[y][x]
+					# first check if tile is null and if the connection is already there
+					if tile_scene != null and !tile_scene.tile_scene_clicked.is_connected(connected._on_tile_clicked):
+						tile_scene.tile_scene_clicked.connect(connected._on_tile_clicked)
+			
 			#var gp = tile.grid_pos # this is commented out temporarily so that it doesn't crash - bonsai im working on the tile scene making it so that it can be moved when it is reparented
 			#grid[gp.y][gp.x] = connected
 
@@ -219,7 +227,7 @@ func on_swap_tile(from_pos, direction):
 		if (to_pos.x < 0 || to_pos.x >= grid_width || to_pos.y < 0 || to_pos.y >= grid_height):
 			return
 		
-		# checks if where the it's swapping with is the same type of tile or not I think
+		# checks if where it's swapping with is the same type of tile (I think)
 		if (grid[from_pos.y][from_pos.x].tile_type == grid[to_pos.y][to_pos.x].tile_type):
 			return
 #		if grid[from_pos.y][from_pos.x].tile_type == Globals.TileType.GHOST or grid[to_pos.y][to_pos.x].tile_type == Globals.TileType.GHOST:
