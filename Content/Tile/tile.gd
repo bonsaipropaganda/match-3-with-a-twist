@@ -17,6 +17,14 @@ enum TileStats{
 	BREAK_ON_ADJACENT_MATCH, #Not Implemented Yet
 	BREAK_ON_PRESSURE
 }
+enum TileType {
+	RED,
+	BLUE,
+	GREEN,
+	YELLOW,
+	GREY,
+	#GHOST,
+}
 
 const tile_stats = [
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],

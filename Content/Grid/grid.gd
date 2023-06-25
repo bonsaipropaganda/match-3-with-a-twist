@@ -219,17 +219,12 @@ func on_swap_tile(from_pos, direction):
 		if (to_pos.x < 0 || to_pos.x >= grid_width || to_pos.y < 0 || to_pos.y >= grid_height):
 			return
 		
-		# can i delete this?
-		# Spawns a Temporary Tile
-#		if grid[to_pos.y][to_pos.x] == null:
-#			add_tile(to_pos.x,to_pos.y,Globals.TileType.GHOST)
-		
 		# checks if where the it's swapping with is the same type of tile or not I think
 		if (grid[from_pos.y][from_pos.x].tile_type == grid[to_pos.y][to_pos.x].tile_type):
 			return
 #		if grid[from_pos.y][from_pos.x].tile_type == Globals.TileType.GHOST or grid[to_pos.y][to_pos.x].tile_type == Globals.TileType.GHOST:
 #			return
-=======
+
 		if grid[to_pos.y][to_pos.x] != null:
 			if (grid[from_pos.y][from_pos.x].tile_type == grid[to_pos.y][to_pos.x].tile_type):
 				return
@@ -239,17 +234,11 @@ func on_swap_tile(from_pos, direction):
 			slideInstead = true
 			if Tile.TileStats.CAN_SWAP not in Tile.tile_stats[grid[from_pos.y][from_pos.x].tile_type]:
 				return
->>>>>>> main
 		
 		is_swapping = true
 		
 		# keeps track of the previous swaps that have been made
 		previous_swaps.append(grid)
-		
-		# actual logic to swap 2 tiles from_pos and to_pos
-		var tmp = grid[from_pos.y][from_pos.x]
-		grid[from_pos.y][from_pos.x] = grid[to_pos.y][to_pos.x]
-		grid[to_pos.y][to_pos.x] = tmp
 		
 		# updates where the tiles are at
 		set_tile_scene_position(grid[from_pos.y][from_pos.x], from_pos.x, from_pos.y)
@@ -269,8 +258,6 @@ func on_swap_tile(from_pos, direction):
 		# Reverts changes if no matches were made if allowed
 		if get_matched_tiles() == [] and false:
 			await get_tree().create_timer(0.25).timeout
-			
-			tmp = grid[from_pos.y][from_pos.x]
 		
 		if !slideInstead:
 			var tmp = grid[from_pos.y][from_pos.x]
@@ -284,8 +271,8 @@ func on_swap_tile(from_pos, direction):
 		
 		
 		
-		if get_to_free() != []:
-			prevoiusSwaps = []
+		if get_matched_tiles() != []:
+			previous_swaps = []
 		
 		
 		is_swapping = false
