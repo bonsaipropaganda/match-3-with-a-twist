@@ -166,7 +166,16 @@ func get_to_free():
 		for tile in to_free:
 			if Tile.TileStats.BREAK_ON_MATCH not in Tile.tile_stats[tile[0]]:
 				to_free.erase(tile)
-		
+	
+	# Makes Tile break if that tile has the BREAK_ON_AGACENT_MATCH Stat and is agacent to a match that was made
+	for row in grid:
+		for tile in row:
+			if tile != null:
+				if Tile.TileStats.BREAK_ON_ADJACENT_MATCH in Tile.tile_stats[tile.tile_type]:
+					for free in to_free:
+						if tile.grid_pos.distance_to(Vector2(free[1],free[2])) == 1:
+							to_check.append([tile.tile_type, tile.grid_pos.x, tile.grid_pos.y])
+	to_free += to_check
 	return to_free
 
 func on_swap_tile(from_pos, direction):
