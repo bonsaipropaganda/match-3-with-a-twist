@@ -57,11 +57,12 @@ func initialise(_tile_width : float, margin_width):
 	sprite2D = $Sprite2D
 	sprite2D.texture = tile_images[tile_type]
 
+
 var clicked = false
-func _on_input_event(viewport, event, shape_idx):
-	if Input.is_action_just_pressed("click"):
+func _on_input_event(_viewport, event: InputEvent, _shape_idx):
+	if event.is_action_pressed("click"):
 		clicked = true
-	if Input.is_action_just_released("click"):
+	if event.is_action_released("click"):
 		clicked = false
 
 func _process(delta):
