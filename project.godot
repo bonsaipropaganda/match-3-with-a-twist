@@ -11,13 +11,15 @@ config_version=5
 [application]
 
 config/name="Match3"
-run/main_scene="res://Content/MainMenu.tscn"
+run/main_scene="res://Content/UserInterface/main_menu.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 Globals="*res://Content/globals.gd"
+Tile="*res://Content/Tile/tile.gd"
+SceneManager="*res://Content/autoload/scene_manager.tscn"
 
 [display]
 
@@ -28,7 +30,7 @@ window/stretch/aspect="expand"
 
 [gui]
 
-theme/custom_font="res://art/fonts/04b_30/04B_30__.TTF"
+theme/custom_font="res://art/fonts/brandy_brunch/BradBunR.ttf"
 
 [input]
 

@@ -1,10 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://c3e6plvrjmj6l"]
+[gd_scene load_steps=3 format=3 uid="uid://c3e6plvrjmj6l"]
 
+[ext_resource type="Theme" uid="uid://3ihnxje2sxwo" path="res://resources/theme/MainTheme.tres" id="1_qvibn"]
 [ext_resource type="Script" path="res://Content/UserInterface/volume_slider.gd" id="1_tbq4a"]
 
 [node name="VolumeSlider" type="HSlider"]
 offset_right = 618.0
 offset_bottom = 40.0
+theme = ExtResource("1_qvibn")
 min_value = -30.0
 max_value = 0.0
 rounded = true

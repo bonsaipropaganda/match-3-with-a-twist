@@ -1,5 +1,4 @@
 extends Area2D
-class_name Tile
 
 const SPRITE_WIDTH = 128.0 # Currently set to width of placeholder image
 
@@ -16,6 +15,7 @@ enum TileStats{
 	CAN_FALL, #Caused A Whole Rework Of The Unswap Mechanic To Happen
 	BREAK_ON_MATCH,
 	BREAK_ON_ADJACENT_MATCH, #Not Implemented Yet
+	BREAK_ON_PRESSURE
 }
 
 const tile_stats = [
@@ -23,8 +23,8 @@ const tile_stats = [
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
-	[TileStats.BREAK_ON_ADJACENT_MATCH],
-	[TileStats.CAN_SWAP],
+	[TileStats.CAN_SWAP],                           
+	#[TileStats.CAN_SWAP,TileStats.BREAK_ON_PRESSURE],
 	]
 
 # Indexed by TileType
@@ -48,6 +48,8 @@ func initialise(_tile_width : float, margin_width, type):
 		tile_type = randi() % (Globals.TileType.size()-1)
 	else:
 		tile_type = type
+	
+	tile_type = randi() % TileType.size()
 	sprite2D = $Sprite2D
 	sprite2D.texture = tile_images[tile_type]
 

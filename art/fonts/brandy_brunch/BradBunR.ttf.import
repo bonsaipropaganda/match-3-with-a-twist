@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://bb1g7md3hyq0w"
-path="res://.godot/imported/04B_30__.TTF-8ad60ad6cfda8a6fa7dda0360a69fd2f.fontdata"
+uid="uid://cq58k7wkj7k25"
+path="res://.godot/imported/BradBunR.ttf-e830d8e7903e20d261486ebd2216f4e7.fontdata"
 
 [deps]
 
-source_file="res://art/fonts/04b_30/04B_30__.TTF"
-dest_files=["res://.godot/imported/04B_30__.TTF-8ad60ad6cfda8a6fa7dda0360a69fd2f.fontdata"]
+source_file="res://art/fonts/brandy_brunch/BradBunR.ttf"
+dest_files=["res://.godot/imported/BradBunR.ttf-e830d8e7903e20d261486ebd2216f4e7.fontdata"]
 
 [params]
 

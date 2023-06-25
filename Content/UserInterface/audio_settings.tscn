@@ -1,32 +1,103 @@
-[gd_scene load_steps=3 format=3 uid="uid://c5rmdjyocox8g"]
+[gd_scene load_steps=19 format=3 uid="uid://c5rmdjyocox8g"]
 
-[ext_resource type="Script" path="res://Content/UserInterface/audio_settings.gd" id="1_nkfga"]
+[ext_resource type="Script" path="res://Content/UserInterface/audio_settings.gd" id="1_b0xxb"]
 [ext_resource type="PackedScene" uid="uid://c3e6plvrjmj6l" path="res://Content/UserInterface/volume_slider.tscn" id="2_l1r8h"]
+[ext_resource type="Texture2D" uid="uid://blgd5sbvd3rv3" path="res://art/gui/FreeGUI/Button_x8.png" id="2_o68wg"]
+[ext_resource type="Texture2D" uid="uid://wm4f7o8xmxa3" path="res://art/gui/FreeGUI/Button_pressed_x8.png" id="3_lt8l7"]
+[ext_resource type="Texture2D" uid="uid://bhmffmcpulflf" path="res://art/gui/FreeGUI/Button_hover_x8.png" id="4_5wstc"]
+[ext_resource type="Texture2D" uid="uid://dhfqchp5ex6ep" path="res://art/gui/FreeGUI/Button.svg" id="6_ljc2q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_odts3"]
+atlas = ExtResource("2_o68wg")
+region = Rect2(1072, 1197, 310, 310)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0el5p"]
+atlas = ExtResource("3_lt8l7")
+region = Rect2(1072, 1197, 310, 310)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pnpn1"]
+atlas = ExtResource("4_5wstc")
+region = Rect2(1072, 1197, 310, 310)
+
+[sub_resource type="Gradient" id="Gradient_7nrk4"]
+offsets = PackedFloat32Array(0, 0.459701, 1)
+colors = PackedColorArray(0.345098, 0.345098, 0.345098, 1, 0.484198, 0.484198, 0.484198, 1, 0.470588, 0.470588, 0.470588, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_n7st7"]
+gradient = SubResource("Gradient_7nrk4")
+width = 1
+height = 640
+fill = 1
+fill_from = Vector2(1, 1)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ogkfy"]
+texture = SubResource("GradientTexture2D_n7st7")
+
+[sub_resource type="LabelSettings" id="LabelSettings_de60f"]
+font_size = 72
+
+[sub_resource type="LabelSettings" id="LabelSettings_5vhag"]
+font_size = 56
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jomjl"]
+atlas = ExtResource("6_ljc2q")
+region = Rect2(524, 10, 45, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mbgrt"]
+atlas = ExtResource("6_ljc2q")
+region = Rect2(572, 10, 45, 45)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ire63"]
+content_margin_left = 32.0
+content_margin_top = 32.0
+content_margin_right = 32.0
+content_margin_bottom = 32.0
+draw_center = false
+border_width_left = 16
+border_width_top = 16
+border_width_right = 16
+border_width_bottom = 16
+border_color = Color(0.894118, 0.894118, 0.894118, 1)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+expand_margin_left = 16.0
+expand_margin_top = 16.0
+expand_margin_right = 16.0
+expand_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7acws"]
+content_margin_left = 32.0
+content_margin_top = 32.0
+content_margin_right = 32.0
+content_margin_bottom = 32.0
+bg_color = Color(0.141176, 0.141176, 0.141176, 1)
+draw_center = false
+border_width_left = 7
+border_width_top = 7
+border_width_right = 7
+border_width_bottom = 7
+border_color = Color(0.356863, 0.356863, 0.356863, 0.584314)
+border_blend = true
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 30
 
 [node name="AudioSettings" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_b0xxb")
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
-
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -512.0
-offset_top = -204.0
-offset_right = 512.0
-offset_bottom = 204.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(1, 1, 1, 0.235294)
 
 [node name="MusicAudio" type="AudioStreamPlayer" parent="."]
 autoplay = true
@@ -37,63 +108,143 @@ autoplay = true
 [node name="SoundFx" type="AudioStreamPlayer" parent="."]
 autoplay = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="BackButton" type="TextureButton" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -384.0
-offset_top = -104.0
-offset_right = 384.0
-offset_bottom = 89.0
+offset_left = 43.0
+offset_top = 31.0
+offset_right = 112.0
+offset_bottom = 98.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
+texture_normal = SubResource("AtlasTexture_odts3")
+texture_pressed = SubResource("AtlasTexture_0el5p")
+texture_hover = SubResource("AtlasTexture_pnpn1")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.12
+anchor_top = 0.14
+anchor_right = 0.88
+anchor_bottom = 0.86
+offset_left = 0.399994
+offset_top = 0.399994
+offset_right = 0.439941
+offset_bottom = -0.200012
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_nkfga")
+theme_override_styles/panel = SubResource("StyleBoxTexture_ogkfy")
 
-[node name="LabelContainer" type="VBoxContainer" parent="HBoxContainer"]
-layout_mode = 2
-alignment = 1
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.03
+anchor_top = 0.05
+anchor_right = 0.97
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 32
 
-[node name="MusicLabel" type="Label" parent="HBoxContainer/LabelContainer"]
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 26
-text = "Music:"
-vertical_alignment = 1
-
-[node name="VoiceOverLabel" type="Label" parent="HBoxContainer/LabelContainer"]
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 26
-text = "Master:"
-vertical_alignment = 1
-
-[node name="SoundFxLabel" type="Label" parent="HBoxContainer/LabelContainer"]
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 26
-text = "SoundFx:"
-vertical_alignment = 1
-
-[node name="SliderContainer" type="VBoxContainer" parent="HBoxContainer"]
+[node name="Label" type="Label" parent="Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-alignment = 1
+text = "Settings"
+label_settings = SubResource("LabelSettings_de60f")
+horizontal_alignment = 1
 
-[node name="MusicSlider" parent="HBoxContainer/SliderContainer" instance=ExtResource("2_l1r8h")]
+[node name="GridContainer" type="GridContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 64
+theme_override_constants/v_separation = 32
+columns = 2
 
-[node name="VoiceOverSlider" parent="HBoxContainer/SliderContainer" instance=ExtResource("2_l1r8h")]
+[node name="VoiceOverLabel" type="Label" parent="Panel/VBoxContainer/GridContainer"]
 layout_mode = 2
-size_flags_vertical = 2
+theme_override_font_sizes/font_size = 26
+text = "Master:"
+label_settings = SubResource("LabelSettings_5vhag")
+horizontal_alignment = 2
+vertical_alignment = 1
 
-[node name="SoundFxSlider" parent="HBoxContainer/SliderContainer" instance=ExtResource("2_l1r8h")]
+[node name="MarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer/GridContainer"]
 layout_mode = 2
-size_flags_vertical = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 32
 
-[connection signal="value_changed" from="HBoxContainer/SliderContainer/MusicSlider" to="HBoxContainer" method="_on_music_slider_value_changed"]
-[connection signal="value_changed" from="HBoxContainer/SliderContainer/VoiceOverSlider" to="HBoxContainer" method="_on_voice_over_slider_value_changed"]
-[connection signal="value_changed" from="HBoxContainer/SliderContainer/SoundFxSlider" to="HBoxContainer" method="_on_sound_fx_slider_value_changed"]
+[node name="VoiceOverSlider" parent="Panel/VBoxContainer/GridContainer/MarginContainer2" instance=ExtResource("2_l1r8h")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="MusicLabel" type="Label" parent="Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Music:"
+label_settings = SubResource("LabelSettings_5vhag")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 32
+
+[node name="MusicSlider" parent="Panel/VBoxContainer/GridContainer/MarginContainer" instance=ExtResource("2_l1r8h")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_icons/grabber = SubResource("AtlasTexture_jomjl")
+theme_override_icons/grabber_highlight = SubResource("AtlasTexture_jomjl")
+value = -20.0
+
+[node name="SoundFxLabel" type="Label" parent="Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Sound Fx:"
+label_settings = SubResource("LabelSettings_5vhag")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 32
+
+[node name="SoundFxSlider" parent="Panel/VBoxContainer/GridContainer/MarginContainer3" instance=ExtResource("2_l1r8h")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_icons/grabber = SubResource("AtlasTexture_mbgrt")
+theme_override_icons/grabber_highlight = SubResource("AtlasTexture_mbgrt")
+
+[node name="Border" type="Panel" parent="Panel"]
+z_index = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ire63")
+
+[node name="InnerBorder" type="Panel" parent="Panel"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7acws")
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="value_changed" from="Panel/VBoxContainer/GridContainer/MarginContainer2/VoiceOverSlider" to="." method="_on_voice_over_slider_value_changed"]
+[connection signal="value_changed" from="Panel/VBoxContainer/GridContainer/MarginContainer/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="Panel/VBoxContainer/GridContainer/MarginContainer3/SoundFxSlider" to="." method="_on_sound_fx_slider_value_changed"]

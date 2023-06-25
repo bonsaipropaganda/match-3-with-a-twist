@@ -1,0 +1,188 @@
+[gd_scene load_steps=18 format=3 uid="uid://ch28na6r55dlc"]
+
+[ext_resource type="Script" path="res://Content/UserInterface/main_menu.gd" id="1_4jtg3"]
+[ext_resource type="PackedScene" uid="uid://y26xkpybmr8r" path="res://Content/game_scene.tscn" id="2_fiuwg"]
+[ext_resource type="Texture2D" uid="uid://blgd5sbvd3rv3" path="res://art/gui/FreeGUI/Button_x8.png" id="4_7lr10"]
+[ext_resource type="Texture2D" uid="uid://wm4f7o8xmxa3" path="res://art/gui/FreeGUI/Button_pressed_x8.png" id="5_t2vgo"]
+[ext_resource type="Texture2D" uid="uid://bhmffmcpulflf" path="res://art/gui/FreeGUI/Button_hover_x8.png" id="6_hl3oj"]
+[ext_resource type="Theme" uid="uid://3ihnxje2sxwo" path="res://resources/theme/MainTheme.tres" id="7_te61c"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_etrrl"]
+font_size = 128
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6wsia"]
+atlas = ExtResource("4_7lr10")
+region = Rect2(55, 838, 310, 310)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yuqny"]
+atlas = ExtResource("5_t2vgo")
+region = Rect2(55, 838, 310, 310)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1c6gt"]
+atlas = ExtResource("6_hl3oj")
+region = Rect2(55, 838, 310, 310)
+
+[sub_resource type="LabelSettings" id="LabelSettings_d841h"]
+font_size = 52
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1np7"]
+atlas = ExtResource("4_7lr10")
+region = Rect2(3633, 1916, 310, 310)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mfim2"]
+atlas = ExtResource("5_t2vgo")
+region = Rect2(3633, 1916, 310, 310)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l0msi"]
+atlas = ExtResource("6_hl3oj")
+region = Rect2(3633, 1916, 310, 310)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6fsls"]
+atlas = ExtResource("4_7lr10")
+region = Rect2(3975, 1198, 310, 310)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ofcw"]
+atlas = ExtResource("5_t2vgo")
+region = Rect2(3975, 1198, 310, 310)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6baoc"]
+atlas = ExtResource("6_hl3oj")
+region = Rect2(3975, 1198, 310, 310)
+
+[node name="MainMenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_4jtg3")
+startScene = ExtResource("2_fiuwg")
+metadata/_edit_vertical_guides_ = []
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 0.1
+anchor_right = 0.85
+anchor_bottom = 0.9
+offset_left = -3.0
+offset_right = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Match 3 game"
+label_settings = SubResource("LabelSettings_etrrl")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 64
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+alignment_vertical = 2
+
+[node name="StartButton" type="TextureButton" parent="VBoxContainer/HBoxContainer/VBoxContainer/AspectRatioContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+texture_normal = SubResource("AtlasTexture_6wsia")
+texture_pressed = SubResource("AtlasTexture_yuqny")
+texture_hover = SubResource("AtlasTexture_1c6gt")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Start" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.7
+theme = ExtResource("7_te61c")
+text = "Start
+"
+label_settings = SubResource("LabelSettings_d841h")
+horizontal_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+alignment_vertical = 2
+
+[node name="SettingsButton" type="TextureButton" parent="VBoxContainer/HBoxContainer/VBoxContainer2/AspectRatioContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+texture_normal = SubResource("AtlasTexture_e1np7")
+texture_pressed = SubResource("AtlasTexture_mfim2")
+texture_hover = SubResource("AtlasTexture_l0msi")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Settings" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.7
+theme = ExtResource("7_te61c")
+text = "Settings
+"
+label_settings = SubResource("LabelSettings_d841h")
+horizontal_alignment = 1
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer3"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+alignment_vertical = 2
+
+[node name="ExitButton" type="TextureButton" parent="VBoxContainer/HBoxContainer/VBoxContainer3/AspectRatioContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+texture_normal = SubResource("AtlasTexture_6fsls")
+texture_pressed = SubResource("AtlasTexture_1ofcw")
+texture_hover = SubResource("AtlasTexture_6baoc")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Exit" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.7
+theme = ExtResource("7_te61c")
+text = "Exit
+"
+label_settings = SubResource("LabelSettings_d841h")
+horizontal_alignment = 1
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/VBoxContainer/AspectRatioContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/VBoxContainer2/AspectRatioContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/VBoxContainer3/AspectRatioContainer/ExitButton" to="." method="_on_exit_button_pressed"]

@@ -214,6 +214,8 @@ func on_swap_tile(from_pos, direction):
 		# sets new position based on where it came from place the direction of the swap
 		var to_pos = from_pos + direction
 		# this makes sure the tile can't be moved outside of the grid
+		var slideInstead = false
+		
 		if (to_pos.x < 0 || to_pos.x >= grid_width || to_pos.y < 0 || to_pos.y >= grid_height):
 			return
 		
@@ -227,6 +229,17 @@ func on_swap_tile(from_pos, direction):
 			return
 #		if grid[from_pos.y][from_pos.x].tile_type == Globals.TileType.GHOST or grid[to_pos.y][to_pos.x].tile_type == Globals.TileType.GHOST:
 #			return
+=======
+		if grid[to_pos.y][to_pos.x] != null:
+			if (grid[from_pos.y][from_pos.x].tile_type == grid[to_pos.y][to_pos.x].tile_type):
+				return
+			if Tile.TileStats.CAN_SWAP not in Tile.tile_stats[grid[from_pos.y][from_pos.x].tile_type] or Tile.TileStats.CAN_SWAP not in Tile.tile_stats[grid[to_pos.y][to_pos.x].tile_type]:
+				return
+		else:
+			slideInstead = true
+			if Tile.TileStats.CAN_SWAP not in Tile.tile_stats[grid[from_pos.y][from_pos.x].tile_type]:
+				return
+>>>>>>> main
 		
 		is_swapping = true
 		
@@ -258,11 +271,22 @@ func on_swap_tile(from_pos, direction):
 			await get_tree().create_timer(0.25).timeout
 			
 			tmp = grid[from_pos.y][from_pos.x]
+		
+		if !slideInstead:
+			var tmp = grid[from_pos.y][from_pos.x]
 			grid[from_pos.y][from_pos.x] = grid[to_pos.y][to_pos.x]
 			grid[to_pos.y][to_pos.x] = tmp
 		
 			set_tile_scene_position(grid[from_pos.y][from_pos.x], from_pos.x, from_pos.y)
 			set_tile_scene_position(grid[to_pos.y][to_pos.x], to_pos.x, to_pos.y)
+		else:
+			move_tile(from_pos.x, from_pos.y, to_pos.x, to_pos.y)
+		
+		
+		
+		if get_to_free() != []:
+			prevoiusSwaps = []
+		
 		
 		is_swapping = false
 

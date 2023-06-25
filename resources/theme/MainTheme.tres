@@ -1,10 +1,45 @@
-[gd_resource type="Theme" load_steps=6 format=3 uid="uid://3ihnxje2sxwo"]
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://3ihnxje2sxwo"]
 
 [ext_resource type="StyleBox" uid="uid://pygcsw676xxm" path="res://resources/theme/ButtonDisabledStyleBox.tres" id="1_u0bvg"]
 [ext_resource type="StyleBox" uid="uid://d1shvcn63sqr3" path="res://resources/theme/ButtonFocusStyleBox.tres" id="2_1ai04"]
 [ext_resource type="StyleBox" uid="uid://d3b2rb7ntxs2c" path="res://resources/theme/ButtonHoverStyleBox.tres" id="3_1nq7g"]
 [ext_resource type="StyleBox" uid="uid://bovohjd3p4a50" path="res://resources/theme/ButtonNormalStyleBox.tres" id="4_d8mcc"]
 [ext_resource type="StyleBox" uid="uid://v6ljhngmu6b0" path="res://resources/theme/ButtonPressedStyleBox.tres" id="5_rnwed"]
+[ext_resource type="Texture2D" uid="uid://dhfqchp5ex6ep" path="res://art/gui/FreeGUI/Button.svg" id="6_8f0pp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_36d3u"]
+atlas = ExtResource("6_8f0pp")
+region = Rect2(473, 10, 45, 45)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_78yfr"]
+atlas = ExtResource("6_8f0pp")
+region = Rect2(473, 10, 45, 45)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vqkcm"]
+bg_color = Color(0.870588, 0.870588, 0.870588, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2314n"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.568627, 0.568627, 0.568627, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [resource]
 Button/constants/h_separation = 0
@@ -16,3 +51,8 @@ Button/styles/focus = ExtResource("2_1ai04")
 Button/styles/hover = ExtResource("3_1nq7g")
 Button/styles/normal = ExtResource("4_d8mcc")
 Button/styles/pressed = ExtResource("5_rnwed")
+HSlider/icons/grabber = SubResource("AtlasTexture_36d3u")
+HSlider/icons/grabber_disabled = null
+HSlider/icons/grabber_highlight = SubResource("AtlasTexture_78yfr")
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_vqkcm")
+HSlider/styles/slider = SubResource("StyleBoxFlat_2314n")
