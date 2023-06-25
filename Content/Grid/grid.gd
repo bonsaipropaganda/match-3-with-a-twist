@@ -173,52 +173,42 @@ func on_swap_tile(from_pos, direction):
 	if done_updating and !doingSwap:
 
 		var to_pos = from_pos + direction
+		var slideInstead = false
 		
 		if (to_pos.x < 0 || to_pos.x >= grid_width || to_pos.y < 0 || to_pos.y >= grid_height):
 			return
 		
 		# Spawns a Temporary Tile
-		if grid[to_pos.y][to_pos.x] == null:
-			add_tile(to_pos.x,to_pos.y)
-			grid[to_pos.y][to_pos.x].tile_type = Tile.TileType.GHOST
-			grid[to_pos.y][to_pos.x].sprite2D.texture = Tile.tile_images[Tile.TileType.GHOST]
-			
-		if (grid[from_pos.y][from_pos.x].tile_type == grid[to_pos.y][to_pos.x].tile_type):
-			return
-		if Tile.TileStats.CAN_SWAP not in Tile.tile_stats[grid[from_pos.y][from_pos.x].tile_type] or Tile.TileStats.CAN_SWAP not in Tile.tile_stats[grid[to_pos.y][to_pos.x].tile_type]:
-			return
+		if grid[to_pos.y][to_pos.x] != null:
+			if (grid[from_pos.y][from_pos.x].tile_type == grid[to_pos.y][to_pos.x].tile_type):
+				return
+			if Tile.TileStats.CAN_SWAP not in Tile.tile_stats[grid[from_pos.y][from_pos.x].tile_type] or Tile.TileStats.CAN_SWAP not in Tile.tile_stats[grid[to_pos.y][to_pos.x].tile_type]:
+				return
+		else:
+			slideInstead = true
+			if Tile.TileStats.CAN_SWAP not in Tile.tile_stats[grid[from_pos.y][from_pos.x].tile_type]:
+				return
 		
 		doingSwap = true
 		
 		prevoiusSwaps.append(grid)
 		
-		var tmp = grid[from_pos.y][from_pos.x]
-		grid[from_pos.y][from_pos.x] = grid[to_pos.y][to_pos.x]
-		grid[to_pos.y][to_pos.x] = tmp
 		
-		set_tile_scene_position(grid[from_pos.y][from_pos.x], from_pos.x, from_pos.y)
-		set_tile_scene_position(grid[to_pos.y][to_pos.x], to_pos.x, to_pos.y)
-		
-		
-		
-		# Removes a Temporary Tile
-		#if grid[from_pos.y][from_pos.x].tile_type == Tile.TileType.GHOST:
-		#	grid[from_pos.y][from_pos.x].queue_free()
-		#	grid[from_pos.y][from_pos.x] = null
-		
-		if get_to_free() != []:
-			prevoiusSwaps = []
-		
-		# Reverts changes if no matches were made if allowed
-		if get_to_free() == [] and false:
-			await get_tree().create_timer(0.25).timeout
-			
-			tmp = grid[from_pos.y][from_pos.x]
+		if !slideInstead:
+			var tmp = grid[from_pos.y][from_pos.x]
 			grid[from_pos.y][from_pos.x] = grid[to_pos.y][to_pos.x]
 			grid[to_pos.y][to_pos.x] = tmp
 		
 			set_tile_scene_position(grid[from_pos.y][from_pos.x], from_pos.x, from_pos.y)
 			set_tile_scene_position(grid[to_pos.y][to_pos.x], to_pos.x, to_pos.y)
+		else:
+			move_tile(from_pos.x, from_pos.y, to_pos.x, to_pos.y)
+		
+		
+		
+		if get_to_free() != []:
+			prevoiusSwaps = []
+		
 		
 		doingSwap = false
 		done_updating = false

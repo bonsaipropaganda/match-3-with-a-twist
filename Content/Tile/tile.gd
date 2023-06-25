@@ -23,7 +23,7 @@ enum TileType {
 	GREEN,
 	YELLOW,
 	GREY,
-	GHOST,
+	#GHOST,
 }
 
 const tile_stats = [
@@ -31,8 +31,8 @@ const tile_stats = [
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
-	[TileStats.BREAK_ON_MATCH,TileStats.CAN_SWAP],                           
-	[TileStats.CAN_SWAP,TileStats.BREAK_ON_PRESSURE],
+	[TileStats.CAN_SWAP],                           
+	#[TileStats.CAN_SWAP,TileStats.BREAK_ON_PRESSURE],
 	]
 
 # Indexed by TileType
@@ -52,8 +52,8 @@ func initialise(_tile_width : float, margin_width):
 	$CollisionShape2D.position = Vector2.ONE * tile_width
 	$CollisionShape2D.shape.size = Vector2.ONE * tile_width * 2
 	
-	# Prevents Ghost tiles from spawning
-	tile_type = randi() % (TileType.size()-1)
+	
+	tile_type = randi() % TileType.size()
 	sprite2D = $Sprite2D
 	sprite2D.texture = tile_images[tile_type]
 
