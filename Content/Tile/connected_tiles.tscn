@@ -8,3 +8,5 @@ script = ExtResource("1_8hw2w")
 
 [node name="mouse_pos" type="Marker2D" parent="."]
 script = ExtResource("2_ewyyx")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
