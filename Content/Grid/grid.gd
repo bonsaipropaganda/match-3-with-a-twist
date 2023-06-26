@@ -168,10 +168,19 @@ func get_matched_tiles():
 			else:
 				to_check.clear()
 		
-		# Stops Tile from breaking if that tile doesnt have the BREAK_ON_MATCH Stat
-#		for tile in matched_tiles:
-#			if Tile.TileStats.BREAK_ON_MATCH not in Tile.tile_stats[tile[0]]:
-#				matched_tiles.erase(tile)
+				# Stops Tile from breaking if that tile doesnt have the BREAK_ON_MATCH Stat
+		for tile in matched_tiles:
+			if Tile.TileStats.BREAK_ON_MATCH not in Tile.tile_stats[tile[0]]:
+				matched_tiles.erase(tile)
+	
+	# Makes Tile break if that tile has the BREAK_ON_AGACENT_MATCH Stat and is agacent to a match that was made
+	for row in grid:
+		for tile in row:
+			if tile != null:
+				if Tile.TileStats.BREAK_ON_ADJACENT_MATCH in Tile.tile_stats[tile.tile_type]:
+					for free in matched_tiles:
+						if tile.grid_pos.distance_to(Vector2(free[1],free[2])) == 1:
+							to_check.append([tile.tile_type, tile.grid_pos.x, tile.grid_pos.y])
 		
 	return matched_tiles
 
@@ -204,6 +213,7 @@ func generate_connected_tiles():
 		var connected = connected_scene.instantiate()
 		connected.modulate = Color("243784") # for debug
 		add_child(connected)
+		connected.tile_width = tile_width
 		for tile in grouped_tiles[type]:
 			tile.reparent(connected)
 			# connects the tiles' tile_scene_clicked signal to the connected tile scene
@@ -216,20 +226,6 @@ func generate_connected_tiles():
 			
 			#var gp = tile.grid_pos # this is commented out temporarily so that it doesn't crash - bonsai im working on the tile scene making it so that it can be moved when it is reparented
 			#grid[gp.y][gp.x] = connected
-		for tile in to_free:
-			if Tile.TileStats.BREAK_ON_MATCH not in Tile.tile_stats[tile[0]]:
-				to_free.erase(tile)
-	
-	# Makes Tile break if that tile has the BREAK_ON_AGACENT_MATCH Stat and is agacent to a match that was made
-	for row in grid:
-		for tile in row:
-			if tile != null:
-				if Tile.TileStats.BREAK_ON_ADJACENT_MATCH in Tile.tile_stats[tile.tile_type]:
-					for free in to_free:
-						if tile.grid_pos.distance_to(Vector2(free[1],free[2])) == 1:
-							to_check.append([tile.tile_type, tile.grid_pos.x, tile.grid_pos.y])
-	to_free += to_check
-	return to_free
 
 func on_swap_tile(from_pos, direction):
 	if done_updating and !is_swapping:
