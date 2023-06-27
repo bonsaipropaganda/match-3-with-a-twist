@@ -7,6 +7,8 @@ var tile_width: int
 
 func _process(delta: float) -> void:
 	if clicked:
+		var children = get_children()
+		#print(children)
 		global_position = lerp(global_position,get_global_mouse_position(), 25 * delta)
 
 func _on_tile_clicked():
@@ -14,6 +16,6 @@ func _on_tile_clicked():
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_released("click"):
-		print("clicked = ", clicked)
+		#print("clicked = ", clicked)
 		clicked = false
-		print("clicked = ", clicked)
+		#print("clicked = ", clicked)
