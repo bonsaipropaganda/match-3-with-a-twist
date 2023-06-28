@@ -212,8 +212,6 @@ func get_to_free():
 
 
 func on_swap_tile(from_pos, direction):
-	move_left -= 1 # Decrease move counter
-	
 	if done_updating and !doingSwap:
 
 		var to_pos = from_pos + direction
@@ -236,6 +234,7 @@ func on_swap_tile(from_pos, direction):
 		doingSwap = true
 		
 		prevoiusSwaps.append(grid)
+		move_left -= 1 # Decrease move counter
 		
 		
 		if !slideInstead:
