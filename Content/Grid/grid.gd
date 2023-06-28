@@ -33,7 +33,7 @@ func _ready():
 				add_tile(x,y)
 	queue_redraw()
 
-func _process(delta):
+func _process(_delta):
 	if Engine.is_editor_hint():
 		queue_redraw()
 	else:
@@ -97,9 +97,9 @@ func set_tile_scene_position(tile, x, y):
 	tile.grid_pos = Vector2(x,y)
 
 func add_tile(x, y) -> bool:
-	if (x < 0 || x >= grid_width || y < 0 || y >= grid_height):
-		assert(false) # Do not try to add tiles out of bounds
-	if (grid[y][x] != null):
+	if x < 0 || x >= grid_width || y < 0 || y >= grid_height:
+		return false # Do not try to add tiles out of bounds
+	if grid[y][x] != null:
 		return false # Do not try to spawn tiles on top of each other
 	
 	var new_tile = tile_scene.instantiate()
@@ -233,10 +233,6 @@ func on_swap_tile(from_pos, direction):
 func on_unswap_tiles():
 	if done_updating and !doingSwap:
 		doingSwap = true
-		var to_pos:Vector2
-		var from_pos:Vector2
-		var tmp = grid[from_pos.y][from_pos.x]
-		
 		
 		# Still Needs Reimplemented
 		prevoiusSwaps.reverse()

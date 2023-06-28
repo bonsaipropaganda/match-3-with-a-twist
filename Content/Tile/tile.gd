@@ -53,7 +53,7 @@ func initialise(_tile_width : float, margin_width):
 	$CollisionShape2D.shape.size = Vector2.ONE * tile_width * 2
 	
 	
-	tile_type = randi() % TileType.size()
+	tile_type = randi() % TileType.size() as TileType
 	sprite2D = $Sprite2D
 	sprite2D.texture = tile_images[tile_type]
 
@@ -65,13 +65,13 @@ func _on_input_event(_viewport, event: InputEvent, _shape_idx):
 	if event.is_action_released("click"):
 		clicked = false
 
-func _process(delta):
+func _process(_delta):
 	if clicked:
 		var mouse_pos = get_viewport().get_mouse_position()
 		var my_pos = $CollisionShape2D.global_position
-		if abs(mouse_pos.x - my_pos.x) > tile_width/2:
+		if abs(mouse_pos.x - my_pos.x) > tile_width / 2:
 			Globals.emit_signal("swap_tile", grid_pos, Vector2(sign(mouse_pos.x - my_pos.x), 0))
 			clicked = false
-		if abs(mouse_pos.y - my_pos.y) > tile_width/2:
+		if abs(mouse_pos.y - my_pos.y) > tile_width / 2:
 			Globals.emit_signal("swap_tile", grid_pos, Vector2(0, sign(mouse_pos.y - my_pos.y)))
 			clicked = false
