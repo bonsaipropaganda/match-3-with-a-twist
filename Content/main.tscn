@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://c1oeet5cg5c1h"]
+
+[ext_resource type="Script" path="res://Content/main.gd" id="1_i4r2r"]
+[ext_resource type="Script" path="res://Content/menu_holder.gd" id="1_kvb6s"]
+[ext_resource type="AudioStream" uid="uid://dqydagu4nykml" path="res://art/sounds/Theme.ogg" id="3_l16xe"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_i4r2r")
+game_scene = "res://Content/game_scene.tscn"
+
+[node name="MenuHolder" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 2
+script = ExtResource("1_kvb6s")
+menus = {
+"GameOver": "res://Content/UserInterface/menus/game_over.tscn",
+"MainMenu": "res://Content/UserInterface/menus/main_menu.tscn",
+"Pause": "res://Content/UserInterface/menus/pause.tscn",
+"Settings": "res://Content/UserInterface/menus/settings.tscn"
+}
+
+[node name="Game" type="CanvasLayer" parent="."]
+
+[node name="Theme" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("3_l16xe")
+autoplay = true
+bus = &"Music"

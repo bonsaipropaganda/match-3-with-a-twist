@@ -6,6 +6,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8r60o"]
 
 [node name="Tile" type="Area2D"]
+monitoring = false
+monitorable = false
 script = ExtResource("1_pcm8c")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

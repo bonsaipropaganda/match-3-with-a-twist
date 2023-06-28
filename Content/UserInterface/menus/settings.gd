@@ -1,5 +1,8 @@
 extends Control
 
+
+@onready var menu_holder: MenuHolder = get_node("/root/Main").get_menu_holder()
+
 # Use your audio to test volume manipulation
 # TO-DO: Maybe add a sprite texture showing when the audio is mute or high
 
@@ -31,4 +34,4 @@ func _on_sound_fx_slider_value_changed(value):
 
 
 func _on_back_button_pressed() -> void:
-	hide()
+	menu_holder.close_menu()

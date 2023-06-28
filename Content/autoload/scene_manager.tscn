@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://dn61trmlj5326"]
 
-[ext_resource type="PackedScene" uid="uid://c5rmdjyocox8g" path="res://Content/UserInterface/audio_settings.tscn" id="1_f850x"]
+[ext_resource type="PackedScene" uid="uid://c5rmdjyocox8g" path="res://Content/UserInterface/settings.tscn" id="1_f850x"]
 [ext_resource type="Script" path="res://Content/autoload/scene_manager.gd" id="1_oo2cf"]
-[ext_resource type="PackedScene" uid="uid://ch28na6r55dlc" path="res://Content/UserInterface/main_menu.tscn" id="2_dbuxg"]
+[ext_resource type="PackedScene" uid="uid://cu0jbeakavbnn" path="res://Content/UserInterface/main_menu.tscn" id="2_dbuxg"]
 
 [node name="SceneManager" type="CanvasLayer"]
 layer = 10

@@ -1,30 +1,17 @@
 extends Control
 
-signal resume
-signal pause
 
-func _ready() -> void:
-	if owner and owner.has_signal("game_over"):
-		owner.game_over.connect(on_game_over)
+@onready var main: Node = get_node("/root/Main")
+@onready var menu_holder: MenuHolder = main.get_menu_holder()
+
 
 func _on_pause_button_pressed() -> void:
-	get_tree().paused = true
-	%PauseMenu.show()
-	pause.emit()
+	menu_holder.open_menu(&"Pause")
 
-func on_game_over() -> void:
-	%GameOverUI.show()
 
-func _on_resume_button_pressed() -> void:
-	get_tree().paused = false
-	%PauseMenu.hide()
-	resume.emit()
+# func _on_retry_button_pressed() -> void:
+# 	main.reset_game()
 
-func _on_settings_button_pressed() -> void:
-	SceneManager.open_settings()
 
-func _on_main_menu_button_pressed() -> void:
-	SceneManager.go_to_main_menu()
-
-func _on_retry_button_pressed() -> void:
-	get_tree().reload_current_scene()
+func set_moves_left(count: int) -> void:
+	%MovesLeftLabel.text = "%2d" % [count]

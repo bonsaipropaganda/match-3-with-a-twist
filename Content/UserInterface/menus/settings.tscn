@@ -1,22 +1,22 @@
 [gd_scene load_steps=19 format=3 uid="uid://c5rmdjyocox8g"]
 
-[ext_resource type="Script" path="res://Content/UserInterface/audio_settings.gd" id="1_b0xxb"]
-[ext_resource type="PackedScene" uid="uid://c3e6plvrjmj6l" path="res://Content/UserInterface/volume_slider.tscn" id="2_l1r8h"]
-[ext_resource type="Texture2D" uid="uid://blgd5sbvd3rv3" path="res://art/gui/FreeGUI/Button_x8.png" id="2_o68wg"]
-[ext_resource type="Texture2D" uid="uid://wm4f7o8xmxa3" path="res://art/gui/FreeGUI/Button_pressed_x8.png" id="3_lt8l7"]
-[ext_resource type="Texture2D" uid="uid://bhmffmcpulflf" path="res://art/gui/FreeGUI/Button_hover_x8.png" id="4_5wstc"]
-[ext_resource type="Texture2D" uid="uid://dhfqchp5ex6ep" path="res://art/gui/FreeGUI/Button.svg" id="6_ljc2q"]
+[ext_resource type="Script" path="res://Content/UserInterface/menus/settings.gd" id="1_csxai"]
+[ext_resource type="Texture2D" uid="uid://blgd5sbvd3rv3" path="res://art/gui/FreeGUI/Button_x8.png" id="2_ngwd8"]
+[ext_resource type="Texture2D" uid="uid://wm4f7o8xmxa3" path="res://art/gui/FreeGUI/Button_pressed_x8.png" id="3_hi44n"]
+[ext_resource type="Texture2D" uid="uid://bhmffmcpulflf" path="res://art/gui/FreeGUI/Button_hover_x8.png" id="4_tfpyp"]
+[ext_resource type="PackedScene" uid="uid://c3e6plvrjmj6l" path="res://Content/UserInterface/volume_slider.tscn" id="5_0yscq"]
+[ext_resource type="Texture2D" uid="uid://dhfqchp5ex6ep" path="res://art/gui/FreeGUI/Button.svg" id="6_kur3w"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_odts3"]
-atlas = ExtResource("2_o68wg")
+atlas = ExtResource("2_ngwd8")
 region = Rect2(1072, 1197, 310, 310)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0el5p"]
-atlas = ExtResource("3_lt8l7")
+atlas = ExtResource("3_hi44n")
 region = Rect2(1072, 1197, 310, 310)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pnpn1"]
-atlas = ExtResource("4_5wstc")
+atlas = ExtResource("4_tfpyp")
 region = Rect2(1072, 1197, 310, 310)
 
 [sub_resource type="Gradient" id="Gradient_7nrk4"]
@@ -41,11 +41,11 @@ font_size = 72
 font_size = 56
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jomjl"]
-atlas = ExtResource("6_ljc2q")
+atlas = ExtResource("6_kur3w")
 region = Rect2(524, 10, 45, 45)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mbgrt"]
-atlas = ExtResource("6_ljc2q")
+atlas = ExtResource("6_kur3w")
 region = Rect2(572, 10, 45, 45)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ire63"]
@@ -87,7 +87,7 @@ corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 shadow_size = 30
 
-[node name="AudioSettings" type="Control"]
+[node name="Settings" type="Control"]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -95,18 +95,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_b0xxb")
+script = ExtResource("1_csxai")
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
-
-[node name="MusicAudio" type="AudioStreamPlayer" parent="."]
-autoplay = true
-
-[node name="VoiceOverAudio" type="AudioStreamPlayer" parent="."]
-autoplay = true
-
-[node name="SoundFx" type="AudioStreamPlayer" parent="."]
-autoplay = true
 
 [node name="BackButton" type="TextureButton" parent="."]
 layout_mode = 1
@@ -176,7 +167,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_right = 32
 
-[node name="VoiceOverSlider" parent="Panel/VBoxContainer/GridContainer/MarginContainer2" instance=ExtResource("2_l1r8h")]
+[node name="VoiceOverSlider" parent="Panel/VBoxContainer/GridContainer/MarginContainer2" instance=ExtResource("5_0yscq")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -194,7 +185,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_right = 32
 
-[node name="MusicSlider" parent="Panel/VBoxContainer/GridContainer/MarginContainer" instance=ExtResource("2_l1r8h")]
+[node name="MusicSlider" parent="Panel/VBoxContainer/GridContainer/MarginContainer" instance=ExtResource("5_0yscq")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -215,7 +206,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_right = 32
 
-[node name="SoundFxSlider" parent="Panel/VBoxContainer/GridContainer/MarginContainer3" instance=ExtResource("2_l1r8h")]
+[node name="SoundFxSlider" parent="Panel/VBoxContainer/GridContainer/MarginContainer3" instance=ExtResource("5_0yscq")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1

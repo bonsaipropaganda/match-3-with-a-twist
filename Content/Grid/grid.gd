@@ -1,6 +1,11 @@
 @tool
 extends Node2D
 
+
+signal move_left_changed(value: int)
+signal game_over()
+
+
 const GRID_COLOR = Color("fce1cf")
 const LINE_WIDTH = 2.0
 const TILE_MARGIN = 3.0
@@ -19,19 +24,35 @@ var done_updating := false
 var doingSwap:bool = false
 var prevoiusSwaps:Array = []
 
-signal tiles_swap
-signal send_moves_to_label
+
+
+# Move count stuff
+var move_left: int = 10:
+	set(value):
+		move_left = value
+		move_left_changed.emit(value)
+		if value <= 0:
+			# TODO: game over should be at the end of the grid update (when nothing moves anymore)
+			game_over.emit()
+
 
 func _ready():
-	if !Engine.is_editor_hint():
-		$Timer.wait_time = TIMESTEP
-		Globals.connect("swap_tile", on_swap_tile)
-		grid = init_grid(grid_width, grid_height)
-		
-		for y in grid_height:
-			for x in grid_width:
-				add_tile(x,y)
 	queue_redraw()
+	
+	if Engine.is_editor_hint():
+		return
+	
+	$Timer.wait_time = TIMESTEP
+	Globals.connect("swap_tile", on_swap_tile)
+	grid = init_grid(grid_width, grid_height)
+	
+	for y in grid_height:
+		for x in grid_width:
+			add_tile(x,y)
+	
+	# Update move left after ready
+	move_left_changed.emit(move_left)
+	
 
 func _process(_delta):
 	if Engine.is_editor_hint():
@@ -40,8 +61,10 @@ func _process(_delta):
 		if !done_updating && $Timer.is_stopped():
 			$Timer.start()
 
+
 func _on_timer_timeout():
 	update_grid()
+
 
 func update_grid():
 	var settled = true
@@ -84,6 +107,7 @@ func init_grid(width, height):
 			g[i].append(null)
 	return g
 
+
 func _draw():
 	# Vertical lines
 	for x in grid_width + 1:
@@ -92,9 +116,11 @@ func _draw():
 	for y in grid_height + 1:
 		draw_line(Vector2(0, y * tile_width), Vector2(grid_width * tile_width, y * tile_width), GRID_COLOR, 2.0)
 
+
 func set_tile_scene_position(tile, x, y):
 	tile.position = Vector2(x * tile_width, y * tile_width) + Vector2(TILE_MARGIN, TILE_MARGIN)
 	tile.grid_pos = Vector2(x,y)
+
 
 func add_tile(x, y) -> bool:
 	if x < 0 || x >= grid_width || y < 0 || y >= grid_height:
@@ -109,6 +135,7 @@ func add_tile(x, y) -> bool:
 	add_child(new_tile)
 	return true
 
+
 # Move tile to empty space
 func move_tile(x1, y1, x2, y2):
 	if grid[y1][x1] != null && grid[y2][x2] == null:
@@ -116,11 +143,13 @@ func move_tile(x1, y1, x2, y2):
 		grid[y2][x2] = grid[y1][x1]
 		grid[y1][x1] = null
 
+
 func can_fall(x, y):
 	if y == grid_height - 1:
 		return false
 	else:
 		return grid[y][x] != null && grid[y+1][x] == null
+
 
 func get_to_free():
 	var to_free := []
@@ -181,8 +210,10 @@ func get_to_free():
 	to_free += to_check
 	return to_free
 
+
 func on_swap_tile(from_pos, direction):
-	tiles_swap.emit()
+	move_left -= 1 # Decrease move counter
+	
 	if done_updating and !doingSwap:
 
 		var to_pos = from_pos + direction
@@ -230,6 +261,7 @@ func on_swap_tile(from_pos, direction):
 		doingSwap = false
 		done_updating = false
 
+
 func on_unswap_tiles():
 	if done_updating and !doingSwap:
 		doingSwap = true
@@ -244,16 +276,18 @@ func on_unswap_tiles():
 		doingSwap = false
 		done_updating = false
 
+
 # basically add more moves depending on the match size
 func add_moves(tiles_matched):
 	if tiles_matched == 3:
-		send_moves_to_label.emit(1)
+		move_left += 1
 	elif tiles_matched == 4:
-		send_moves_to_label.emit(2)
+		move_left += 2
 	elif tiles_matched == 5:
-		send_moves_to_label.emit(3)
+		move_left += 3
 	elif tiles_matched >= 6:
-		send_moves_to_label.emit(5)
+		move_left += 5
+
 
 #func update_tile_group(x, y, group_id, tile_type):
 #	if (x < 0 || x >= grid_width || y < 0 || y >= grid_height || grid[y][x] == null):

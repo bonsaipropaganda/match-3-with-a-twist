@@ -1,52 +1,51 @@
-[gd_scene load_steps=22 format=3 uid="uid://cu0jbeakavbnn"]
+[gd_scene load_steps=21 format=3 uid="uid://cu0jbeakavbnn"]
 
-[ext_resource type="Script" path="res://Content/UserInterface/main_menu.gd" id="1_4jtg3"]
-[ext_resource type="PackedScene" uid="uid://y26xkpybmr8r" path="res://Content/game_scene.tscn" id="2_fiuwg"]
-[ext_resource type="Texture2D" uid="uid://cc6ktbeachhy6" path="res://art/gui/menu/MixMatch - Background.png" id="3_28kfa"]
-[ext_resource type="Texture2D" uid="uid://lwkk27tgpo2v" path="res://art/gui/menu/MixMatch - Mix.png" id="3_omnnl"]
-[ext_resource type="Texture2D" uid="uid://blgd5sbvd3rv3" path="res://art/gui/FreeGUI/Button_x8.png" id="4_7lr10"]
-[ext_resource type="Texture2D" uid="uid://duug7n2f8inkm" path="res://art/gui/menu/MixMatch - Match.png" id="4_v5flv"]
-[ext_resource type="Texture2D" uid="uid://cb0hm00cus2wr" path="res://art/gui/menu/MixMatch - Pro.png" id="5_7j5c6"]
-[ext_resource type="Texture2D" uid="uid://wm4f7o8xmxa3" path="res://art/gui/FreeGUI/Button_pressed_x8.png" id="5_t2vgo"]
-[ext_resource type="Texture2D" uid="uid://bhmffmcpulflf" path="res://art/gui/FreeGUI/Button_hover_x8.png" id="6_hl3oj"]
-[ext_resource type="Texture2D" uid="uid://hj613qwurt41" path="res://art/gui/menu/MixMatch - Start.png" id="9_peqfe"]
-[ext_resource type="Texture2D" uid="uid://b701118bekoac" path="res://art/gui/menu/MixMatch - Settings.png" id="10_mt12n"]
-[ext_resource type="Texture2D" uid="uid://dyqydcfl28tgt" path="res://art/gui/menu/MixMatch - Exit.png" id="11_rf0sb"]
+[ext_resource type="Script" path="res://Content/UserInterface/menus/main_menu.gd" id="1_nswlg"]
+[ext_resource type="Texture2D" uid="uid://cc6ktbeachhy6" path="res://art/gui/menu/MixMatch - Background.png" id="2_hsjg4"]
+[ext_resource type="Texture2D" uid="uid://lwkk27tgpo2v" path="res://art/gui/menu/MixMatch - Mix.png" id="3_bpuph"]
+[ext_resource type="Texture2D" uid="uid://duug7n2f8inkm" path="res://art/gui/menu/MixMatch - Match.png" id="4_cailh"]
+[ext_resource type="Texture2D" uid="uid://cb0hm00cus2wr" path="res://art/gui/menu/MixMatch - Pro.png" id="5_ie051"]
+[ext_resource type="Texture2D" uid="uid://blgd5sbvd3rv3" path="res://art/gui/FreeGUI/Button_x8.png" id="6_0p56q"]
+[ext_resource type="Texture2D" uid="uid://wm4f7o8xmxa3" path="res://art/gui/FreeGUI/Button_pressed_x8.png" id="7_vab7w"]
+[ext_resource type="Texture2D" uid="uid://bhmffmcpulflf" path="res://art/gui/FreeGUI/Button_hover_x8.png" id="8_2m7lw"]
+[ext_resource type="Texture2D" uid="uid://hj613qwurt41" path="res://art/gui/menu/MixMatch - Start.png" id="9_708br"]
+[ext_resource type="Texture2D" uid="uid://b701118bekoac" path="res://art/gui/menu/MixMatch - Settings.png" id="10_u34qs"]
+[ext_resource type="Texture2D" uid="uid://dyqydcfl28tgt" path="res://art/gui/menu/MixMatch - Exit.png" id="11_3fbic"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6wsia"]
-atlas = ExtResource("4_7lr10")
+atlas = ExtResource("6_0p56q")
 region = Rect2(55, 838, 310, 310)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yuqny"]
-atlas = ExtResource("5_t2vgo")
+atlas = ExtResource("7_vab7w")
 region = Rect2(55, 838, 310, 310)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1c6gt"]
-atlas = ExtResource("6_hl3oj")
+atlas = ExtResource("8_2m7lw")
 region = Rect2(55, 838, 310, 310)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e1np7"]
-atlas = ExtResource("4_7lr10")
+atlas = ExtResource("6_0p56q")
 region = Rect2(3633, 1916, 310, 310)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mfim2"]
-atlas = ExtResource("5_t2vgo")
+atlas = ExtResource("7_vab7w")
 region = Rect2(3633, 1916, 310, 310)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l0msi"]
-atlas = ExtResource("6_hl3oj")
+atlas = ExtResource("8_2m7lw")
 region = Rect2(3633, 1916, 310, 310)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6fsls"]
-atlas = ExtResource("4_7lr10")
+atlas = ExtResource("6_0p56q")
 region = Rect2(3975, 1198, 310, 310)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1ofcw"]
-atlas = ExtResource("5_t2vgo")
+atlas = ExtResource("7_vab7w")
 region = Rect2(3975, 1198, 310, 310)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6baoc"]
-atlas = ExtResource("6_hl3oj")
+atlas = ExtResource("8_2m7lw")
 region = Rect2(3975, 1198, 310, 310)
 
 [node name="MainMenu" type="Control"]
@@ -58,8 +57,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("1_4jtg3")
-startScene = ExtResource("2_fiuwg")
+script = ExtResource("1_nswlg")
 metadata/_edit_vertical_guides_ = []
 
 [node name="BoxContainer" type="BoxContainer" parent="."]
@@ -71,7 +69,7 @@ anchor_bottom = 1.0
 [node name="Background" type="TextureRect" parent="BoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("3_28kfa")
+texture = ExtResource("2_hsjg4")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="BoxContainer/Background"]
 layout_mode = 1
@@ -94,17 +92,17 @@ theme_override_constants/separation = -200
 [node name="MixMatch-Mix" type="TextureRect" parent="BoxContainer/Background/VBoxContainer/TitleContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("3_omnnl")
+texture = ExtResource("3_bpuph")
 
 [node name="MixMatch-Match" type="TextureRect" parent="BoxContainer/Background/VBoxContainer/TitleContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("4_v5flv")
+texture = ExtResource("4_cailh")
 
 [node name="MixMatch-Pro" type="TextureRect" parent="BoxContainer/Background/VBoxContainer/TitleContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("5_7j5c6")
+texture = ExtResource("5_ie051")
 
 [node name="OptionsContainer" type="HBoxContainer" parent="BoxContainer/Background/VBoxContainer"]
 layout_mode = 2
@@ -137,7 +135,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.7
-texture = ExtResource("9_peqfe")
+texture = ExtResource("9_708br")
 
 [node name="SettingsContainer" type="VBoxContainer" parent="BoxContainer/Background/VBoxContainer/OptionsContainer"]
 layout_mode = 2
@@ -165,7 +163,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.7
-texture = ExtResource("10_mt12n")
+texture = ExtResource("10_u34qs")
 
 [node name="ExitContainer" type="VBoxContainer" parent="BoxContainer/Background/VBoxContainer/OptionsContainer"]
 layout_mode = 2
@@ -193,7 +191,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.7
-texture = ExtResource("11_rf0sb")
+texture = ExtResource("11_3fbic")
 
 [connection signal="pressed" from="BoxContainer/Background/VBoxContainer/OptionsContainer/StartContainer/AspectRatioContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="BoxContainer/Background/VBoxContainer/OptionsContainer/SettingsContainer/AspectRatioContainer/SettingsButton" to="." method="_on_settings_button_pressed"]

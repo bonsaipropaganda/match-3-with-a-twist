@@ -1,0 +1,197 @@
+[gd_scene load_steps=17 format=3 uid="uid://b5y6aqloq7thx"]
+
+[ext_resource type="Texture2D" uid="uid://blgd5sbvd3rv3" path="res://art/gui/FreeGUI/Button_x8.png" id="1_dv0py"]
+[ext_resource type="Script" path="res://Content/UserInterface/menus/pause.gd" id="1_phfw2"]
+[ext_resource type="Texture2D" uid="uid://wm4f7o8xmxa3" path="res://art/gui/FreeGUI/Button_pressed_x8.png" id="2_ucdol"]
+[ext_resource type="Texture2D" uid="uid://bhmffmcpulflf" path="res://art/gui/FreeGUI/Button_hover_x8.png" id="3_t3syy"]
+[ext_resource type="Theme" uid="uid://3ihnxje2sxwo" path="res://resources/theme/MainTheme.tres" id="4_uea4g"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_48p4b"]
+font_size = 72
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2uvy1"]
+atlas = ExtResource("1_dv0py")
+region = Rect2(55, 838, 310, 310)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4pv4q"]
+atlas = ExtResource("2_ucdol")
+region = Rect2(55, 838, 310, 310)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xyw2j"]
+atlas = ExtResource("3_t3syy")
+region = Rect2(55, 838, 310, 310)
+
+[sub_resource type="LabelSettings" id="LabelSettings_t7woh"]
+font_size = 36
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ohii"]
+atlas = ExtResource("1_dv0py")
+region = Rect2(3633, 1916, 310, 310)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ve836"]
+atlas = ExtResource("2_ucdol")
+region = Rect2(3633, 1916, 310, 310)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0eck"]
+atlas = ExtResource("3_t3syy")
+region = Rect2(3633, 1916, 310, 310)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k1a1a"]
+atlas = ExtResource("1_dv0py")
+region = Rect2(730, 2277, 310, 310)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_be2je"]
+atlas = ExtResource("2_ucdol")
+region = Rect2(730, 2277, 310, 310)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rhoto"]
+atlas = ExtResource("3_t3syy")
+region = Rect2(730, 2277, 310, 310)
+
+[node name="PauseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_phfw2")
+
+[node name="Overlay" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.490196)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.272
+anchor_top = 0.165
+anchor_right = 0.728
+anchor_bottom = 0.84
+offset_left = -0.160034
+offset_top = 0.199997
+offset_right = 0.159912
+offset_bottom = 0.199951
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+text = "Paused"
+label_settings = SubResource("LabelSettings_48p4b")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 64
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+alignment_vertical = 2
+
+[node name="ResumeButton" type="TextureButton" parent="VBoxContainer/HBoxContainer/VBoxContainer/AspectRatioContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+texture_normal = SubResource("AtlasTexture_2uvy1")
+texture_pressed = SubResource("AtlasTexture_4pv4q")
+texture_hover = SubResource("AtlasTexture_xyw2j")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Resume" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme = ExtResource("4_uea4g")
+text = "Resume
+"
+label_settings = SubResource("LabelSettings_t7woh")
+horizontal_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+alignment_vertical = 2
+
+[node name="SettingsButton" type="TextureButton" parent="VBoxContainer/HBoxContainer/VBoxContainer2/AspectRatioContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+texture_normal = SubResource("AtlasTexture_3ohii")
+texture_pressed = SubResource("AtlasTexture_ve836")
+texture_hover = SubResource("AtlasTexture_r0eck")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Settings" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme = ExtResource("4_uea4g")
+text = "Settings
+"
+label_settings = SubResource("LabelSettings_t7woh")
+horizontal_alignment = 1
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer3"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+alignment_vertical = 2
+
+[node name="MainMenuButton" type="TextureButton" parent="VBoxContainer/HBoxContainer/VBoxContainer3/AspectRatioContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+texture_normal = SubResource("AtlasTexture_k1a1a")
+texture_pressed = SubResource("AtlasTexture_be2je")
+texture_hover = SubResource("AtlasTexture_rhoto")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="MainMenu" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme = ExtResource("4_uea4g")
+text = "Main Menu
+"
+label_settings = SubResource("LabelSettings_t7woh")
+horizontal_alignment = 1
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/VBoxContainer/AspectRatioContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/VBoxContainer2/AspectRatioContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/VBoxContainer3/AspectRatioContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

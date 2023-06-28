@@ -1,10 +1,10 @@
-[gd_scene load_steps=29 format=3 uid="uid://44pumqm1otrx"]
+[gd_scene load_steps=9 format=3 uid="uid://44pumqm1otrx"]
 
 [ext_resource type="Texture2D" uid="uid://blgd5sbvd3rv3" path="res://art/gui/FreeGUI/Button_x8.png" id="1_vhol0"]
 [ext_resource type="Script" path="res://Content/UserInterface/game_ui.gd" id="1_vjmls"]
 [ext_resource type="Texture2D" uid="uid://wm4f7o8xmxa3" path="res://art/gui/FreeGUI/Button_pressed_x8.png" id="2_pl6m7"]
 [ext_resource type="Texture2D" uid="uid://bhmffmcpulflf" path="res://art/gui/FreeGUI/Button_hover_x8.png" id="3_jhhtc"]
-[ext_resource type="Theme" uid="uid://3ihnxje2sxwo" path="res://resources/theme/MainTheme.tres" id="5_3n00s"]
+[ext_resource type="FontFile" uid="uid://cq58k7wkj7k25" path="res://art/fonts/brandy_brunch/BradBunR.ttf" id="5_xvdsi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dlgyj"]
 atlas = ExtResource("1_vhol0")
@@ -18,81 +18,6 @@ region = Rect2(1072, 2640, 310, 310)
 atlas = ExtResource("3_jhhtc")
 region = Rect2(1072, 2640, 310, 310)
 
-[sub_resource type="LabelSettings" id="LabelSettings_ofrci"]
-font_size = 86
-
-[sub_resource type="LabelSettings" id="LabelSettings_buf1g"]
-font_size = 48
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dokui"]
-atlas = ExtResource("1_vhol0")
-region = Rect2(1965, 2274, 310, 310)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sy7fj"]
-atlas = ExtResource("2_pl6m7")
-region = Rect2(1965, 2274, 310, 310)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_iasw6"]
-atlas = ExtResource("3_jhhtc")
-region = Rect2(1965, 2274, 310, 310)
-
-[sub_resource type="LabelSettings" id="LabelSettings_2v4y8"]
-font_size = 36
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wh80d"]
-atlas = ExtResource("1_vhol0")
-region = Rect2(730, 2277, 310, 310)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3mefx"]
-atlas = ExtResource("2_pl6m7")
-region = Rect2(730, 2277, 310, 310)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lmgnc"]
-atlas = ExtResource("3_jhhtc")
-region = Rect2(730, 2277, 310, 310)
-
-[sub_resource type="LabelSettings" id="LabelSettings_eowo7"]
-font_size = 72
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wi0wo"]
-atlas = ExtResource("1_vhol0")
-region = Rect2(55, 838, 310, 310)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_n2wvn"]
-atlas = ExtResource("2_pl6m7")
-region = Rect2(55, 838, 310, 310)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_an2v3"]
-atlas = ExtResource("3_jhhtc")
-region = Rect2(55, 838, 310, 310)
-
-[sub_resource type="LabelSettings" id="LabelSettings_a3a85"]
-font_size = 36
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4piw8"]
-atlas = ExtResource("1_vhol0")
-region = Rect2(3633, 1916, 310, 310)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_l05fy"]
-atlas = ExtResource("2_pl6m7")
-region = Rect2(3633, 1916, 310, 310)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_07ncd"]
-atlas = ExtResource("3_jhhtc")
-region = Rect2(3633, 1916, 310, 310)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_06sau"]
-atlas = ExtResource("1_vhol0")
-region = Rect2(730, 2277, 310, 310)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nknld"]
-atlas = ExtResource("2_pl6m7")
-region = Rect2(730, 2277, 310, 310)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7b7tp"]
-atlas = ExtResource("3_jhhtc")
-region = Rect2(730, 2277, 310, 310)
-
 [node name="GameUI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -100,14 +25,29 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_vjmls")
 
-[node name="PauseButton" type="TextureButton" parent="."]
-layout_mode = 0
-offset_left = 43.0
-offset_top = 31.0
-offset_right = 112.0
-offset_bottom = 98.0
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+
+[node name="Control" type="Control" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="PauseButton" type="TextureButton" parent="MarginContainer/Control"]
+layout_mode = 1
+offset_top = 20.0
+offset_right = 332.0
+offset_bottom = 99.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.1
 texture_normal = SubResource("AtlasTexture_dlgyj")
@@ -116,280 +56,27 @@ texture_hover = SubResource("AtlasTexture_xame0")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="GameOverUI" type="Control" parent="."]
+[node name="MovesLeft" type="HBoxContainer" parent="MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -174.0
+offset_right = 174.0
+offset_bottom = 79.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Control/MovesLeft"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_xvdsi")
+theme_override_font_sizes/font_size = 64
+text = "Moves left: "
+
+[node name="MovesLeftLabel" type="Label" parent="MarginContainer/Control/MovesLeft"]
 unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Overlay" type="ColorRect" parent="GameOverUI"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 0.490196)
-
-[node name="VBoxContainer" type="VBoxContainer" parent="GameOverUI"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.272
-anchor_top = 0.0816667
-anchor_right = 0.728
-anchor_bottom = 0.923333
-offset_left = -0.160034
-offset_top = 0.199997
-offset_right = 0.159912
-offset_bottom = 0.199951
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 36
-metadata/_edit_use_anchors_ = true
-
-[node name="Title" type="Label" parent="GameOverUI/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 1
-text = "Game Over
-"
-label_settings = SubResource("LabelSettings_ofrci")
-horizontal_alignment = 1
-vertical_alignment = 2
+theme_override_fonts/font = ExtResource("5_xvdsi")
+theme_override_font_sizes/font_size = 64
+text = "XX"
 
-[node name="Score" type="Label" parent="GameOverUI/VBoxContainer"]
-layout_mode = 2
-text = "Your Score: xxx"
-label_settings = SubResource("LabelSettings_buf1g")
-horizontal_alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="GameOverUI/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 32
-
-[node name="VBoxContainer" type="VBoxContainer" parent="GameOverUI/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 16
-
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="GameOverUI/VBoxContainer/HBoxContainer/VBoxContainer"]
-clip_contents = true
-layout_mode = 2
-size_flags_vertical = 3
-alignment_vertical = 2
-
-[node name="RetryButton" type="TextureButton" parent="GameOverUI/VBoxContainer/HBoxContainer/VBoxContainer/AspectRatioContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 3.0
-texture_normal = SubResource("AtlasTexture_dokui")
-texture_pressed = SubResource("AtlasTexture_sy7fj")
-texture_hover = SubResource("AtlasTexture_iasw6")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="Retry" type="Label" parent="GameOverUI/VBoxContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme = ExtResource("5_3n00s")
-text = "Retry
-
-"
-label_settings = SubResource("LabelSettings_2v4y8")
-horizontal_alignment = 1
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="GameOverUI/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 16
-
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="GameOverUI/VBoxContainer/HBoxContainer/VBoxContainer2"]
-clip_contents = true
-layout_mode = 2
-size_flags_vertical = 3
-alignment_vertical = 2
-
-[node name="MainMenuButton" type="TextureButton" parent="GameOverUI/VBoxContainer/HBoxContainer/VBoxContainer2/AspectRatioContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 3.0
-texture_normal = SubResource("AtlasTexture_wh80d")
-texture_pressed = SubResource("AtlasTexture_3mefx")
-texture_hover = SubResource("AtlasTexture_lmgnc")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="MainMenu" type="Label" parent="GameOverUI/VBoxContainer/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme = ExtResource("5_3n00s")
-text = "Main Menu
-"
-label_settings = SubResource("LabelSettings_2v4y8")
-horizontal_alignment = 1
-
-[node name="PauseMenu" type="Control" parent="."]
-unique_name_in_owner = true
-process_mode = 2
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Overlay" type="ColorRect" parent="PauseMenu"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 0.490196)
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.272
-anchor_top = 0.165
-anchor_right = 0.728
-anchor_bottom = 0.84
-offset_left = -0.160034
-offset_top = 0.199997
-offset_right = 0.159912
-offset_bottom = 0.199951
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 20
-
-[node name="Title" type="Label" parent="PauseMenu/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.2
-text = "Paused"
-label_settings = SubResource("LabelSettings_eowo7")
-horizontal_alignment = 1
-vertical_alignment = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="PauseMenu/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 64
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 16
-
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="PauseMenu/VBoxContainer/HBoxContainer/VBoxContainer"]
-clip_contents = true
-layout_mode = 2
-size_flags_vertical = 3
-alignment_vertical = 2
-
-[node name="ResumeButton" type="TextureButton" parent="PauseMenu/VBoxContainer/HBoxContainer/VBoxContainer/AspectRatioContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 3.0
-texture_normal = SubResource("AtlasTexture_wi0wo")
-texture_pressed = SubResource("AtlasTexture_n2wvn")
-texture_hover = SubResource("AtlasTexture_an2v3")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="Resume" type="Label" parent="PauseMenu/VBoxContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-theme = ExtResource("5_3n00s")
-text = "Resume
-"
-label_settings = SubResource("LabelSettings_a3a85")
-horizontal_alignment = 1
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="PauseMenu/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 16
-
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="PauseMenu/VBoxContainer/HBoxContainer/VBoxContainer2"]
-clip_contents = true
-layout_mode = 2
-size_flags_vertical = 3
-alignment_vertical = 2
-
-[node name="SettingsButton" type="TextureButton" parent="PauseMenu/VBoxContainer/HBoxContainer/VBoxContainer2/AspectRatioContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 3.0
-texture_normal = SubResource("AtlasTexture_4piw8")
-texture_pressed = SubResource("AtlasTexture_l05fy")
-texture_hover = SubResource("AtlasTexture_07ncd")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="Settings" type="Label" parent="PauseMenu/VBoxContainer/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-theme = ExtResource("5_3n00s")
-text = "Settings
-"
-label_settings = SubResource("LabelSettings_a3a85")
-horizontal_alignment = 1
-
-[node name="VBoxContainer3" type="VBoxContainer" parent="PauseMenu/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 16
-
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="PauseMenu/VBoxContainer/HBoxContainer/VBoxContainer3"]
-clip_contents = true
-layout_mode = 2
-size_flags_vertical = 3
-alignment_vertical = 2
-
-[node name="MainMenuButton" type="TextureButton" parent="PauseMenu/VBoxContainer/HBoxContainer/VBoxContainer3/AspectRatioContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 3.0
-texture_normal = SubResource("AtlasTexture_06sau")
-texture_pressed = SubResource("AtlasTexture_nknld")
-texture_hover = SubResource("AtlasTexture_7b7tp")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="MainMenu" type="Label" parent="PauseMenu/VBoxContainer/HBoxContainer/VBoxContainer3"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-theme = ExtResource("5_3n00s")
-text = "Main Menu
-"
-label_settings = SubResource("LabelSettings_a3a85")
-horizontal_alignment = 1
-
-[connection signal="pressed" from="PauseButton" to="." method="_on_pause_button_pressed"]
-[connection signal="pressed" from="GameOverUI/VBoxContainer/HBoxContainer/VBoxContainer/AspectRatioContainer/RetryButton" to="." method="_on_retry_button_pressed"]
-[connection signal="pressed" from="GameOverUI/VBoxContainer/HBoxContainer/VBoxContainer/AspectRatioContainer/RetryButton" to="GameOverUI" method="_on_retry_button_pressed" flags=18]
-[connection signal="pressed" from="GameOverUI/VBoxContainer/HBoxContainer/VBoxContainer2/AspectRatioContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
-[connection signal="pressed" from="GameOverUI/VBoxContainer/HBoxContainer/VBoxContainer2/AspectRatioContainer/MainMenuButton" to="GameOverUI" method="_on_main_menu_button_pressed" flags=18]
-[connection signal="pressed" from="PauseMenu/VBoxContainer/HBoxContainer/VBoxContainer/AspectRatioContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
-[connection signal="pressed" from="PauseMenu/VBoxContainer/HBoxContainer/VBoxContainer/AspectRatioContainer/ResumeButton" to="PauseMenu" method="_on_resume_button_pressed" flags=18]
-[connection signal="pressed" from="PauseMenu/VBoxContainer/HBoxContainer/VBoxContainer2/AspectRatioContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
-[connection signal="pressed" from="PauseMenu/VBoxContainer/HBoxContainer/VBoxContainer2/AspectRatioContainer/SettingsButton" to="PauseMenu" method="_on_settings_button_pressed" flags=18]
-[connection signal="pressed" from="PauseMenu/VBoxContainer/HBoxContainer/VBoxContainer3/AspectRatioContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
-[connection signal="pressed" from="PauseMenu/VBoxContainer/HBoxContainer/VBoxContainer3/AspectRatioContainer/MainMenuButton" to="PauseMenu" method="_on_main_menu_button_pressed" flags=18]
+[connection signal="pressed" from="MarginContainer/Control/PauseButton" to="." method="_on_pause_button_pressed"]

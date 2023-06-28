@@ -46,6 +46,7 @@ const tile_images = [
 	preload("res://art/pieces/unselected_ghost.png"),
 ]
 
+
 func initialise(_tile_width : float, margin_width):
 	tile_width = _tile_width - margin_width * 2
 	scale *= tile_width / SPRITE_WIDTH
@@ -64,6 +65,7 @@ func _on_input_event(_viewport, event: InputEvent, _shape_idx):
 		clicked = true
 	if event.is_action_released("click"):
 		clicked = false
+
 
 func _process(_delta):
 	if clicked:
