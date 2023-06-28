@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://btoxfm4ull60m"]
+
+[ext_resource type="FontFile" uid="uid://cq58k7wkj7k25" path="res://art/fonts/brandy_brunch/BradBunR.ttf" id="1_7a0y7"]
+[ext_resource type="Script" path="res://Content/UserInterface/moves_left_counter.gd" id="1_k6vwt"]
+
+[node name="MovesLeftCounter" type="Node2D"]
+script = ExtResource("1_k6vwt")
+
+[node name="MovesLeftLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 20.0
+theme_override_fonts/font = ExtResource("1_7a0y7")
+theme_override_font_sizes/font_size = 64
+text = "Moves left: 10"

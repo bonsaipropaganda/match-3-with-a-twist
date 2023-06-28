@@ -1,19 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://y26xkpybmr8r"]
+[gd_scene load_steps=5 format=3 uid="uid://y26xkpybmr8r"]
 
 [ext_resource type="Script" path="res://Content/game_scene.gd" id="1_u61ru"]
 [ext_resource type="PackedScene" uid="uid://dkbegd2mpsmvo" path="res://Content/Grid/grid.tscn" id="2_benkg"]
 [ext_resource type="PackedScene" uid="uid://44pumqm1otrx" path="res://Content/UserInterface/game_ui.tscn" id="3_0gh26"]
+[ext_resource type="PackedScene" uid="uid://btoxfm4ull60m" path="res://Content/UserInterface/moves_left_counter.tscn" id="4_v557g"]
 
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_u61ru")
 
 [node name="Grid" parent="." instance=ExtResource("2_benkg")]
-position = Vector2(462, 198)
+position = Vector2(369, 87)
+grid_width = 8
+grid_height = 8
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="GameUI" parent="CanvasLayer" instance=ExtResource("3_0gh26")]
 unique_name_in_owner = true
 mouse_filter = 2
+
+[node name="MovesLeftCounter" parent="CanvasLayer/GameUI" instance=ExtResource("4_v557g")]
+position = Vector2(481, 0)
+
+[connection signal="send_moves_to_label" from="Grid" to="CanvasLayer/GameUI/MovesLeftCounter" method="_on_moves_recieved"]
+[connection signal="tiles_swap" from="Grid" to="CanvasLayer/GameUI/MovesLeftCounter" method="_on_grid_tiles_swap"]
+[connection signal="game_over" from="CanvasLayer/GameUI/MovesLeftCounter" to="CanvasLayer/GameUI" method="on_game_over"]
 
 [editable path="CanvasLayer/GameUI"]

@@ -19,6 +19,9 @@ var done_updating := false
 var doingSwap:bool = false
 var prevoiusSwaps:Array = []
 
+signal tiles_swap
+signal send_moves_to_label
+
 func _ready():
 	if !Engine.is_editor_hint():
 		$Timer.wait_time = TIMESTEP
@@ -179,6 +182,7 @@ func get_to_free():
 	return to_free
 
 func on_swap_tile(from_pos, direction):
+	tiles_swap.emit()
 	if done_updating and !doingSwap:
 
 		var to_pos = from_pos + direction
@@ -218,6 +222,10 @@ func on_swap_tile(from_pos, direction):
 		if get_to_free() != []:
 			prevoiusSwaps = []
 		
+		# prior to updating the grid we need to get which tiles were matched by the player
+		var matches_made = get_to_free()
+		# this adds moves to your moves left variable in the move counter
+		add_moves(matches_made.size())
 		
 		doingSwap = false
 		done_updating = false
@@ -240,6 +248,16 @@ func on_unswap_tiles():
 		doingSwap = false
 		done_updating = false
 
+# basically add more moves depending on the match size
+func add_moves(tiles_matched):
+	if tiles_matched == 3:
+		send_moves_to_label.emit(1)
+	elif tiles_matched == 4:
+		send_moves_to_label.emit(2)
+	elif tiles_matched == 5:
+		send_moves_to_label.emit(3)
+	elif tiles_matched >= 6:
+		send_moves_to_label.emit(5)
 
 #func update_tile_group(x, y, group_id, tile_type):
 #	if (x < 0 || x >= grid_width || y < 0 || y >= grid_height || grid[y][x] == null):
