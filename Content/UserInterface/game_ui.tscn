@@ -58,13 +58,16 @@ stretch_mode = 4
 
 [node name="MovesLeft" type="HBoxContainer" parent="MarginContainer/Control"]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 7
 anchor_left = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-offset_left = -174.0
-offset_right = 174.0
-offset_bottom = 79.0
+anchor_bottom = 1.0
+offset_left = -176.0
+offset_top = -79.0
+offset_right = 176.0
 grow_horizontal = 2
+grow_vertical = 0
 
 [node name="Label" type="Label" parent="MarginContainer/Control/MovesLeft"]
 layout_mode = 2
@@ -78,5 +81,27 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("5_xvdsi")
 theme_override_font_sizes/font_size = 64
 text = "XX"
+
+[node name="Score" type="HBoxContainer" parent="MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -72.0
+offset_right = 72.0
+offset_bottom = 79.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Control/Score"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_xvdsi")
+theme_override_font_sizes/font_size = 64
+text = "Score: "
+
+[node name="ScoreLabel" type="Label" parent="MarginContainer/Control/Score"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "00"
 
 [connection signal="pressed" from="MarginContainer/Control/PauseButton" to="." method="_on_pause_button_pressed"]

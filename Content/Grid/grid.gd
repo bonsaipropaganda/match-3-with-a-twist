@@ -3,6 +3,7 @@ extends Node2D
 
 
 signal move_left_changed(value: int)
+signal score_changed(value: int)
 signal game_over()
 
 
@@ -24,8 +25,6 @@ var done_updating := false
 var doingSwap:bool = false
 var prevoiusSwaps:Array = []
 
-
-
 # Move count stuff
 var move_left: int = 10:
 	set(value):
@@ -34,7 +33,11 @@ var move_left: int = 10:
 		if value <= 0:
 			# TODO: game over should be at the end of the grid update (when nothing moves anymore)
 			game_over.emit()
-
+# score stuff
+var score: int = 0:
+	set(value):
+		score = value
+		score_changed.emit(value)
 
 func _ready():
 	queue_redraw()
@@ -256,6 +259,7 @@ func on_swap_tile(from_pos, direction):
 		var matches_made = get_to_free()
 		# this adds moves to your moves left variable in the move counter
 		add_moves(matches_made.size())
+		add_score(matches_made.size())
 		
 		doingSwap = false
 		done_updating = false
@@ -287,6 +291,15 @@ func add_moves(tiles_matched):
 	elif tiles_matched >= 6:
 		move_left += 5
 
+func add_score(tiles_matched):
+	if tiles_matched == 3:
+		score += 10
+	elif tiles_matched == 4:
+		score += 25
+	elif tiles_matched == 5:
+		score += 50
+	elif tiles_matched >= 6:
+		score += 100
 
 #func update_tile_group(x, y, group_id, tile_type):
 #	if (x < 0 || x >= grid_width || y < 0 || y >= grid_height || grid[y][x] == null):

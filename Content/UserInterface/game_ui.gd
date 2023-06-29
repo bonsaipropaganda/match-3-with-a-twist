@@ -15,3 +15,6 @@ func _on_pause_button_pressed() -> void:
 
 func set_moves_left(count: int) -> void:
 	%MovesLeftLabel.text = "%2d" % [count]
+
+func set_score(count: int) -> void:
+	%ScoreLabel.text = "%2d" % [count]
