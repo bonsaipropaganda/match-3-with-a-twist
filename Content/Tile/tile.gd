@@ -31,7 +31,7 @@ const tile_stats = [
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
-	[TileStats.CAN_SWAP,TileStats.BREAK_ON_ADJACENT_MATCH],                           
+	[TileStats.CAN_SWAP,TileStats.BREAK_ON_ADJACENT_MATCH,TileStats.BREAK_ON_MATCH],                           
 	#[TileStats.CAN_SWAP,TileStats.BREAK_ON_PRESSURE],
 	]
 
