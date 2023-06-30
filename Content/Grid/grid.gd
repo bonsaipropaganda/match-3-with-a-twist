@@ -195,6 +195,10 @@ func get_to_free():
 						to_check.append([grid[y][x].tile_type, x, y])
 						to_free.append_array(to_check)
 			else:
+				# if the tile is null this runs
+				if !to_check.is_empty():
+					if to_check.size() >= 3:
+						to_free.append_array(to_check)
 				to_check.clear()
 		
 		# Stops Tile from breaking if that tile doesnt have the BREAK_ON_MATCH Stat
