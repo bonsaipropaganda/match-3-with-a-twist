@@ -4,6 +4,7 @@
 
 [node name="Grid" type="Node2D"]
 script = ExtResource("1_q44yw")
+grid_width = 5
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.2

@@ -210,7 +210,7 @@ func get_to_free():
 					for free in to_free:
 						if tile.grid_pos.distance_to(Vector2(free[1],free[2])) == 1:
 							to_check.append([tile.tile_type, tile.grid_pos.x, tile.grid_pos.y])
-	to_free += to_check
+#	to_free += to_check
 	return to_free
 
 
