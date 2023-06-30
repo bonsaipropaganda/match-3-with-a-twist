@@ -7,19 +7,19 @@ signal score_changed(value: int)
 signal game_over()
 
 
-const GRID_COLOR = Color("fce1cf")
-const LINE_WIDTH = 2.0
-const TILE_MARGIN = 3.0
+const GRID_COLOR := Color("fce1cf")
+const LINE_WIDTH: float = 2.0
+const TILE_MARGIN: float = 3.0
 
 const TIMESTEP = 0.2
 
 @export_group("Grid Variables")
 @export var grid_width = 6
 @export var grid_height = 6
-@export_color_no_alpha var background_color: Color = Color.BLACK
+@export_color_no_alpha var background_color := Color.BLACK
 
 @export_group("Tile Variables")
-@export var tile_width = 70
+@export var tile_width: float = 70
 ## Tile falling speed in tiles/second
 @export var falling_speed: float = 10.0
 ## Tile swapping speed in tiles/second
@@ -31,8 +31,8 @@ var grid: Array
 var group_counts: Dictionary
 var currently_moving_tiles: int = 0
 var done_updating := false
-var doingSwap:bool = false
-var prevoiusSwaps:Array = []
+var doing_swap: bool = false
+var prevoius_swaps: Array = []
 
 
 # Move count stuff
@@ -114,7 +114,7 @@ func update_grid():
 		
 		# Reward the player for matches
 		if matches != []:
-			prevoiusSwaps = []
+			prevoius_swaps = []
 		
 		add_moves(matches.size())
 		add_score(matches.size())
@@ -144,7 +144,7 @@ func update_grid():
 				animate_tile_scene_position(tile, x, y, falling_speed)
 	
 	# Unswaps all the tiles swaped when the length of previous swaps that havent made a match = 3 if enabled
-	if len(prevoiusSwaps) == 3:
+	if len(prevoius_swaps) == 3:
 		on_unswap_tiles()
 
 
@@ -284,7 +284,7 @@ func get_matches():
 
 
 func on_swap_tile(from_pos, direction):
-	if done_updating and !doingSwap:
+	if done_updating and !doing_swap:
 		var to_pos = from_pos + direction
 		var slideInstead = false
 		
@@ -306,9 +306,9 @@ func on_swap_tile(from_pos, direction):
 			if Tile.TileStats.CAN_SWAP not in Tile.tile_stats[grid[from_pos.y][from_pos.x].tile_type]:
 				return
 		
-		doingSwap = true
+		doing_swap = true
 		
-		prevoiusSwaps.append(grid)
+		prevoius_swaps.append(grid)
 		move_left -= 1 # Decrease move counter
 		
 		
@@ -322,22 +322,22 @@ func on_swap_tile(from_pos, direction):
 		else:
 			move_tile(from_pos.x, from_pos.y, to_pos.x, to_pos.y, true, swapping_speed)
 		
-		doingSwap = false
+		doing_swap = false
 		done_updating = false
 
 
 func on_unswap_tiles():
-	if done_updating and !doingSwap:
-		doingSwap = true
+	if done_updating and !doing_swap:
+		doing_swap = true
 		
 		# Still Needs Reimplemented
-		prevoiusSwaps.reverse()
-		for swap in prevoiusSwaps:
+		prevoius_swaps.reverse()
+		for swap in prevoius_swaps:
 			await get_tree().create_timer(0.05).timeout
 			pass
 		
-		prevoiusSwaps = []
-		doingSwap = false
+		prevoius_swaps = []
+		doing_swap = false
 		done_updating = false
 
 
