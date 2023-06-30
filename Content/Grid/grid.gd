@@ -79,17 +79,26 @@ func update_grid():
 				settled = false
 				done_updating = false
 	
-	var to_free = []
+	var matches = []
 	if settled:
-		to_free = get_to_free()
-		for i in to_free: # [tile_type, x, y]
+		matches = get_matches()
+		
+		# Remove tiles from the board
+		for i in matches: # [tile_type, x, y]
 			var x = i[1]
 			var y = i[2]
 			if grid[y][x] != null:
 				grid[y][x].queue_free()
 				grid[y][x] = null
+		
+		# Reward the player for matches
+		if matches != []:
+			prevoiusSwaps = []
+		
+		add_moves(matches.size())
+		add_score(matches.size())
 	
-	if to_free.size() == 0:
+	if matches.size() == 0:
 		if settled:
 			done_updating = true
 		for x in grid_width:
@@ -101,6 +110,7 @@ func update_grid():
 	# Unswaps all the tiles swaped when the length of previous swaps that havent made a match = 3 if enabled
 	if len(prevoiusSwaps) == 3 and true:
 		on_unswap_tiles()
+
 
 func init_grid(width, height):
 	var g = []
@@ -154,8 +164,8 @@ func can_fall(x, y):
 		return grid[y][x] != null && grid[y+1][x] == null
 
 
-func get_to_free():
-	var to_free := []
+func get_matches():
+	var matches := []
 	var to_check := []
 	
 	# Vertical check
@@ -167,14 +177,14 @@ func get_to_free():
 					to_check.append([grid[y][x].tile_type, x, y])
 				elif grid[y][x].tile_type != to_check.back()[0]:
 					if to_check.size() >= 3:
-						to_free.append_array(to_check)
+						matches.append_array(to_check)
 					to_check.clear()
 					to_check.append([grid[y][x].tile_type, x, y])
 				elif grid[y][x].tile_type == to_check.back()[0]:
 					to_check.append([grid[y][x].tile_type, x, y])
 					if y == grid_height-1 && to_check.size() >= 3:
 						to_check.append([grid[y][x].tile_type, x, y])
-						to_free.append_array(to_check)
+						matches.append_array(to_check)
 			else:
 				to_check.clear()
 	# Horizontal check
@@ -186,41 +196,40 @@ func get_to_free():
 					to_check.append([grid[y][x].tile_type, x, y])
 				elif grid[y][x].tile_type != to_check.back()[0]:
 					if to_check.size() >= 3:
-						to_free.append_array(to_check)
+						matches.append_array(to_check)
 					to_check.clear()
 					to_check.append([grid[y][x].tile_type, x, y])
 				elif grid[y][x].tile_type == to_check.back()[0]:
 					to_check.append([grid[y][x].tile_type, x, y])
 					if x == grid_width-1 && to_check.size() >= 3:
 						to_check.append([grid[y][x].tile_type, x, y])
-						to_free.append_array(to_check)
+						matches.append_array(to_check)
 			else:
 				# if the tile is null this runs
 				if !to_check.is_empty():
 					if to_check.size() >= 3:
-						to_free.append_array(to_check)
+						matches.append_array(to_check)
 				to_check.clear()
 		
 		# Stops Tile from breaking if that tile doesnt have the BREAK_ON_MATCH Stat
-		for tile in to_free:
+		for tile in matches:
 			if Tile.TileStats.BREAK_ON_MATCH not in Tile.tile_stats[tile[0]]:
-				to_free.erase(tile)
+				matches.erase(tile)
 	
 	# Makes Tile break if that tile has the BREAK_ON_AGACENT_MATCH Stat and is agacent to a match that was made
 	for row in grid:
 		for tile in row:
 			if tile != null:
 				if Tile.TileStats.BREAK_ON_ADJACENT_MATCH in Tile.tile_stats[tile.tile_type]:
-					for free in to_free:
+					for free in matches:
 						if tile.grid_pos.distance_to(Vector2(free[1],free[2])) == 1:
-							to_free.append([tile.tile_type, tile.grid_pos.x, tile.grid_pos.y])
-#	to_free += to_check
-	return to_free
+							matches.append([tile.tile_type, tile.grid_pos.x, tile.grid_pos.y])
+#	matches += to_check
+	return matches
 
 
 func on_swap_tile(from_pos, direction):
 	if done_updating and !doingSwap:
-
 		var to_pos = from_pos + direction
 		var slideInstead = false
 		
@@ -254,17 +263,6 @@ func on_swap_tile(from_pos, direction):
 		else:
 			move_tile(from_pos.x, from_pos.y, to_pos.x, to_pos.y)
 		
-		
-		
-		if get_to_free() != []:
-			prevoiusSwaps = []
-		
-		# prior to updating the grid we need to get which tiles were matched by the player
-		var matches_made = get_to_free()
-		# this adds moves to your moves left variable in the move counter
-		add_moves(matches_made.size())
-		add_score(matches_made.size())
-		
 		doingSwap = false
 		done_updating = false
 
@@ -294,6 +292,7 @@ func add_moves(tiles_matched):
 		move_left += 3
 	elif tiles_matched >= 6:
 		move_left += 5
+
 
 func add_score(tiles_matched):
 	if tiles_matched == 3:
