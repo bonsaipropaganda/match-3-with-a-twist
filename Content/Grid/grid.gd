@@ -86,8 +86,7 @@ func update_grid():
 	for x in range(0, grid_width):
 		var ground_level: int = grid_height - 1
 		for y in range(grid_height - 1, -1, -1):
-			if not is_instance_valid(grid[y][x]):
-				continue
+			if not is_instance_valid(grid[y][x]): continue
 			
 			if Tile.TileStats.CAN_FALL in Tile.tile_stats[grid[y][x].tile_type]:
 				if ground_level != y: # If the tile is not on ground, make it fall
@@ -129,11 +128,10 @@ func update_grid():
 			# Get the amount of tiles to be added
 			var new_tile_count: int = 0
 			for y in grid_height:
-				if not is_instance_valid(grid[y][x]):
-					new_tile_count += 1
-					done_updating = false
-				else:
-					break
+				if is_instance_valid(grid[y][x]): break
+				
+				new_tile_count += 1
+				done_updating = false
 			
 			for i in new_tile_count:
 				var y: int = new_tile_count - 1 - i
