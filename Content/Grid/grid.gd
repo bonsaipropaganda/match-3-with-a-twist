@@ -13,17 +13,26 @@ const TILE_MARGIN = 3.0
 
 const TIMESTEP = 0.2
 
+@export_group("Grid Variables")
 @export var grid_width = 6
 @export var grid_height = 6
+
+@export_group("Tile Variables")
 @export var tile_width = 70
+## Tile falling speed in tiles/second
+@export var falling_speed: float = 10.0
+## Tile swapping speed in tiles/second
+@export var swapping_speed: float = 12.0
 
 @onready var tile_scene := preload("res://Content/Tile/tile.tscn")
 
 var grid: Array
 var group_counts: Dictionary
+var currently_moving_tiles: int = 0
 var done_updating := false
 var doingSwap:bool = false
 var prevoiusSwaps:Array = []
+
 
 # Move count stuff
 var move_left: int = 10:
@@ -33,11 +42,13 @@ var move_left: int = 10:
 		if value <= 0:
 			# TODO: game over should be at the end of the grid update (when nothing moves anymore)
 			game_over.emit()
+
 # score stuff
 var score: int = 0:
 	set(value):
 		score = value
 		score_changed.emit(value)
+
 
 func _ready():
 	queue_redraw()
@@ -70,17 +81,27 @@ func _on_timer_timeout():
 
 
 func update_grid():
-	var settled = true
-	for y in range(grid_height-2, -1, -1):
-		for x in range(0, grid_width):
-			#Stops Tile from breaking if that tile doesnt have the CAN_FALL Stat
-			if can_fall(x, y) and Tile.TileStats.CAN_FALL in Tile.tile_stats[grid[y][x].tile_type]:
-				move_tile(x, y, x, y+1)
-				settled = false
-				done_updating = false
+	# Gravity
+	for x in range(0, grid_width):
+		var ground_level: int = grid_height - 1
+		for y in range(grid_height - 1, -1, -1):
+			if not is_instance_valid(grid[y][x]):
+				continue
+			
+			if Tile.TileStats.CAN_FALL in Tile.tile_stats[grid[y][x].tile_type]:
+				if ground_level != y: # If the tile is not on ground, make it fall
+					move_tile(x, y, x, ground_level, true, falling_speed)
+					done_updating = false
+				# Raise ground level
+				ground_level -= 1
+			else:
+				# Update the ground to be above this tile
+				ground_level = y - 1
 	
+	
+	# Handle matches
 	var matches = []
-	if settled:
+	if is_board_settled():
 		matches = get_matches()
 		
 		# Remove tiles from the board
@@ -99,16 +120,32 @@ func update_grid():
 		add_score(matches.size())
 	
 	if matches.size() == 0:
-		if settled:
+		if is_board_settled():
 			done_updating = true
+			
+		# Add tiles to the game
 		for x in grid_width:
-			if (add_tile(x, 0)):
-				done_updating = false
-	else:
-		settled = false
+			# Get the amount of tiles to be added
+			var new_tile_count: int = 0
+			for y in grid_height:
+				if not is_instance_valid(grid[y][x]):
+					new_tile_count += 1
+					done_updating = false
+				else:
+					break
+			
+			for i in new_tile_count:
+				var y: int = new_tile_count - 1 - i
+				add_tile(x, y)
+				
+				# Animate tile entering the screen
+				var tile: Tile = grid[y][x]
+				tile.grid_pos = Vector2(x, -i-1) # Well... that's a bit hacky... but it works !
+				tile.position = get_tile_scene_position(x, -i-1)
+				animate_tile_scene_position(tile, x, y, falling_speed)
 	
 	# Unswaps all the tiles swaped when the length of previous swaps that havent made a match = 3 if enabled
-	if len(prevoiusSwaps) == 3 and true:
+	if len(prevoiusSwaps) == 3:
 		on_unswap_tiles()
 
 
@@ -130,9 +167,23 @@ func _draw():
 		draw_line(Vector2(0, y * tile_width), Vector2(grid_width * tile_width, y * tile_width), GRID_COLOR, 2.0)
 
 
-func set_tile_scene_position(tile, x, y):
-	tile.position = Vector2(x * tile_width, y * tile_width) + Vector2(TILE_MARGIN, TILE_MARGIN)
+func set_tile_scene_position(tile: Tile, x: int, y: int):
+	tile.position = get_tile_scene_position(x, y)
 	tile.grid_pos = Vector2(x,y)
+
+
+func animate_tile_scene_position(tile: Tile, x: int, y: int, speed: float) -> void:
+	# Move tile
+	var final_grid_pos := Vector2i(x, y)
+	var final_scene_pos: Vector2 = get_tile_scene_position(x, y)
+	var distance: float = (final_grid_pos - Vector2i(tile.grid_pos)).length()
+	tile.grid_pos = Vector2(x, y)
+	var duration: float = distance / speed
+	tile.animated_move_to(final_scene_pos, duration)
+	
+	# Keep count of moving tiles
+	currently_moving_tiles += 1
+	tile.done_moving.connect(func(): currently_moving_tiles -= 1, CONNECT_ONE_SHOT)
 
 
 func add_tile(x, y) -> bool:
@@ -150,9 +201,12 @@ func add_tile(x, y) -> bool:
 
 
 # Move tile to empty space
-func move_tile(x1, y1, x2, y2):
+func move_tile(x1, y1, x2, y2, animated := false, tile_speed: float = 1.0):
 	if grid[y1][x1] != null && grid[y2][x2] == null:
-		set_tile_scene_position(grid[y1][x1], x2, y2)
+		if not animated:
+			set_tile_scene_position(grid[y1][x1], x2, y2)
+		else:
+			animate_tile_scene_position(grid[y1][x1], x2, y2, tile_speed)
 		grid[y2][x2] = grid[y1][x1]
 		grid[y1][x1] = null
 
@@ -262,10 +316,10 @@ func on_swap_tile(from_pos, direction):
 			grid[from_pos.y][from_pos.x] = grid[to_pos.y][to_pos.x]
 			grid[to_pos.y][to_pos.x] = tmp
 		
-			set_tile_scene_position(grid[from_pos.y][from_pos.x], from_pos.x, from_pos.y)
-			set_tile_scene_position(grid[to_pos.y][to_pos.x], to_pos.x, to_pos.y)
+			animate_tile_scene_position(grid[from_pos.y][from_pos.x], from_pos.x, from_pos.y, swapping_speed)
+			animate_tile_scene_position(grid[to_pos.y][to_pos.x], to_pos.x, to_pos.y, swapping_speed)
 		else:
-			move_tile(from_pos.x, from_pos.y, to_pos.x, to_pos.y)
+			move_tile(from_pos.x, from_pos.y, to_pos.x, to_pos.y, true, swapping_speed)
 		
 		doingSwap = false
 		done_updating = false
@@ -307,6 +361,14 @@ func add_score(tiles_matched):
 		score += 50
 	elif tiles_matched >= 6:
 		score += 100
+
+
+func get_tile_scene_position(x: int, y: int) -> Vector2:
+	return Vector2(x * tile_width, y * tile_width) + Vector2(TILE_MARGIN, TILE_MARGIN)
+
+
+func is_board_settled() -> bool:
+	return currently_moving_tiles == 0
 
 #func update_tile_group(x, y, group_id, tile_type):
 #	if (x < 0 || x >= grid_width || y < 0 || y >= grid_height || grid[y][x] == null):
