@@ -18,6 +18,7 @@ enum TileStats{
 }
 
 enum TileType {
+	PINK,
 	ORANGE,
 	RED,
 	BLUE,
@@ -33,6 +34,7 @@ const tile_stats = [
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
+	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
 	[TileStats.CAN_SWAP,TileStats.BREAK_ON_ADJACENT_MATCH,TileStats.BREAK_ON_MATCH],                           
 	#[TileStats.CAN_SWAP,TileStats.BREAK_ON_PRESSURE],
 	]
@@ -40,6 +42,7 @@ const tile_stats = [
 # Indexed by TileType
 # Replace these with the actual images
 const tile_images = [
+	preload("res://art/pieces/unselected_pink.png"),
 	preload("res://art/pieces/unselected_orange.png"),
 	preload("res://art/pieces/unselected_red.png"),
 	preload("res://art/pieces/unselected_blue.png"),
