@@ -244,6 +244,10 @@ func on_swap_tile(from_pos, direction):
 				return
 		else:
 			slideInstead = true
+			# Don't allow for moving a tile up
+			if to_pos.y - from_pos.y == -1:
+				return
+			# Don't allow to slide an unswappable tile
 			if Tile.TileStats.CAN_SWAP not in Tile.tile_stats[grid[from_pos.y][from_pos.x].tile_type]:
 				return
 		
