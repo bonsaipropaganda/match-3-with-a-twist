@@ -213,7 +213,7 @@ func get_to_free():
 				if Tile.TileStats.BREAK_ON_ADJACENT_MATCH in Tile.tile_stats[tile.tile_type]:
 					for free in to_free:
 						if tile.grid_pos.distance_to(Vector2(free[1],free[2])) == 1:
-							to_check.append([tile.tile_type, tile.grid_pos.x, tile.grid_pos.y])
+							to_free.append([tile.tile_type, tile.grid_pos.x, tile.grid_pos.y])
 #	to_free += to_check
 	return to_free
 
