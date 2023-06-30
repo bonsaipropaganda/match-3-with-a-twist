@@ -16,6 +16,7 @@ const TIMESTEP = 0.2
 @export_group("Grid Variables")
 @export var grid_width = 6
 @export var grid_height = 6
+@export_color_no_alpha var background_color: Color = Color.BLACK
 
 @export_group("Tile Variables")
 @export var tile_width = 70
@@ -160,7 +161,7 @@ func init_grid(width, height):
 
 func _draw():
 	# Background, tiles on it are not clipped
-	draw_rect(Rect2(Vector2.ZERO, tile_width * Vector2(grid_width, grid_height)), Color.BLACK)
+	draw_rect(Rect2(Vector2.ZERO, tile_width * Vector2(grid_width, grid_height)), background_color)
 	# Vertical lines
 	for x in grid_width + 1:
 		draw_line(Vector2(x * tile_width, 0), Vector2(x * tile_width, grid_height * tile_width), GRID_COLOR, 2.0)
