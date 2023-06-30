@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://Content/Grid/grid.gd" id="1_q44yw"]
 
 [node name="Grid" type="Node2D"]
+clip_children = 2
 script = ExtResource("1_q44yw")
 grid_width = 5
 

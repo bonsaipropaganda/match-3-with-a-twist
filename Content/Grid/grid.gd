@@ -159,6 +159,8 @@ func init_grid(width, height):
 
 
 func _draw():
+	# Background, tiles on it are not clipped
+	draw_rect(Rect2(Vector2.ZERO, tile_width * Vector2(grid_width, grid_height)), Color.BLACK)
 	# Vertical lines
 	for x in grid_width + 1:
 		draw_line(Vector2(x * tile_width, 0), Vector2(x * tile_width, grid_height * tile_width), GRID_COLOR, 2.0)
