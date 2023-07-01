@@ -1,5 +1,9 @@
 extends Area2D
 
+
+signal done_moving()
+
+
 const SPRITE_WIDTH = 128.0 # Currently set to width of placeholder image
 
 var sprite2D : Sprite2D
@@ -8,6 +12,11 @@ var tile_type: TileType
 var group_id: int
 var tile_width: int
 var grid_pos: Vector2 # Set by grid
+
+# Tile moving animation stuff
+var move_tween: Tween
+var final_move_position: Vector2
+
 
 enum TileStats{
 	CAN_SWAP,
@@ -83,3 +92,17 @@ func _process(_delta):
 		if abs(mouse_pos.y - my_pos.y) > tile_width / 2:
 			Globals.emit_signal("swap_tile", grid_pos, Vector2(0, sign(mouse_pos.y - my_pos.y)))
 			clicked = false
+
+
+func animated_move_to(target_pos: Vector2, duration: float) -> void:
+	if move_tween:
+		if move_tween.is_running():
+			move_tween.stop()
+			position = final_move_position
+			done_moving.emit() # Send the done moving signal for cancellation
+		move_tween.kill()
+	
+	move_tween = create_tween()
+	move_tween.tween_property(self, ^"position", target_pos, duration)
+	move_tween.tween_callback(func(): done_moving.emit())
+	final_move_position = target_pos
