@@ -40,7 +40,7 @@ var move_left: int = 10:
 	set(value):
 		move_left = value
 		move_left_changed.emit(value)
-		if value < 0:
+		if value < 0: # if you hit LESS than zero then game over
 			# TODO: game over should be at the end of the grid update (when nothing moves anymore)
 			game_over.emit()
 
@@ -343,8 +343,6 @@ func on_unswap_tiles():
 
 # basically add more moves depending on the match size
 func add_moves(tiles_matched):
-#	if tiles_matched == 4:
-#		move_left += 1
 	if tiles_matched == 5:
 		move_left += 2
 	elif tiles_matched >= 6:
