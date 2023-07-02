@@ -8,14 +8,10 @@
 script = ExtResource("1_u61ru")
 
 [node name="Grid" parent="." instance=ExtResource("2_benkg")]
-position = Vector2(369, 107)
-grid_width = 9
-grid_height = 7
+position = Vector2(387, 124)
+gridWidth = 7
+gridHeight = 7
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="GameUI" parent="CanvasLayer" instance=ExtResource("3_0gh26")]
-
-[connection signal="game_over" from="Grid" to="." method="_on_game_over"]
-[connection signal="move_left_changed" from="Grid" to="CanvasLayer/GameUI" method="set_moves_left"]
-[connection signal="score_changed" from="Grid" to="CanvasLayer/GameUI" method="set_score"]

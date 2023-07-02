@@ -1,11 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://dkbegd2mpsmvo"]
 
-[ext_resource type="Script" path="res://Content/Grid/grid.gd" id="1_q44yw"]
+[ext_resource type="Script" path="res://Operation Repair!/Grid.gd" id="1_usxs7"]
 
 [node name="Grid" type="Node2D"]
 clip_children = 2
-script = ExtResource("1_q44yw")
-grid_width = 5
+script = ExtResource("1_usxs7")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.2

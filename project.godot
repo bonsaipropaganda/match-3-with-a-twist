@@ -18,8 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 Globals="*res://Content/globals.gd"
-Tile="*res://Content/Tile/tile.gd"
 SceneManager="*res://Content/autoload/scene_manager.tscn"
+Tile="res://Content/Tile/tile.gd"
 
 [display]
 
