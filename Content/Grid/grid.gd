@@ -343,21 +343,19 @@ func on_unswap_tiles():
 
 # basically add more moves depending on the match size
 func add_moves(tiles_matched):
-	if tiles_matched == 5:
-		move_left += 2
-	elif tiles_matched >= 6:
-		move_left += 3
+	if tiles_matched >= 6:
+		move_left += 4
 
 
 func add_score(tiles_matched):
 	if tiles_matched == 3:
-		score += 30
-	elif tiles_matched == 4:
 		score += 40
+	elif tiles_matched == 4:
+		score += 60
 	elif tiles_matched == 5:
-		score += 50
+		score += 80
 	elif tiles_matched >= 6:
-		score += 75
+		score += 0
 
 
 func get_tile_scene_position(x: int, y: int) -> Vector2:
