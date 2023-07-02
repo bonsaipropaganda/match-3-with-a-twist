@@ -343,9 +343,6 @@ func on_unswap_tiles():
 
 # basically add more moves depending on the match size
 func add_moves(tiles_matched):
-#	if tiles_matched == 5:
-#		move_left += 2
-	print(tiles_matched)
 	if tiles_matched >= 6:
 		move_left += 4
 
