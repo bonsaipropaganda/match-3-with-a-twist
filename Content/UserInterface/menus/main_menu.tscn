@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cu0jbeakavbnn"]
+[gd_scene load_steps=23 format=3 uid="uid://cu0jbeakavbnn"]
 
 [ext_resource type="Script" path="res://Content/UserInterface/menus/main_menu.gd" id="1_nswlg"]
 [ext_resource type="Texture2D" uid="uid://cc6ktbeachhy6" path="res://art/gui/menu/MixMatch - Background.png" id="2_hsjg4"]
@@ -11,6 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://hj613qwurt41" path="res://art/gui/menu/MixMatch - Start.png" id="9_708br"]
 [ext_resource type="Texture2D" uid="uid://b701118bekoac" path="res://art/gui/menu/MixMatch - Settings.png" id="10_u34qs"]
 [ext_resource type="Texture2D" uid="uid://dyqydcfl28tgt" path="res://art/gui/menu/MixMatch - Exit.png" id="11_3fbic"]
+[ext_resource type="AudioStream" uid="uid://b7pt3ujolwal6" path="res://art/sounds/start.mp3" id="12_rd06v"]
+[ext_resource type="AudioStream" uid="uid://dfv33e21od60g" path="res://art/sounds/mouse_click.mp3" id="13_233pl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6wsia"]
 atlas = ExtResource("6_0p56q")
@@ -192,6 +194,19 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.7
 texture = ExtResource("11_3fbic")
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Start" type="AudioStreamPlayer" parent="Sounds"]
+unique_name_in_owner = true
+stream = ExtResource("12_rd06v")
+volume_db = -5.0
+bus = &"SoundFx"
+
+[node name="Click" type="AudioStreamPlayer" parent="Sounds"]
+unique_name_in_owner = true
+stream = ExtResource("13_233pl")
+bus = &"SoundFx"
 
 [connection signal="pressed" from="BoxContainer/Background/VBoxContainer/OptionsContainer/StartContainer/AspectRatioContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="BoxContainer/Background/VBoxContainer/OptionsContainer/SettingsContainer/AspectRatioContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
