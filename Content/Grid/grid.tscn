@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dkbegd2mpsmvo"]
+[gd_scene load_steps=3 format=3 uid="uid://dkbegd2mpsmvo"]
 
 [ext_resource type="Script" path="res://Content/Grid/grid.gd" id="1_q44yw"]
+[ext_resource type="AudioStream" uid="uid://83mm7gwuvxkm" path="res://art/sounds/match sound.mp3" id="2_ecogo"]
 
 [node name="Grid" type="Node2D"]
 clip_children = 2
@@ -10,5 +11,10 @@ grid_width = 5
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
+
+[node name="Match" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("2_ecogo")
+bus = &"SoundFx"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

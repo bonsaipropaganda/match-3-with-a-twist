@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Content/main.gd" id="1_i4r2r"]
 [ext_resource type="Script" path="res://Content/menu_holder.gd" id="1_kvb6s"]
 [ext_resource type="AudioStream" uid="uid://dqydagu4nykml" path="res://art/sounds/Theme.ogg" id="3_l16xe"]
-[ext_resource type="AudioStream" uid="uid://btiw3wy4qlxtd" path="res://art/sounds/title-by-sinnesloschen.mp3" id="4_0psmk"]
+[ext_resource type="AudioStream" path="res://art/sounds/title-by-sinnesloschen.mp3" id="4_0psmk"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_i4r2r")
@@ -28,6 +28,7 @@ menus = {
 unique_name_in_owner = true
 stream = ExtResource("4_0psmk")
 autoplay = true
+bus = &"Music"
 
 [node name="Theme" type="AudioStreamPlayer" parent="MusicPlayer"]
 unique_name_in_owner = true

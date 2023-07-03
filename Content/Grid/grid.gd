@@ -118,6 +118,7 @@ func update_grid():
 		
 		add_moves(matches.size())
 		add_score(matches.size())
+		play_sfx(matches.size())
 	
 	if matches.size() == 0:
 		if is_board_settled():
@@ -357,6 +358,9 @@ func add_score(tiles_matched):
 	elif tiles_matched >= 6:
 		score += 0
 
+func play_sfx(tiles_matched):
+	if tiles_matched >= 3:
+		%Match.play()
 
 func get_tile_scene_position(x: int, y: int) -> Vector2:
 	return Vector2(x * tile_width, y * tile_width) + Vector2(TILE_MARGIN, TILE_MARGIN)
