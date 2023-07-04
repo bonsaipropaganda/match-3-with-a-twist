@@ -15,3 +15,7 @@ gridHeight = 7
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="GameUI" parent="CanvasLayer" instance=ExtResource("3_0gh26")]
+
+[connection signal="game_over" from="Grid" to="." method="_on_grid_game_over"]
+[connection signal="move_left_changed" from="Grid" to="CanvasLayer/GameUI" method="_on_grid_move_left_changed"]
+[connection signal="score_changed" from="Grid" to="CanvasLayer/GameUI" method="_on_grid_score_changed"]

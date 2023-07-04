@@ -7,7 +7,7 @@ clip_children = 2
 script = ExtResource("1_usxs7")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.5
 one_shot = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

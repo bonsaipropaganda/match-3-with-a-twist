@@ -2,6 +2,9 @@
 extends Node2D
 class_name Grid
 
+signal move_left_changed(value: int)
+signal score_changed(value: int)
+signal game_over()
 
 const GRID_COLOR = Color("fce1cf")
 const LINE_WIDTH = 2.0
@@ -16,6 +19,20 @@ var doneUpdating:bool = false
 
 @onready var tile_scene := preload("res://Content/Tile/tile.tscn")
 
+var move_left: int = 10:
+	set(value):
+		move_left = value
+		move_left_changed.emit(value)
+		if value <= 0:
+			# TODO: game over should be at the end of the grid update (when nothing moves anymore)
+			game_over.emit()
+
+# score stuff
+var score: int = 0:
+	set(value):
+		score = value
+		score_changed.emit(value)
+
 var tiles:Array[Tile] = []
 
 var done_updating := false
@@ -23,20 +40,33 @@ var done_updating := false
 func _ready():
 	if !Engine.is_editor_hint():
 		$Timer.wait_time = TIMESTEP
-	for y in gridHeight:
+	for y in gridHeight-1:
 		for x in gridWidth:
 			add_tile(Vector2(x,y))
 	
+	move_left_changed.emit(move_left)
+	
 	await get_tree().create_timer(.5).timeout
 	update_grid()
+	print(get_matched_tiles())
 
 func _process(delta):
 	if Engine.is_editor_hint():
 		queue_redraw()
+	else:
+		if !done_updating && $Timer.is_stopped():
+			$Timer.start()
+
+func _on_timer_timeout():
+	update_grid()
 
 func update_grid():
-	if not doneUpdating:
-		tiles_fall()
+	doneUpdating = true
+	tiles_fall()
+	if not doneUpdating: return
+	spawn_new_tiles()
+	if not doneUpdating: return
+	break_matched_tiles()
 
 func _draw():
 	# Vertical lines
@@ -60,8 +90,6 @@ func add_tile(_gridPos:Vector2):
 	add_child(new_tile)
 	
 	new_tile.set_grid_position(_gridPos)
-	
-	
 
 func get_tile_at(_gridPos:Vector2)->Tile:
 	if len(tiles) == 0:
@@ -77,9 +105,7 @@ func tiles_fall():
 			if tile.can_fall():
 				tile.fall()
 				tileFell = true
-	
-	if tileFell:
-		tiles_fall()
+				doneUpdating = false
 
 func valid_grid_pos(_gridPos:Vector2):
 	if 0 <= _gridPos.x and _gridPos.x < gridWidth and 0 <= _gridPos.y and _gridPos.y < gridHeight:
@@ -129,3 +155,39 @@ func get_matched_tiles():
 
 	return matchedTiles
 
+func get_agacent_tiles(_tiles:Array):
+	var agacentTiles:Array[Tile]
+	var isAgacent = true
+	for tile in tiles:
+		for _tile in _tiles:
+			if _tile.gridPos == tile.gridPos and _tile.gridPos.distance_to(tile.gridPos) != 1:
+				isAgacent = false
+			if isAgacent and tile.has_stat(Tile.TileStats.BREAK_ON_ADJACENT_MATCH):
+				agacentTiles.append(tile)
+	return agacentTiles
+
+func break_matched_tiles():
+	var _tiles = get_matched_tiles()
+	for tile in _tiles:
+		if not tile.has_stat(Tile.TileStats.BREAK_ON_MATCH):
+			_tiles.erase(tile)
+	var agacentTiles = get_agacent_tiles(_tiles)
+	
+	for tile in agacentTiles:
+		if not tile.has_stat(Tile.TileStats.BREAK_ON_ADJACENT_MATCH):
+			agacentTiles.erase(tile)
+	
+	_tiles.append_array(agacentTiles)
+	
+	if not _tiles.is_empty():
+		doneUpdating = false
+	
+	for tile in _tiles:
+		tiles.erase(tile)
+		tile.queue_free()
+
+func spawn_new_tiles():
+	for x in gridWidth:
+		if get_tile_at(Vector2(x,0)) == null:
+			add_tile(Vector2(x,0))
+			doneUpdating = false

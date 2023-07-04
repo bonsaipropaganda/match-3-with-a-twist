@@ -21,7 +21,6 @@ enum TileType {
 	GREY,
 	#GHOST,
 }
-
 enum TileStats{
 	CAN_SWAP,
 	CAN_FALL,
@@ -40,7 +39,6 @@ const tileImages = [
 	preload("res://art/pieces/unselected_grey.png"),
 	preload("res://art/pieces/unselected_ghost.png"),
 ]
-
 const tileStats = [
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
@@ -48,7 +46,7 @@ const tileStats = [
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
 	[TileStats.CAN_SWAP,TileStats.CAN_FALL,TileStats.BREAK_ON_MATCH],
-	[TileStats.CAN_SWAP,TileStats.BREAK_ON_ADJACENT_MATCH,TileStats.BREAK_ON_MATCH],                           
+	[TileStats.CAN_SWAP,TileStats.BREAK_ON_ADJACENT_MATCH,],                           
 	#[TileStats.CAN_SWAP,TileStats.BREAK_ON_PRESSURE],
 	]
 
@@ -73,6 +71,7 @@ func has_stat(stat:TileStats)->bool:
 func set_grid_position(_gridPos:Vector2):
 	position = _gridPos * parentNode.tileScale + Vector2(parentNode.TILE_MARGIN, parentNode.TILE_MARGIN)
 	gridPos = _gridPos
+	parentNode.doneUpdating = false
 
 func get_tile_at(_gridPos:Vector2)->Tile:
 	if len(parentNode.tiles) == 0:
@@ -85,8 +84,6 @@ func get_tile_at(_gridPos:Vector2)->Tile:
 func _on_input_event(_viewport, event: InputEvent, _shape_idx):
 	if event.is_action_pressed("click"):
 		clicked = true
-	if event.is_action_released("click"):
-		clicked = false
 
 func _on_tile_drag():
 	if clicked:
@@ -98,8 +95,13 @@ func _on_tile_drag():
 		if abs(mouse_pos.y - my_pos.y) > tileScale/2 and can_swap(gridPos + Vector2(0, sign(mouse_pos.y - my_pos.y))):
 			if can_swap(gridPos + Vector2(0, sign(mouse_pos.y - my_pos.y))):
 				swap_to_position(gridPos + Vector2(0, sign(mouse_pos.y - my_pos.y)))
+	if not Input.is_action_pressed("click"):
+		clicked = false
 
 func can_swap(_gridPos:Vector2):
+	if not parentNode.doneUpdating:
+		return false
+	
 	if not has_stat(TileStats.CAN_SWAP):
 		return false
 	
@@ -109,6 +111,9 @@ func can_swap(_gridPos:Vector2):
 	return parentNode.valid_grid_pos(_gridPos)
 
 func swap_to_position(_gridPos:Vector2):
+	
+	parentNode.move_left -= 1
+	
 	if get_tile_at(_gridPos) == null:
 		set_grid_position(_gridPos)
 	else:
@@ -126,6 +131,7 @@ func can_fall():
 	return parentNode.valid_grid_pos(gridPos+Vector2.DOWN)
 
 func fall():
+	clicked = false
 	set_grid_position(gridPos+Vector2.DOWN)
 
 func _process(delta):

@@ -18,3 +18,10 @@ func set_moves_left(count: int) -> void:
 
 func set_score(count: int) -> void:
 	%ScoreLabel.text = "%2d" % [count]
+
+
+func _on_grid_move_left_changed(value):
+	set_moves_left(value)
+
+func _on_grid_score_changed(value):
+	set_score(value)
