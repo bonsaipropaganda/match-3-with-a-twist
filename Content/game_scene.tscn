@@ -11,6 +11,7 @@ script = ExtResource("1_u61ru")
 position = Vector2(369, 107)
 grid_width = 9
 grid_height = 7
+move_left = 20
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

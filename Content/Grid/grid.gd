@@ -36,11 +36,11 @@ var prevoius_swaps: Array = []
 
 
 # Move count stuff
-var move_left: int = 10:
+@export var move_left: int = 10:
 	set(value):
 		move_left = value
 		move_left_changed.emit(value)
-		if value < 0: # if you hit LESS than zero then game over
+		if value <= 0: # if you hit LESS than zero then game over
 			# TODO: game over should be at the end of the grid update (when nothing moves anymore)
 			game_over.emit()
 
@@ -101,9 +101,9 @@ func update_grid():
 	
 	# Handle matches
 	var matches = []
+	var grey_matche_success = false # checks if a grey match happened
 	if is_board_settled():
 		matches = get_matches()
-		
 		# Remove tiles from the board
 		for i in matches: # [tile_type, x, y]
 			var x = i[1]
@@ -111,12 +111,17 @@ func update_grid():
 			if grid[y][x] != null:
 				grid[y][x].queue_free()
 				grid[y][x] = null
+			
+			# get the grey tile type # 6
+			if i[0] == 6: # tile type grey
+				grey_matche_success = true
 		
 		# Reward the player for matches
 		if matches != []:
 			prevoius_swaps = []
 		
-		add_moves(matches.size())
+		
+		add_moves(grey_matche_success)
 		add_score(matches.size())
 		play_sfx(matches.size())
 	
@@ -343,20 +348,21 @@ func on_unswap_tiles():
 
 
 # basically add more moves depending on the match size
-func add_moves(tiles_matched):
-	if tiles_matched >= 6:
-		move_left += 4
+func add_moves(grey_match_success):
+	if grey_match_success == true:
+		move_left += 2
+		grey_match_success = false
 
 
 func add_score(tiles_matched):
 	if tiles_matched == 3:
-		score += 40
+		score += 25
 	elif tiles_matched == 4:
-		score += 60
+		score += 40
 	elif tiles_matched == 5:
 		score += 80
 	elif tiles_matched >= 6:
-		score += 0
+		score += 100
 
 func play_sfx(tiles_matched):
 	if tiles_matched >= 3:
