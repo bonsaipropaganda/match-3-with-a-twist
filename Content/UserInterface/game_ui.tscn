@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://44pumqm1otrx"]
+[gd_scene load_steps=11 format=3 uid="uid://44pumqm1otrx"]
 
 [ext_resource type="Texture2D" uid="uid://blgd5sbvd3rv3" path="res://art/gui/FreeGUI/Button_x8.png" id="1_vhol0"]
 [ext_resource type="Script" path="res://Content/UserInterface/game_ui.gd" id="1_vjmls"]
 [ext_resource type="Texture2D" uid="uid://wm4f7o8xmxa3" path="res://art/gui/FreeGUI/Button_pressed_x8.png" id="2_pl6m7"]
+[ext_resource type="Texture2D" uid="uid://briib0p23wq62" path="res://art/gui/menu/MixMatch - Background Gameplay.png" id="2_xibrn"]
 [ext_resource type="Texture2D" uid="uid://bhmffmcpulflf" path="res://art/gui/FreeGUI/Button_hover_x8.png" id="3_jhhtc"]
 [ext_resource type="FontFile" uid="uid://cq58k7wkj7k25" path="res://art/fonts/brandy_brunch/BradBunR.ttf" id="5_xvdsi"]
 [ext_resource type="AudioStream" uid="uid://dfv33e21od60g" path="res://art/sounds/mouse_click.mp3" id="6_y6nn3"]
@@ -28,6 +29,13 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_vjmls")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 2
+offset_top = 10.0
+offset_right = 1280.0
+offset_bottom = 730.0
+texture = ExtResource("2_xibrn")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
