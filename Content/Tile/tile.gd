@@ -70,6 +70,8 @@ func initialise(_tile_width : float, margin_width):
 	
 	
 	tile_type = randi() % TileType.size() as TileType
+	if tile_type == 6: # decreases chances of getting grey tile type
+		tile_type = randi() % TileType.size() as TileType
 	sprite2D = $Sprite2D
 	sprite2D.texture = tile_images[tile_type]
 

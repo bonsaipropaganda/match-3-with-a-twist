@@ -7,6 +7,15 @@
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_u61ru")
 
+<<<<<<< HEAD
+=======
+[node name="Grid" parent="." instance=ExtResource("2_benkg")]
+position = Vector2(369, 107)
+grid_width = 9
+grid_height = 7
+move_left = 20
+
+>>>>>>> main
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="GameUI" parent="CanvasLayer" instance=ExtResource("3_0gh26")]
