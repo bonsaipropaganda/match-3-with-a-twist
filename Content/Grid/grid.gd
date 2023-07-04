@@ -363,8 +363,12 @@ func add_score(tiles_matched):
 		score += 40
 	elif tiles_matched == 5:
 		score += 80
-	elif tiles_matched >= 6:
+	elif tiles_matched == 6:
 		score += 100
+	elif tiles_matched == 7:
+		score += 175
+	elif tiles_matched >= 8:
+		score += 250
 
 func play_sfx(tiles_matched):
 	if tiles_matched >= 3:
