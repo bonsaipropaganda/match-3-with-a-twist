@@ -68,7 +68,9 @@ func _ready():
 	# Update move left after ready
 	move_left_changed.emit(move_left)
 	
-
+	position.x = 640 - (tile_width * grid_width)/2
+	position.y = 360 - (tile_width * grid_height)/2
+	
 func _process(_delta):
 	if Engine.is_editor_hint():
 		queue_redraw()
