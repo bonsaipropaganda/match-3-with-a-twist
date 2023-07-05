@@ -89,14 +89,17 @@ func _process(_delta):
 		var mouse_pos = get_viewport().get_mouse_position()
 		var my_pos = $CollisionShape2D.global_position
 		if abs(mouse_pos.x - my_pos.x) > tile_width / 2:
+			
 			Globals.emit_signal("swap_tile", grid_pos, Vector2(sign(mouse_pos.x - my_pos.x), 0))
 			clicked = false
 		if abs(mouse_pos.y - my_pos.y) > tile_width / 2:
+			
 			Globals.emit_signal("swap_tile", grid_pos, Vector2(0, sign(mouse_pos.y - my_pos.y)))
 			clicked = false
 
 
 func animated_move_to(target_pos: Vector2, duration: float) -> void:
+	scale_tween()
 	if move_tween:
 		if move_tween.is_running():
 			move_tween.stop()
@@ -104,7 +107,23 @@ func animated_move_to(target_pos: Vector2, duration: float) -> void:
 			done_moving.emit() # Send the done moving signal for cancellation
 		move_tween.kill()
 	
-	move_tween = create_tween()
+	move_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 	move_tween.tween_property(self, ^"position", target_pos, duration)
 	move_tween.tween_callback(func(): done_moving.emit())
 	final_move_position = target_pos
+
+func destroy() -> void:
+	$DeathParticle.texture = $Sprite2D.texture
+	$DeathParticle/AnimationPlayer.play("Anim")
+	$DeathParticle.emitting=true
+	$Sprite2D.hide()
+	await get_tree().create_timer(5).timeout
+	queue_free()
+
+var last_tween
+func scale_tween() -> void:
+	$Sprite2D.scale = Vector2(0.5,0.5)
+	if last_tween: last_tween.stop()
+	var tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	last_tween = tween
+	tween.tween_property($Sprite2D, "scale", Vector2(1,1), 0.5)

@@ -111,7 +111,7 @@ func update_grid():
 			var x = i[1]
 			var y = i[2]
 			if grid[y][x] != null:
-				grid[y][x].queue_free()
+				grid[y][x].destroy()
 				grid[y][x] = null
 			
 			# get the grey tile type # 6
