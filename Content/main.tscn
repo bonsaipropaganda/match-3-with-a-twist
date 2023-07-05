@@ -35,3 +35,6 @@ unique_name_in_owner = true
 process_mode = 3
 stream = ExtResource("3_l16xe")
 bus = &"Music"
+
+[node name="GlobalSfxContainer" type="Node" parent="."]
+process_mode = 3

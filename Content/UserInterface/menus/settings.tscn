@@ -1,10 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://c5rmdjyocox8g"]
+[gd_scene load_steps=20 format=3 uid="uid://c5rmdjyocox8g"]
 
 [ext_resource type="Script" path="res://Content/UserInterface/menus/settings.gd" id="1_csxai"]
 [ext_resource type="Texture2D" uid="uid://blgd5sbvd3rv3" path="res://art/gui/FreeGUI/Button_x8.png" id="2_ngwd8"]
 [ext_resource type="Texture2D" uid="uid://wm4f7o8xmxa3" path="res://art/gui/FreeGUI/Button_pressed_x8.png" id="3_hi44n"]
 [ext_resource type="Texture2D" uid="uid://bhmffmcpulflf" path="res://art/gui/FreeGUI/Button_hover_x8.png" id="4_tfpyp"]
 [ext_resource type="PackedScene" uid="uid://c3e6plvrjmj6l" path="res://Content/UserInterface/volume_slider.tscn" id="5_0yscq"]
+[ext_resource type="PackedScene" uid="uid://byng8h7i0e7ow" path="res://Content/UserInterface/ButtonClickSfx.tscn" id="5_owqk5"]
 [ext_resource type="Texture2D" uid="uid://dhfqchp5ex6ep" path="res://art/gui/FreeGUI/Button.svg" id="6_kur3w"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_odts3"]
@@ -112,6 +113,8 @@ texture_pressed = SubResource("AtlasTexture_0el5p")
 texture_hover = SubResource("AtlasTexture_pnpn1")
 ignore_texture_size = true
 stretch_mode = 4
+
+[node name="ButtonClickSfx" parent="BackButton" instance=ExtResource("5_owqk5")]
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1

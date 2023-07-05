@@ -6,7 +6,6 @@ extends Control
 
 
 func _on_pause_button_pressed() -> void:
-	%Click.play()
 	menu_holder.open_menu(&"Pause")
 
 

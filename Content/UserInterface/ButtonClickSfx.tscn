@@ -1,0 +1,10 @@
+[gd_scene load_steps=4 format=3 uid="uid://byng8h7i0e7ow"]
+
+[ext_resource type="Script" path="res://Content/UserInterface/ButtonSfx.gd" id="1_vsxx5"]
+[ext_resource type="AudioStream" uid="uid://cibsf62fotf6w" path="res://art/sounds/sfx/mouse_click/down.wav" id="2_v8i5q"]
+[ext_resource type="AudioStream" uid="uid://b8388188xv2f5" path="res://art/sounds/sfx/mouse_click/up.wav" id="3_cardt"]
+
+[node name="ButtonClickSfx" type="Node"]
+script = ExtResource("1_vsxx5")
+button_down_stream = ExtResource("2_v8i5q")
+button_up_stream = ExtResource("3_cardt")

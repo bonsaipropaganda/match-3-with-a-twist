@@ -34,6 +34,15 @@ func reset_to_main_menu() -> void:
 	%Title.play()
 
 
+func play_global_sfx(audio_stream: AudioStream) -> void:
+	var player := AudioStreamPlayer.new()
+	player.ready.connect(player.play)
+	player.finished.connect(player.queue_free)
+	player.stream = audio_stream
+	player.bus = &"SoundFx"
+	$GlobalSfxContainer.add_child(player)
+
+
 func _clean_game() -> void:
 	for c in $Game.get_children():
 		c.queue_free()

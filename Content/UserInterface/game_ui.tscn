@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cgcut4b84w45a" path="res://art/gui/menu/MixMatch - Background Gameplay.png" id="2_s4usy"]
 [ext_resource type="Texture2D" uid="uid://bhmffmcpulflf" path="res://art/gui/FreeGUI/Button_hover_x8.png" id="3_jhhtc"]
 [ext_resource type="FontFile" uid="uid://cq58k7wkj7k25" path="res://art/fonts/brandy_brunch/BradBunR.ttf" id="5_xvdsi"]
-[ext_resource type="AudioStream" uid="uid://dfv33e21od60g" path="res://art/sounds/mouse_click.mp3" id="6_y6nn3"]
+[ext_resource type="PackedScene" uid="uid://byng8h7i0e7ow" path="res://Content/UserInterface/ButtonClickSfx.tscn" id="6_fshnm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dlgyj"]
 atlas = ExtResource("1_vhol0")
@@ -65,6 +65,8 @@ texture_hover = SubResource("AtlasTexture_xame0")
 ignore_texture_size = true
 stretch_mode = 4
 
+[node name="ButtonClickSfx" parent="MarginContainer/Control/PauseButton" instance=ExtResource("6_fshnm")]
+
 [node name="MovesLeft" type="HBoxContainer" parent="MarginContainer/Control"]
 layout_mode = 1
 anchors_preset = -1
@@ -116,10 +118,5 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 60
 text = "00"
-
-[node name="Click" type="AudioStreamPlayer" parent="."]
-unique_name_in_owner = true
-stream = ExtResource("6_y6nn3")
-volume_db = -2.0
 
 [connection signal="pressed" from="MarginContainer/Control/PauseButton" to="." method="_on_pause_button_pressed"]

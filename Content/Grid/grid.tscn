@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dkbegd2mpsmvo"]
 
 [ext_resource type="Script" path="res://Content/Grid/grid.gd" id="1_q44yw"]
-[ext_resource type="AudioStream" uid="uid://83mm7gwuvxkm" path="res://art/sounds/match sound.mp3" id="2_ecogo"]
+[ext_resource type="AudioStream" uid="uid://83mm7gwuvxkm" path="res://art/sounds/sfx/match sound.mp3" id="2_fh3n1"]
 
 [node name="Grid" type="Node2D"]
 clip_children = 2
@@ -14,7 +14,7 @@ one_shot = true
 
 [node name="Match" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
-stream = ExtResource("2_ecogo")
+stream = ExtResource("2_fh3n1")
 bus = &"SoundFx"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
