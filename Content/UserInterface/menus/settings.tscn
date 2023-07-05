@@ -188,12 +188,13 @@ size_flags_horizontal = 3
 theme_override_constants/margin_right = 32
 
 [node name="MusicSlider" parent="Panel/VBoxContainer/GridContainer/MarginContainer" instance=ExtResource("5_0yscq")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_icons/grabber = SubResource("AtlasTexture_jomjl")
 theme_override_icons/grabber_highlight = SubResource("AtlasTexture_jomjl")
-value = -20.0
+value = 0.8
 
 [node name="SoundFxLabel" type="Label" parent="Panel/VBoxContainer/GridContainer"]
 layout_mode = 2
@@ -209,6 +210,7 @@ size_flags_horizontal = 3
 theme_override_constants/margin_right = 32
 
 [node name="SoundFxSlider" parent="Panel/VBoxContainer/GridContainer/MarginContainer3" instance=ExtResource("5_0yscq")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1

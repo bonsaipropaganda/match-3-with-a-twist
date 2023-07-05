@@ -12,13 +12,23 @@ var voice_over_bus = AudioServer.get_bus_index("VoiceOver")
 var sound_fx_bus = AudioServer.get_bus_index("SoundFx")
 
 
-func set_bus_volume(audio_bus, value) -> void:
-	AudioServer.set_bus_volume_db(audio_bus, value)
+func _ready() -> void:
+	# Sync slider value with bus value
+	%MusicSlider.value = get_bus_volume(music_bus)
+	%SoundFxSlider.value = get_bus_volume(sound_fx_bus)
 
-	if value == -30:
+
+func set_bus_volume(audio_bus, value) -> void:
+	AudioServer.set_bus_volume_db(audio_bus, linear_to_db(value))
+
+	if value == 0:
 		AudioServer.set_bus_mute(audio_bus, true)
 	else:
 		AudioServer.set_bus_mute(audio_bus, false)
+
+
+func get_bus_volume(audio_bus) -> float:
+	return db_to_linear(AudioServer.get_bus_volume_db(audio_bus))
 
 
 func _on_voice_over_slider_value_changed(value):

@@ -7,9 +7,8 @@
 offset_right = 618.0
 offset_bottom = 40.0
 theme = ExtResource("1_qvibn")
-min_value = -30.0
-max_value = 0.0
-rounded = true
+max_value = 1.5
+step = 0.05
 scrollable = false
 script = ExtResource("1_tbq4a")
 
