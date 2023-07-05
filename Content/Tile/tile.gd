@@ -4,7 +4,7 @@ extends Area2D
 signal done_moving()
 
 
-const SPRITE_WIDTH = 108.0 # Currently set to width of placeholder image
+const SPRITE_WIDTH = 108.0*1.5 # Currently set to width of placeholder image
 
 var sprite2D : Sprite2D
 
@@ -146,11 +146,8 @@ func scale_tween(start_var, final_var, duration) -> void:
 	last_tween = tween
 	tween.tween_property($SpriteHolder, "scale", final_var, duration)
 
-
-
 func _on_mouse_entered() -> void:
 	scale_tween($SpriteHolder.scale, Vector2(1.1,1.1), 0.2)
-
 
 func _on_mouse_exited() -> void:
 	scale_tween($SpriteHolder.scale, Vector2(1,1), 0.2)

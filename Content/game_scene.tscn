@@ -13,7 +13,7 @@ script = ExtResource("1_u61ru")
 
 [node name="Grid" parent="." instance=ExtResource("2_benkg")]
 position = Vector2(369, 107)
-grid_width = 10
+grid_width = 12
 grid_height = 7
 tile_width = 60.0
 move_left = 20
