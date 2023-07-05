@@ -18,6 +18,9 @@ grid_height = 7
 tile_width = 60.0
 move_left = 20
 
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
 [connection signal="game_over" from="Grid" to="." method="_on_game_over"]
 [connection signal="move_left_changed" from="Grid" to="CanvasLayer/GameUI" method="set_moves_left"]
 [connection signal="score_changed" from="Grid" to="CanvasLayer/GameUI" method="set_score"]

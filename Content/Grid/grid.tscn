@@ -1,7 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://dkbegd2mpsmvo"]
+[gd_scene load_steps=4 format=3 uid="uid://dkbegd2mpsmvo"]
 
 [ext_resource type="Script" path="res://Content/Grid/grid.gd" id="1_q44yw"]
 [ext_resource type="AudioStream" uid="uid://83mm7gwuvxkm" path="res://art/sounds/sfx/match sound.mp3" id="2_fh3n1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ruq7d"]
+bg_color = Color(0, 0, 0, 0)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.756863)
+shadow_size = 25
 
 [node name="Grid" type="Node2D"]
 clip_children = 2
@@ -16,5 +25,11 @@ one_shot = true
 unique_name_in_owner = true
 stream = ExtResource("2_fh3n1")
 bus = &"SoundFx"
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 350.0
+offset_bottom = 420.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ruq7d")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -167,13 +167,16 @@ func init_grid(width, height):
 
 func _draw():
 	# Background, tiles on it are not clipped
-	draw_rect(Rect2(Vector2.ZERO, tile_width * Vector2(grid_width, grid_height)), background_color)
-	# Vertical lines
-	for x in grid_width + 1:
-		draw_line(Vector2(x * tile_width, 0), Vector2(x * tile_width, grid_height * tile_width), GRID_COLOR, 2.0)
-	# Horizontal lines
-	for y in grid_height + 1:
-		draw_line(Vector2(0, y * tile_width), Vector2(grid_width * tile_width, y * tile_width), GRID_COLOR, 2.0)
+	$Panel.position = Vector2.ZERO
+	$Panel.size = tile_width * Vector2(grid_width, grid_height)
+#	draw_rect(Rect2(Vector2.ZERO, tile_width * Vector2(grid_width, grid_height)), background_color)
+#	# Vertical lines
+#	for x in grid_width + 1:
+#		draw_line(Vector2(x * tile_width, 0), Vector2(x * tile_width, grid_height * tile_width), GRID_COLOR, 2.0)
+#	# Horizontal lines
+#	for y in grid_height + 1:
+#		draw_line(Vector2(0, y * tile_width), Vector2(grid_width * tile_width, y * tile_width), GRID_COLOR, 2.0)
+	pass
 
 
 func set_tile_scene_position(tile: Tile, x: int, y: int):

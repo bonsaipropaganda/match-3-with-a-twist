@@ -4,7 +4,7 @@ extends Area2D
 signal done_moving()
 
 
-const SPRITE_WIDTH = 128.0 # Currently set to width of placeholder image
+const SPRITE_WIDTH = 108.0 # Currently set to width of placeholder image
 
 var sprite2D : Sprite2D
 
@@ -50,15 +50,26 @@ const tile_stats = [
 
 # Indexed by TileType
 # Replace these with the actual images
+#const tile_images = [
+#	preload("res://art/pieces/unselected_pink.png"),
+#	preload("res://art/pieces/unselected_orange.png"),
+#	preload("res://art/pieces/unselected_red.png"),
+#	preload("res://art/pieces/unselected_blue.png"),
+#	preload("res://art/pieces/unselected_green.png"),
+#	preload("res://art/pieces/unselected_yellow.png"),
+#	preload("res://art/pieces/unselected_grey.png"),
+#	preload("res://art/pieces/unselected_ghost.png"),
+#]
+
 const tile_images = [
-	preload("res://art/pieces/unselected_pink.png"),
-	preload("res://art/pieces/unselected_orange.png"),
-	preload("res://art/pieces/unselected_red.png"),
-	preload("res://art/pieces/unselected_blue.png"),
-	preload("res://art/pieces/unselected_green.png"),
-	preload("res://art/pieces/unselected_yellow.png"),
-	preload("res://art/pieces/unselected_grey.png"),
-	preload("res://art/pieces/unselected_ghost.png"),
+	preload("res://art/pieces/outline/tilePink.png"),
+	preload("res://art/pieces/outline/tileOrange.png"),
+	preload("res://art/pieces/outline/tileRed.png"),
+	preload("res://art/pieces/outline/tileBlue.png"),
+	preload("res://art/pieces/outline/tileGreen.png"),
+	preload("res://art/pieces/outline/tileYellow.png"),
+	preload("res://art/pieces/outline/tileBlack.png"),
+	preload("res://art/pieces/outline/tileGrey.png")
 ]
 
 
@@ -72,7 +83,7 @@ func initialise(_tile_width : float, margin_width):
 	tile_type = randi() % TileType.size() as TileType
 	if tile_type == 6: # decreases chances of getting grey tile type
 		tile_type = randi() % TileType.size() as TileType
-	sprite2D = $Sprite2D
+	sprite2D = $SpriteHolder/Sprite2D
 	sprite2D.texture = tile_images[tile_type]
 
 
@@ -99,7 +110,9 @@ func _process(_delta):
 
 
 func animated_move_to(target_pos: Vector2, duration: float) -> void:
-	scale_tween()
+	var direction = (target_pos-position).normalized()
+	scale_tween(Vector2(0.8,0.8)-abs(Vector2.ONE-direction)*0.3, Vector2.ONE, 0.5)
+	
 	if move_tween:
 		if move_tween.is_running():
 			move_tween.stop()
@@ -111,19 +124,33 @@ func animated_move_to(target_pos: Vector2, duration: float) -> void:
 	move_tween.tween_property(self, ^"position", target_pos, duration)
 	move_tween.tween_callback(func(): done_moving.emit())
 	final_move_position = target_pos
+	await get_tree().create_timer(duration).timeout
+	
+#	var r = randi_range(0,1); if r==0:r=-1
+#	DampedOscillator.animate($SpriteHolder/Sprite2D, "scale", randf_range(225,275), randf_range(6,7),randf_range(8,11), randf_range(0.20,0.3)*r)
+	DampedOscillator.animate($SpriteHolder/Sprite2D, "scale", randf_range(225,275), randf_range(6,7),randf_range(8,11), randf_range(0.20,0.3))
 
 func destroy() -> void:
-	$DeathParticle.texture = $Sprite2D.texture
+	$DeathParticle.texture = $SpriteHolder/Sprite2D.texture
 	$DeathParticle/AnimationPlayer.play("Anim")
 	$DeathParticle.emitting=true
-	$Sprite2D.hide()
+	$SpriteHolder.hide()
 	await get_tree().create_timer(5).timeout
 	queue_free()
 
 var last_tween
-func scale_tween() -> void:
-	$Sprite2D.scale = Vector2(0.5,0.5)
+func scale_tween(start_var, final_var, duration) -> void:
+	$SpriteHolder.scale = start_var
 	if last_tween: last_tween.stop()
 	var tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	last_tween = tween
-	tween.tween_property($Sprite2D, "scale", Vector2(1,1), 0.5)
+	tween.tween_property($SpriteHolder, "scale", final_var, duration)
+
+
+
+func _on_mouse_entered() -> void:
+	scale_tween($SpriteHolder.scale, Vector2(1.1,1.1), 0.2)
+
+
+func _on_mouse_exited() -> void:
+	scale_tween($SpriteHolder.scale, Vector2(1,1), 0.2)
